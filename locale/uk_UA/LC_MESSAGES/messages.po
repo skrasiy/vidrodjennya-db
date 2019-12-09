@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Vidrodjennya\n"
-"POT-Creation-Date: 2019-12-02 16:10+0200\n"
-"PO-Revision-Date: 2019-12-02 16:10+0200\n"
+"POT-Creation-Date: 2019-12-09 15:11+0200\n"
+"PO-Revision-Date: 2019-12-09 15:14+0200\n"
 "Last-Translator: \n"
 "Language-Team: Inquisitor, <inquisitor@2ch.hk>\n"
 "Language: uk_UA\n"
@@ -193,15 +193,15 @@ msgstr "Група ризику"
 msgid "CLIENT_ACTIONS"
 msgstr "Дії з клієнтом"
 
-#: cardview.twig:7 courses.twig:89 courses_all.twig:85
+#: cardview.twig:7 courses.twig:89 courses_all.twig:86
 msgid "EDIT"
 msgstr "Редагувати"
 
-#: cardview.twig:8 navbar.twig:50
+#: cardview.twig:8 navbar.twig:69
 msgid "EDIT_COURSES"
 msgstr "Курси"
 
-#: cardview.twig:10 courses.twig:92 courses_all.twig:88 delete.twig:43
+#: cardview.twig:10 courses.twig:92 courses_all.twig:89 delete.twig:43
 msgid "DELETE"
 msgstr "Видалити"
 
@@ -391,7 +391,7 @@ msgstr "Тривалість"
 msgid "ADDITIONAL_SERVICES"
 msgstr "Додаткові послуги"
 
-#: cardview.twig:156 courses.twig:82 courses_all.twig:78
+#: cardview.twig:156 courses.twig:82 courses_all.twig:79
 msgid "DAYS"
 msgstr "днів"
 
@@ -507,7 +507,7 @@ msgstr "Додати"
 msgid "COURSE_EXISTED"
 msgstr "Існуючі курси"
 
-#: courses.twig:92 courses_all.twig:88 delete.twig:41
+#: courses.twig:92 courses_all.twig:89 delete.twig:41
 msgid "DELETE_CONFIRM"
 msgstr "Ви підтверджуєте видалення запису?"
 
@@ -527,7 +527,7 @@ msgstr "Активний курс"
 msgid "NAME"
 msgstr "Ім'я"
 
-#: courses_all.twig:101
+#: courses_all.twig:102
 msgid "MSG_NO_ACTIVE_COURSE"
 msgstr "Активних курсів немає"
 
@@ -763,7 +763,7 @@ msgstr "Користувач"
 msgid "EVENT_ACTION"
 msgstr "Подія"
 
-#: eventlog.twig:15 navbar.twig:81 noaccess.twig:6 noaccess.twig:7
+#: eventlog.twig:15 navbar.twig:100 noaccess.twig:6 noaccess.twig:7
 #: register.twig:19
 msgid "ACCESS_LEVEL"
 msgstr "Рівень доступу"
@@ -788,7 +788,7 @@ msgstr "запитів до БД"
 msgid "SCRIPT_DEBUG_NOTE"
 msgstr "РЕЖИМ ВІДЛАДКИ АКТИВНИЙ"
 
-#: html_header.twig:5 navbar.twig:3 navbar.twig:4 navbar.twig:73
+#: html_header.twig:5 navbar.twig:3 navbar.twig:4 navbar.twig:92
 msgid "APP_NAME"
 msgstr "База даних"
 
@@ -804,7 +804,7 @@ msgstr ""
 "Увага! Ви підключені до <strong>ТЕСТОВОЇ</strong> бази даних: зміни, що "
 "внесені тут, не вплинуть на основну базу"
 
-#: list.twig:2 main.twig:8 navbar.twig:42
+#: list.twig:2 main.twig:8 navbar.twig:61
 msgid "LIST"
 msgstr "Списки"
 
@@ -942,7 +942,7 @@ msgstr "Пароль"
 msgid "PASSWORD_NON_ENG_CHARS"
 msgstr "Увага! Обрана не англійська розкладка клавіатури"
 
-#: login.twig:23 navbar.twig:93
+#: login.twig:23 navbar.twig:112
 msgid "LOGIN"
 msgstr "Увійти"
 
@@ -950,15 +950,15 @@ msgstr "Увійти"
 msgid "ACTION_SELECT_MSG"
 msgstr "Для початку роботи оберіть дію зі списку"
 
-#: main.twig:7 navbar.twig:38
+#: main.twig:7 navbar.twig:57
 msgid "SEARCH"
 msgstr "Пошук"
 
-#: main.twig:9 navbar.twig:46
+#: main.twig:9 navbar.twig:65
 msgid "DOCS"
 msgstr "Документи"
 
-#: main.twig:10 navbar.twig:55
+#: main.twig:10 navbar.twig:74
 msgid "NEW_CLIENT"
 msgstr "Новий клієнт"
 
@@ -966,7 +966,7 @@ msgstr "Новий клієнт"
 msgid "SELECT_DATE"
 msgstr "Оберіть дату"
 
-#: navbar.twig:4 navbar.twig:73
+#: navbar.twig:4 navbar.twig:92
 msgid "COMPANY_NAME_SHORT"
 msgstr "«Відродження»"
 
@@ -978,19 +978,35 @@ msgstr "Адміністрування"
 msgid "NEW_USER"
 msgstr "Новий користувач"
 
-#: navbar.twig:34
+#: navbar.twig:32
+msgid "DEVELOPER_PMA_LINK"
+msgstr "phpMyAdmin"
+
+#: navbar.twig:36
+msgid "DEVELOPER_PHPINFO_LINK"
+msgstr "phpinfo()"
+
+#: navbar.twig:40
+msgid "DEVELOPER_NGINX_LOG_LINK"
+msgstr "Логи Nginx"
+
+#: navbar.twig:44
+msgid "DEVELOPER_GITLIST_LINK"
+msgstr "GitList"
+
+#: navbar.twig:53
 msgid "NAV_MENU_DROPDOWN"
 msgstr "Меню"
 
-#: navbar.twig:62
+#: navbar.twig:81
 msgid "LANGUAGE"
 msgstr "Мова"
 
-#: navbar.twig:73
+#: navbar.twig:92
 msgid "HELP"
 msgstr "Інструкція користувача"
 
-#: navbar.twig:91
+#: navbar.twig:110
 msgid "LOGOUT"
 msgstr "Вийти"
 
