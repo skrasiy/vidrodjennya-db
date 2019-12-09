@@ -1,0 +1,6 @@
+# Twig cache & PHP-Stamp cache
+cache/*
+# keep geo location cache
+!cache/geocode
+# Production config file
+include/config.php

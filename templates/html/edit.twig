@@ -1,0 +1,286 @@
+<div class="container interface">
+	{% if client.new %}
+	<h2 class="text-secondary">{% trans 'TITLE_NEW_CLIENT' %}</h2>
+	{% else %}
+	<h2 class="text-secondary">{% trans 'TITLE_EDIT_CLIENT' %}</h2>
+	{% endif %}
+	{% if (client.loaded and (not client.new)) %}
+	<h4 class="text-center text-secondary">{{ client.name }} (<em>{% trans 'FILE_NO' %}: {{ client.file}}</em>)</h4>
+	{% endif %}
+	<hr>
+	{% if client.loaded %}
+	<form action="{{ page.self }}" id="edit-client" name="edit-client" method="POST" enctype="multipart/form-data">
+		<input type="hidden" name="save" value="true">
+
+		<div class="form-row">
+			<div class="form-group col-sm-12 col-md-12 col-lg-6">
+				<label for="edit-name">{% trans 'NAME_DESC' %}</label>
+				<input type="text" name="edit-name" class="form-control" id="edit-name" value="{{ client.name }}" required>
+			</div>
+			<div class="form-group col-sm-4 col-md-4 col-lg-2">
+				<label for="edit-gender">{% trans 'GENDER' %}</label>
+				<select name="edit-gender" class="form-control" id="edit-gender">
+						<option value="0"{{(client.gender is same as('0'))?' selected'}}>{% trans 'GENDER_MALE' %}</option>
+						<option value="1"{{(client.gender is same as('1'))?' selected'}}>{% trans 'GENDER_FEMALE' %}</option>
+				</select>
+			</div>
+			<div class="form-group col-sm-6 col-md-6 col-lg-3">
+				<label for="edit-rnokpp">{% trans 'RNOKPP' %}</label>
+				<input type="text" name="edit-rnokpp" class="form-control" id="edit-rnokpp" value="{{ client.rnokpp }}" pattern="\d{10}">
+			</div>
+			<div class="form-group col-sm-2 col-md-2 col-lg-1">
+				<label for="edit-file"><span class="nobr">{% trans 'FILE_NO' %}</span></label>
+				<input type="text" name="edit-file" class="form-control text-right" id="edit-file" value="{{ client.file }}" pattern="\d*" required>
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="form-group col-sm-4 col-md-4 col-lg-2">
+				<label for="edit-birthdate"><span class="nobr">{% trans 'BIRTHDATE' %}</span></label>
+				<input type="text" name="edit-birthdate" class="form-control" id="edit-birthdate" value="{{ client.birthdate }}" placeholder="{% trans 'DATE_YEAR' %}-{% trans 'DATE_MONTH' %}-{% trans 'DATE_DAY' %}" pattern="\d{4}-\d{2}-\d{2}" required>
+			</div>
+			<div class="form-group col-sm-4 col-md-4 col-lg-2">
+				<label>{% trans 'SPECIAL_STATUS' %}</label>
+				<div class="nobr">
+					<div class="form-check form-check-inline mt-lg-2">
+						<input type="checkbox" value="1" class="form-check-input" id="edit-status_ato" name="edit-status_ato"{{(client.status_ato is same as('1'))?' checked'}}>
+						<label class="form-check-label" for="edit-status_ato" data-toggle="tooltip" data-placement="bottom" title="{% trans 'STATUS_ATO' %}">{% trans 'STATUS_ATO_SHORT' %}</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input type="checkbox" value="1" class="form-check-input" id="edit-status_vpl" name="edit-status_vpl"{{(client.status_vpl is same as('1'))?' checked'}}>
+						<label class="form-check-label" for="edit-status_vpl" data-toggle="tooltip" data-placement="bottom" title="{% trans 'STATUS_VPO' %}">{% trans 'STATUS_VPO_SHORT' %}</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group col-sm-4 col-md-4 col-lg-2">
+				<label for="edit-active">{% trans 'ACTIVE' %}</label>
+				<select name="edit-active" class="form-control" id="edit-active">
+						<option value="1"{{(client.active is same as('1'))?' selected'}}>{% trans 'YES' %}</option>
+						<option value="0"{{(client.active is same as('0'))?' selected'}}>{% trans 'NO' %}</option>
+				</select>
+			</div>
+			<div class="form-group col-sm-4 col-md-4 col-lg-2">
+				<label for="edit-registered"><span class="nobr">{% trans 'REGISTER_DATE' %}</span></label>
+				<input type="text" name="edit-registered" class="form-control" id="edit-registered" value="{{ client.registered }}" placeholder="{% trans 'DATE_YEAR' %}-{% trans 'DATE_MONTH' %}-{% trans 'DATE_DAY' %}" pattern="\d{4}-\d{2}-\d{2}" required>
+			</div>
+			<div class="form-group col-sm-4 col-md-4 col-lg-2">
+				<label for="edit-dismissed"><span class="nobr">{% trans 'DISMISS_DATE' %}</span></label>
+				<input type="text" name="edit-dismissed" class="form-control" id="edit-dismissed" value="{{ client.dismissed }}" placeholder="{% trans 'DATE_YEAR' %}-{% trans 'DATE_MONTH' %}-{% trans 'DATE_DAY' %}" pattern="\d{4}-\d{2}-\d{2}">
+			</div>
+			<div class="form-group col-sm-4 col-md-4 col-lg-2">
+				<label for="edit-incomplete">{% trans 'INCOMPLETE' %}</label>
+				<select name="edit-incomplete" class="form-control" id="edit-incomplete">
+						<option value="0"{{(client.incomplete is same as('0'))?' selected'}}>{% trans 'NO' %}</option>
+						<option value="1"{{(client.incomplete is same as('1'))?' selected'}}>{% trans 'YES' %}</option>
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-row">
+			<div class="form-group col-sm-12 col-md-12 col-lg-6">
+				<label for="edit-diagnosis">{% trans 'DIAGNOSIS' %}</label>
+				<textarea class="form-control" rows="4" name="edit-diagnosis" id="edit-diagnosis" required>{{ client.diagnosis }}</textarea>
+			</div>
+			<div class="form-group col-sm-12 col-md-12 col-lg-6">
+				<div class="form-row">
+					<div class="form-group col-sm-4 col-md-4 col-lg-4">
+						<label for="edit-diag_code">
+							{% trans 'ICD10_CODE' %}
+							<a href="https://mkb-10.com/" target="_blank">
+								<i class="fas fa-question-circle ml-1" data-toggle="tooltip" data-placement="top" title="{% trans 'ICD10_CODE_HINT' %}"></i>
+							</a>
+						</label>
+						<input type="text" name="edit-diag_code" class="form-control" id="edit-diag_code" value="{{ client.diag_code }}">
+					</div>
+					<div class="form-group col-sm-4 col-md-4 col-lg-4">
+						<label for="edit-disabled_group">{% trans 'DISABLED_GROUP' %}</label>
+						<select name="edit-disabled_group" class="form-control" id="edit-disabled_group" required>
+							<option disabled{{client.disabled_group is empty?' selected'}}>{% trans 'SELECT' %}</option>
+							{% for option in enum.disabled %}
+							<option value="{{ loop.index0 }}" {{(client.disabled_group==option)?'selected'}}>{{ option|title }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="form-group col-sm-4 col-md-4 col-lg-4">
+						<label for="edit-diag_group">{% trans 'DIAGNOSIS_CATEGORY' %}</label>
+						<select name="edit-diag_group" class="form-control" id="edit-diag_group" required>
+							<option disabled{{client.diag_group is empty?' selected'}}>{% trans 'SELECT' %}</option>
+							{% for option in enum.diag %}
+							<option value="{{ loop.index0 }}" {{(client.diag_group==option)?'selected'}}>{{ option }}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-sm-4 col-md-4 col-lg-4">
+						<label for="edit-course_start">{% trans 'IPR_STARTED' %}</label>
+						<input type="text" name="edit-course_start" class="form-control" id="edit-course_start" value="{{ client.course_start }}" placeholder="{% trans 'DATE_YEAR' %}-{% trans 'DATE_MONTH' %}-{% trans 'DATE_DAY' %}" pattern="\d{4}-\d{2}-\d{2}" required>
+					</div>
+					<div class="form-group col-sm-4 col-md-4 col-lg-4">
+						<label for="edit-course_end">{% trans 'IPR_DATE' %}</label>
+						<input type="text" name="edit-course_end" class="form-control" id="edit-course_end" value="{{ client.course_end }}" placeholder="{% trans 'DATE_YEAR' %}-{% trans 'DATE_MONTH' %}-{% trans 'DATE_DAY' %}" pattern="\d{4}-\d{2}-\d{2}" required>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-row mb-3">
+			<div class="form-group col-12 text-center align-bottom text-secondary m-0">
+				{% trans 'IPR_SERVICES' %}
+			</div>
+
+			<div class="form-group col-sm-12 col-md-2 col-lg-2 align-self-center">
+				{% trans 'IPR_CAT_PSYCHO' %}
+			</div>
+			<div class="form-group col-sm-12 col-md-5 col-lg-5 align-self-top mb-1">
+				<div class="input-group ipr-svc mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							{% trans 'IPR_SVC_PCONS_SHORT' %}
+							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_PCONS' %}"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" name="ipr-svc-psycho-pcons" value="{{ client.ipr_services.psycho.pscons }}">
+				</div>
+				<div class="input-group ipr-svc mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							{% trans 'IPR_SVC_PPP_SHORT' %}
+							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_PPP' %}"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" name="ipr-svc-psycho-ppp" value="{{ client.ipr_services.psycho.ppp }}">
+				</div>
+			</div>
+			<div class="form-group col-sm-12 col-md-5 col-lg-5 align-self-top mb-1">
+				<div class="input-group ipr-svc mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							{% trans 'IPR_SVC_PPD_SHORT' %}
+							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_PPD' %}"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" name="ipr-svc-psycho-ppd" value="{{ client.ipr_services.psycho.ppd }}">
+				</div>
+				<div class="input-group ipr-svc mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							{% trans 'IPR_SVC_PPK_SHORT' %}
+							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_PPK' %}"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" name="ipr-svc-psycho-ppk" value="{{ client.ipr_services.psycho.ppk }}">
+				</div>
+			</div>
+
+			<div class="form-group col-sm-12 col-md-2 col-lg-2 align-self-center">
+				{% trans 'IPR_CAT_PHYS' %}
+			</div>
+			<div class="form-group col-sm-12 col-md-5 col-lg-5 align-self-top mb-1">
+				<div class="input-group ipr-svc mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							{% trans 'IPR_SVC_FCONS_SHORT' %}
+							<i class="fas fa-question-circle ml-1" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_FCONS' %}"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" name="ipr-svc-phys-fcons" value="{{ client.ipr_services.phys.phcons }}">
+				</div>
+				<div class="input-group ipr-svc mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							{% trans 'IPR_SVC_LFK_SHORT' %}
+							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_LFK' %}"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" name="ipr-svc-phys-lfk" value="{{ client.ipr_services.phys.lfk }}">
+				</div>
+			</div>
+			<div class="form-group col-sm-12 col-md-5 col-lg-5 align-self-top mb-1">
+				<div class="input-group ipr-svc mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							{% trans 'IPR_SVC_LM_SHORT' %}
+							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_LM' %}"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" name="ipr-svc-phys-lm" value="{{ client.ipr_services.phys.lm }}">
+				</div>
+			</div>
+
+			<div class="form-group col-sm-12 col-md-2 col-lg-2 align-self-center">
+				{% trans 'IPR_CAT_SOCIAL' %}
+			</div>
+			<div class="form-group col-sm-12 col-md-5 col-lg-5 align-self-top mb-1">
+				<div class="input-group ipr-svc mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							{% trans 'IPR_SVC_NOSN_SHORT' %}
+							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_NOSN' %}"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" name="ipr-svc-social-nosn" value="{{ client.ipr_services.social.nosn }}">
+				</div>
+			</div>
+			<div class="form-group col-sm-12 col-md-5 col-lg-5 align-self-top mb-1">
+				<div class="input-group ipr-svc mb-1">
+					<div class="input-group-prepend">
+						<span class="input-group-text">
+							{% trans 'IPR_SVC_SPP_SHORT' %}
+							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_SPP' %}"></i>
+						</span>
+					</div>
+					<input type="text" class="form-control" name="ipr-svc-social-spp" value="{{ client.ipr_services.social.spp }}">
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-row">
+			<div class="form-group col-sm-12 col-md-12 col-lg-6">
+				<div class="form-row">
+					<div class="form-group col-sm-12 col-md-6 col-lg-6">
+						<label for="edit-region">{% trans 'REGION' %}</label>
+						<select name="edit-region" class="form-control" id="edit-region" required>
+							<option disabled{{client.region is empty?' selected'}}>{% trans 'SELECT' %}</option>
+							{% for option in enum.region %}
+							<option value="{{ loop.index0 }}" {{(client.region==option)?'selected'}}>{{ option }}</option>
+							{% endfor %}
+						</select>
+					</div>
+					<div class="form-group col-sm-12 col-md-6 col-lg-6">
+						<label for="edit-district">{% trans 'DISTRICT' %}</label>
+						<input type="text" name="edit-district" class="form-control" id="edit-district" value="{{ client.district }}">
+					</div>
+					<div class="form-group col-sm-12 col-md-6 col-lg-6">
+						<label for="edit-city">{% trans 'CITY' %}</label>
+						<input type="text" name="edit-city" class="form-control" id="edit-city" value="{{ client.city }}" required>
+					</div>
+					<div class="form-group col-sm-12 col-md-6 col-lg-6">
+						<label for="edit-address">{% trans 'ADDRESS' %}</label>
+						<input type="text" name="edit-address" class="form-control" id="edit-address" value="{{ client.address }}" required>
+					</div>
+				</div>
+			</div>
+			<div class="form-group col-sm-12 col-md-12 col-lg-6">
+				<label for="edit-contact_data">{% trans 'CONTACTS_DESC' %}</label>
+				<textarea class="form-control" rows="4" name="edit-contact_data" id="edit-contact_data" required>{{ client.contact_data }}</textarea>
+			</div>
+		</div>
+
+		<div class="form-row justify-content-between align-items-end">
+			<div class="form-group col-sm-12 col-md-12 col-lg-6">
+				<label for="edit-comment">{% trans 'COMMENT' %}</label>
+				<textarea class="form-control" rows="4" name="edit-comment" id="edit-comment">{{ client.comment }}</textarea>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-primary" onclick="submitOnce(this, true)" data-message="{% trans 'WAIT_BTN' %}" data-wait="{% trans 'WAIT_MSG' %}">{{'SAVE'|trans|upper}}</button>
+			</div>
+		</div>
+	</form>
+	{% else %}
+	<div class="alert alert-warning" role="alert"><i class="fas fa-exclamation-circle"></i> {% trans 'MSG_NOFILE' %}</div>
+	<div class="text-center">
+		<a class="btn btn-primary" href="{{ page.root }}" role="button">{{ 'MAIN_PAGE'|trans|upper }}</a>
+	</div>
+	{% endif %}
+</div>

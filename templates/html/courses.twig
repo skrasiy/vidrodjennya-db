@@ -1,0 +1,118 @@
+<div class="container interface">
+	<h2 class="text-secondary">{% trans 'TITLE_EDIT_CLIENT_COURSES' %}</h2>
+	<h4 class="text-center mb-0">{{ client.name }}</h4>
+	<h5 class="text-secondary text-center mt-0 pt-0">{% trans 'FILE_NO' %} {{client.file}}</h5>
+	<hr>
+	{% if page.status == 'dataerror' %}
+	<div class="alert alert-warning" role="alert">
+		<i class="fas fa-exclamation-circle"></i>
+		{% trans 'MSG_VALUES_ERROR' %}
+	</div>
+	{% elseif page.status == 'dberror' %}
+	<div class="alert alert-danger" role="alert">
+		<i class="fas fa-exclamation-triangle"></i>
+		{% trans 'MSG_DATABASE_ERROR' %}
+	</div>
+	{% elseif page.status == 'ok' %}
+	<div class="alert alert-success" role="alert">
+		<i class="fas fa-check-circle"></i>
+		{% trans 'EDIT_MSG_SUCCESS' %}
+	</div>
+	{% endif %}
+	<div class="row">
+		<div class="col">
+			<h5 class="text-center">{% trans 'COURSE_NEW' %}</h5>
+			<form action="{{ page.self }}" method="POST" enctype="multipart/form-data">
+				<input type="hidden" name="course" value="new">
+				<input type="hidden" name="course-user" value="{{client.id}}">
+				<div class="form-row align-items-end justify-content-md-center">
+					<div class="form-group col-lg-2 col-md-6 col-sm-6">
+						<label for="course-start">{% trans 'COURSE_START' %}</label>
+						<input type="date" name="course-start" class="form-control" id="course-start" required>
+					</div>
+					<div class="form-group col-lg-2 col-md-6 col-sm-6">
+						<label for="course-end">{% trans 'COURSE_END' %}</label>
+						<input type="date" name="course-end" class="form-control" id="course-end" required>
+					</div>
+					<div class="form-group col-lg-3 col-md-12 col-sm-12">
+						<label for="course-services">{% trans 'IPR_SERVICES' %}</label>
+						<input type="text" name="course-services" class="form-control" id="course-services" value="{{ client.ipr_services_text }}">
+					</div>
+					<div class="form-group col-lg-3 col-md-12 col-sm-12">
+						<label for="course-additional">{% trans 'ADDITIONAL_SERVICES' %}</label>
+						<input type="text" name="course-additional" class="form-control" id="course-additional">
+					</div>
+				</div>
+				<div class="form-row align-items-end row justify-content-md-center">
+					<div class="form-group col-lg-8 col-md-12 col-sm-12">
+						<label for="course-comment">{% trans 'COMMENT' %}</label>
+						<input type="text" name="course-comment" class="form-control" id="course-comment">
+					</div>
+					<div class="form-group col-lg-2 col-md-3 col-sm-4">
+						<button type="submit" class="btn btn-primary btn-block">{{'ADD'|trans|upper}}</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<hr>
+	<div class="row">
+		<div class="col mt-4">
+			<h5 class="text-center">{% trans 'COURSE_EXISTED' %}</h5>
+			{% if courses %}
+			<table class="table table-sm table-bordered">
+				<thead class="thead-light">
+					<tr>
+						<th>{% trans 'COURSE_START' %}</th>
+						<th>{% trans 'COURSE_END' %}</th>
+						<th>{% trans 'DURATION' %}</th>
+						<th>{% trans 'IPR_SERVICES' %}</th>
+						<th>{% trans 'ADDITIONAL_SERVICES' %}</th>
+						<th>{% trans 'COMMENT' %}</th>
+						{% if  page.user.accessLevel >= page.access.editor %}<th></th>{% endif %}
+						
+					</tr>
+				</thead>
+				<tbody>
+					{% for course in courses %}
+					{% set duration = date(course.course_start).diff(course.course_end) %}
+					<tr{{(date() < date(course.course_end))?' class="table-success"'}}>
+						<td>{{ course.course_start|date("d.m.Y") }}</td>
+						<td>{{ course.course_end|date("d.m.Y") }}</td>
+						<td>{{ duration.days }} {% trans 'DAYS' %}</td>
+						<td>{{ course.ipr_svc }}</td>
+						<td>{{ course.additional_svc }}</td>
+						<td>{{ course.comment}}</td>
+						{% if  page.user.accessLevel >= page.access.editor %}
+						<td>
+							<span class="nobr">
+							<a class="btn btn-primary btn-sm" href="{{ page.self ~ '/' ~ course.id ~ '/edit' }}" role="button" data-toggle="tooltip" data-placement="top" title="{% trans 'EDIT' %}">
+								<i class="fas fa-edit fa-fw"></i>
+							</a>
+							<a class="btn btn-danger btn-sm" href="{{ page.self ~ '/' ~ course.id ~ '/delete' }}" role="button" data-toggle="tooltip" data-placement="top" title="{% trans 'DELETE' %}" onclick="return confirm('{% trans 'DELETE_CONFIRM' %}')">
+								<i class="fas fa-trash-alt fa-fw"></i>
+							</a>
+							</span>
+						</td>
+						{% endif %}
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% else %}
+			<div class="alert alert-dark" role="alert">
+				<i class="fas fa-file-exclamation"></i>
+				{% trans 'NO_DATA' %}
+			</div>
+			{% endif %}
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<div class="text-center">
+				<a class="btn btn-secondary btn-sm" href="{{ page.root ~ 'view/' ~ client.id }}" role="button">{{ 'BTN_CLIENT_CARD'|trans|upper }}</a>
+				<a class="btn btn-secondary btn-sm" href="{{ page.root ~ 'courses' }}" role="button">{{ 'BACK'|trans|upper }}</a>
+			</div>
+		</div>
+	</div>
+</div>

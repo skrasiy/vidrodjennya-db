@@ -1,0 +1,82 @@
+<div class="container interface">
+	<h2 class="text-secondary">{% trans 'SELECT_DOC_TYPE' %}</h2>
+	<hr>
+	<div class="row">
+
+		<div class="col col-sm-12 col-md-6 col-lg-4 mt-3">
+			<div class="card docs">
+				<div class="row no-gutters">
+					<div class="col-md-4 mt-4"><img src="{{ page.root ~ 'static/img/docs/register-order.jpg'}}" class="card-img"></div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title text-center">{{ 'ORDER'|trans|upper }}</h5>
+							<p class="card-text">{% trans 'DOCS_REGISTER_DESCRIPTION' %}</p>
+							<a href="{{ page.self ~  '/register-order'}}" class="btn btn-primary">{{ 'BTN_SELECT'|trans|upper }}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col col-sm-12 col-md-6 col-lg-4 mt-3">
+			<div class="card docs">
+				<div class="row no-gutters">
+					<div class="col-md-4 mt-4"><img src="{{ page.root ~ 'static/img/docs/register-notify.jpg'}}" class="card-img"></div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title text-center">{{ 'NOTIFY'|trans|upper }}</h5>
+							<p class="card-text">{% trans 'DOCS_REGISTER_DESCRIPTION' %}</p>
+							<a href="{{ page.self ~  '/register-notify'}}" class="btn btn-primary">{{ 'BTN_SELECT'|trans|upper }}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col col-sm-12 col-md-6 col-lg-4 mt-3">
+			<div class="card docs">
+				<div class="row no-gutters">
+					<div class="col-md-4 mt-4"><img src="{{ page.root ~ 'static/img/docs/committee-protocol.jpg'}}" class="card-img"></div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title text-center">{{ 'PROTOCOL'|trans|upper }}</h5>
+							<p class="card-text">{% trans 'DOCS_ADMISSION_COMMITTEE_DESCRIPTION' %}</p>
+							<a href="{{ page.self ~  '/committee-protocol'}}" class="btn btn-primary">{{ 'BTN_SELECT'|trans|upper }}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="col col-sm-12 col-md-6 col-lg-4 mt-3">
+			<div class="card docs">
+				<div class="row no-gutters">
+					<div class="col-md-4 mt-4"><img src="{{ page.root ~ 'static/img/docs/longterm-plan.jpg'}}" class="card-img"></div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title text-center">{{ 'PLAN'|trans|upper }}</h5>
+							<p class="card-text">{% trans 'DOCS_LONG_TERM_PLAN_DESCRIPTION' %}</p>
+							<a href="{{ page.self ~  '/longterm-plan'}}" class="btn btn-primary">{{ 'BTN_SELECT'|trans|upper }}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="col col-sm-12 col-md-6 col-lg-4 mt-3">
+			<div class="card docs">
+				<div class="row no-gutters">
+					<div class="col-md-4 mt-4"><img src="{{ page.root ~ 'static/img/docs/social-plan.jpg'}}" class="card-img"></div>
+					<div class="col-md-8">
+						<div class="card-body">
+							<h5 class="card-title text-center">{{ 'TEMPLATE'|trans|upper }}</h5>
+							<p class="card-text">{% trans 'DOCS_SOCIAL_YEAR_PLAN_DESCRIPTION' %}</p>
+							<a href="{{ page.self ~  '/social-year-plan'}}" class="btn btn-primary">{{ 'BTN_SELECT'|trans|upper }}</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>

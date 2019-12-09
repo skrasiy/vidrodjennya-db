@@ -1,0 +1,23 @@
+<div class="container interface">
+	{% if result is same as(0) %}
+	<div class="alert alert-warning" role="alert"><i class="fas fa-exclamation-circle"></i> {% trans 'EDIT_MSG_NO_CHANGES' %}</div>
+	<div class="text-center">
+		<a class="btn btn-primary" href="{{ page.self }}" role="button">{{ 'EDIT_BTN_AGAIN'|trans|upper }}</a>
+		<a class="btn btn-secondary" href="{{ page.root }}" role="button">{{ 'MAIN_PAGE'|trans|upper }}</a>
+	</div>
+	{% elseif result is same as(-1) %}
+	<div class="alert alert-danger" role="alert"><i class="fas fa-exclamation-circle"></i> {% trans 'EDIT_MSG_BAD_DATA' %}</div>
+	<div class="text-center">
+		<a class="btn btn-primary" href="{{ page.self }}" role="button">{{ 'EDIT_BTN_AGAIN'|trans|upper }}</a>
+		<a class="btn btn-secondary" href="{{ page.root }}" role="button">{{ 'MAIN_PAGE'|trans|upper }}</a>
+	</div>
+	{% elseif result >= 1 %}
+	<div class="alert alert-success" role="alert"><i class="fas fa-check-circle"></i> {% trans 'EDIT_MSG_SUCCESS' %}</div>
+	<div class="text-center">
+		{% if client.new %}
+		<a class="btn btn-primary" href="{{ page.root ~ 'docs/register-order' }}" role="button">{{ 'EDIT_BTN_DOCS'|trans|upper }}</a>
+		{% endif %}
+		<a class="btn btn-primary" href="{{ page.root }}" role="button">{{ 'MAIN_PAGE'|trans|upper }}</a>
+	</div>
+	{% endif %}
+</div>

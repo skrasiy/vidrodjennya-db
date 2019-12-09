@@ -1,0 +1,32 @@
+<div class="container-fluid list">
+	<h2 class="text-secondary text-center">{% trans 'EVENT_LOG' %}</h2>
+	<table class="table table-striped table-sm">
+		<thead>
+			<tr>
+				<th class="nobr">{% trans 'TIMESTAMP' %}</th>
+				<th class="nobr">{% trans 'USER' %}</th>
+				<th>{% trans 'EVENT_ACTION' %}</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for event in events %}
+			<tr>
+				<td class="nobr"><time class="timeago" datetime="{{ event.timestamp }}" >{{ event.date|date("d.m.Y H:m:s") }}</time></td>
+				<td class="nobr" title="{{ event.user_id ~ ' (' ~ event.ip  ~ ')'  ~ ', ' ~ 'ACCESS_LEVEL'|trans|lower ~ ': ' ~ event.user_lvl }}">{{event.user_name}}</td>
+				<td{{(event.error)?' class="warning-msg"'}}>{{ event.action }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	<div class="text-center">
+		<a class="btn btn-primary" href="{{ page.root }}" role="button">{{ 'MAIN_PAGE'|trans|upper }}</a>
+	</div>
+</div>
+
+<script src="{{ page.root }}static/js/jquery.timeago.js"></script>
+<script src="{{ page.root }}locale/{{ page.locale }}/timeago.js"></script>
+<script>
+	$(document).ready(function() {
+		$('time.timeago').timeago();
+	} );
+</script>

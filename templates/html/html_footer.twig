@@ -1,0 +1,11 @@
+	<script src="{{ page.root }}static/js/script.js{% if js_ver %}?ver={{js_ver}}{% endif %}"></script>
+	<footer class="fixed-bottom bg-dark text-white text-center">
+		© {% trans 'SCRIPT_AUTHOR' %}, 2019
+		&nbsp;&nbsp;–&nbsp;&nbsp; 
+		{% trans 'SCRIPT_VERSION' %}: {{ cfg.version }} ({{ cfg.commit_date }})
+		&nbsp;&nbsp;–&nbsp;&nbsp; 
+		{% trans 'SCRIPT_EXEC_TIME' %}: {{ exec_time }}с. ({% trans 'SCRIPT_DB_QUERIES' %}: {{ queries }})
+		{% if cfg.debug.enable %}<span class="debug-msg">{% trans 'SCRIPT_DEBUG_NOTE' %}</span>{% endif %}
+	</footer>
+</body>
+</html>

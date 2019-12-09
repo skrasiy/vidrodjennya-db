@@ -1,0 +1,99 @@
+{% set current = ' active' %}
+<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light" id="navbar">
+	<span class="navbar-brand" title="{% trans 'APP_NAME' %} {% trans 'COMPANY_NAME' %}">
+	{% trans 'APP_NAME' %} {% trans 'COMPANY_NAME_SHORT' %}
+	</span>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="{{ page.root }}"><i class="far fa-home"></i> {% trans 'MAIN_PAGE' %}</a>
+			</li>
+
+			{% if page.user.accessLevel >= config.access.admin %}
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdmin" role="button" data-toggle="dropdown">{% trans 'NAV_MENU_ADMIN' %}</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item{{(page.path.slice[1]=='register')?current:''}}" href="{{page.root ~ 'admin/register'}}">
+						<i class="fas fa-fw fa-user-tie"></i>
+						{% trans 'NEW_USER' %}
+					</a>
+					<a class="dropdown-item{{(page.path.slice[1]=='eventlog')?current:''}}" href="{{page.root ~ 'admin/eventlog'}}">
+						<i class="fas fa-fw fa-scroll"></i>
+						{% trans 'EVENT_LOG' %}
+					</a>
+				</div>
+			</li>
+			{% endif %}
+
+			{% if page.user.logged %}
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">{% trans 'NAV_MENU_DROPDOWN' %}</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item{{(page.path.slice[0]=='search')?current:''}}" href="{{page.root ~ 'search'}}">
+						<i class="fas fa-fw fa-search"></i>
+						{% trans 'SEARCH' %}
+					</a>
+					<a class="dropdown-item{{(page.path.slice[0]=='list')?current:''}}" href="{{page.root ~ 'list'}}">
+						<i class="fas fa-fw fa-list"></i>
+						{% trans 'LIST' %}
+					</a>
+					<a class="dropdown-item{{(page.path.slice[0]=='docs')?current:''}}" href="{{page.root ~ 'docs'}}">
+						<i class="fas fa-fw fa-file-word"></i>
+						{% trans 'DOCS' %}
+					</a>
+					<a class="dropdown-item{{(page.path.slice[0]=='courses')?current:''}}" href="{{page.root ~ 'courses'}}">
+						<i class="fas fa-fw fa-calendar-plus"></i>
+						{% trans 'EDIT_COURSES' %}
+					</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item{{(page.path.slice[0]=='new')?current:''}}" href="{{page.root ~ 'new'}}">
+						<i class="fas fa-fw fa-user-plus"></i>
+						{% trans 'NEW_CLIENT' %}
+					</a>
+				</div>
+			</li>
+			{% endif %}
+			
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownLang" role="button" data-toggle="dropdown">{% trans 'LANGUAGE' %}</a>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" onClick="setLanguage('ru_RU', '{{ page.root }}')">
+						<img src="{{ page.root ~ 'static/img/flags/ru.png'}}">&nbsp;Русский
+					</a>
+					<a class="dropdown-item" onClick="setLanguage('uk_UA', '{{ page.root }}')">
+						<img src="{{ page.root ~ 'static/img/flags/ua.png'}}">&nbsp;Українська
+					</a>
+				</div>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="{{ page.root ~ 'static/files/manual.pdf' }}" download="{% trans 'APP_NAME' %} {% trans 'COMPANY_NAME_SHORT' %} – {% trans 'HELP' %}.pdf" ><i class="far fa-question-circle"></i> {% trans 'HELP' %}</a>
+			</li>
+		</ul>
+		
+		<ul class="navbar-nav ml-auto user">
+			<li class="nav-item active">
+				<span class="nobr">
+					{% if page.user.logged %}
+					<span class="navbar-text" title="{% trans 'ACCESS_LEVEL' %}: {{ page.user.accessLevel }}">
+						{% if page.user.avatar %}
+						<img src="{{ page.root }}{{ page.user.avatar }}" class="avatar">
+						{% else %}
+						<span class="avatar text-avatar">
+							{{ page.user.displayName|first|upper }}
+						</span>
+						{% endif %}
+						{{ page.user.displayName }}
+					</span>
+					<a href="{{ page.root ~ 'logout' }}">{% trans 'LOGOUT' %}</a>
+					{% else %}
+					<a href="{{ page.root ~ 'login' }}">{% trans 'LOGIN' %}</a>
+					{% endif %}
+				</span>
+			</li>
+		</ul>
+	</div>
+</nav>

@@ -1,0 +1,13 @@
+<div class="container interface">
+	{% if result %}
+	<div class="alert alert-success" role="alert"><i class="fas fa-check-circle"></i> {% trans 'DELETE_MSG_SUCCESS' %}</div>
+	<div class="text-center">
+		<a class="btn btn-primary" href="{{ page.root }}" role="button">{{ 'MAIN_PAGE'|trans|upper }}</a>
+	</div>
+	{% else %}
+	<div class="alert alert-warning" role="alert"><i class="fas fa-exclamation-circle"></i> {% trans 'DELETE_MSG_FAIL' %}</div>
+	<div class="text-center">
+		<a class="btn btn-primary" href="{{ page.root }}" role="button">{{ 'MAIN_PAGE'|trans|upper }}</a>
+	</div>
+	{% endif %}
+</div>

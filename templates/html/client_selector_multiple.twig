@@ -1,0 +1,97 @@
+<div class="container interface">
+	<h2 class="text-secondary">{% trans 'SELECT_MULTIPLE' %}</h2>
+	{% set type = page.path['slice'][1] %}
+	<h4 class="text-center text-secondary">
+		{% if type == 'longterm-plan' %}
+			{{ 'DOCS_LONG_TERM_PLAN_DESCRIPTION'|trans }}
+		{% endif %}
+	</h4>
+	<hr>
+	<div class="row justify-content-md-center">
+
+		<div class="col-sm-12 col-md-12 col-lg-6">
+			<form action="{{ page.self }}" method="POST" enctype="multipart/form-data">
+				<input type="hidden" name="export" value="true">
+				<input type="hidden" name="doctype" value="{{ type }}">
+				{% if type == 'longterm-plan' %}
+				<div class="form-row mb-2">
+					<div class="col-sm-12 col-md-12 col-lg-8"">
+						<label for="month"><strong>{% trans 'MONTH' %}</strong></label>
+						<select name="month" class="form-control" id="month">
+							{% for i in 1..12 %}
+							{% set monthName = 'MONTH'~i %}
+							<option value="{{i}}"{{(i == thisMonth)?' selected'}}>{{ monthName|trans}} {{thisYear}}</option>
+							{% endfor %}
+						</select>
+					</div>
+				</div>
+				{% endif %}
+				<div class="form-row">
+					<div class="col-sm-12 col-md-12 col-lg-8">
+						<div class="form-group">
+							<label><strong>{% trans 'SELECT_ALPHABET' %}</strong></label>
+							<select class="form-control" name="files[]" size="10" id="client-selector" multiple>
+							{% for item in grouped %}
+								{% if item.optgroup %}
+								<option disabled class="optgroup" data-group="{{ item.name }}">{{ item.name }}</option>
+								{% else %}
+								<option value="{{ item.file }}">{{ item.name }}</option>
+								{% endif %}
+							{% endfor %}
+							</select>
+							<small class="pt-2"><code>* – {% trans 'SELECT_MULTIPLE_HINT' %}</code> <span class="badge badge-dark">Ctrl</span></small>
+						</div>
+					</div>
+					<div class="col-sm-12 col-md-12 col-lg-4">
+						<label class="text-secondary">{% trans 'ALPHA_NAV_HINT' %}</label>
+						<br>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="А" onclick="alphaScroll(this.dataset.value)">А</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Б" onclick="alphaScroll(this.dataset.value)">Б</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="В" onclick="alphaScroll(this.dataset.value)">В</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Г" onclick="alphaScroll(this.dataset.value)">Г</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Ґ" onclick="alphaScroll(this.dataset.value)">Ґ</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Д" onclick="alphaScroll(this.dataset.value)">Д</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Е" onclick="alphaScroll(this.dataset.value)">Е</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Є" onclick="alphaScroll(this.dataset.value)">Є</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Ж" onclick="alphaScroll(this.dataset.value)">Ж</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="З" onclick="alphaScroll(this.dataset.value)">З</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="И" onclick="alphaScroll(this.dataset.value)">И</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="І" onclick="alphaScroll(this.dataset.value)">І</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Ї" onclick="alphaScroll(this.dataset.value)">Ї</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Й" onclick="alphaScroll(this.dataset.value)">Й</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="К" onclick="alphaScroll(this.dataset.value)">К</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Л" onclick="alphaScroll(this.dataset.value)">Л</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="М" onclick="alphaScroll(this.dataset.value)">М</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Н" onclick="alphaScroll(this.dataset.value)">Н</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="О" onclick="alphaScroll(this.dataset.value)">О</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="П" onclick="alphaScroll(this.dataset.value)">П</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Р" onclick="alphaScroll(this.dataset.value)">Р</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="С" onclick="alphaScroll(this.dataset.value)">С</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Т" onclick="alphaScroll(this.dataset.value)">Т</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="У" onclick="alphaScroll(this.dataset.value)">У</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Ф" onclick="alphaScroll(this.dataset.value)">Ф</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Х" onclick="alphaScroll(this.dataset.value)">Х</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Ц" onclick="alphaScroll(this.dataset.value)">Ц</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Ч" onclick="alphaScroll(this.dataset.value)">Ч</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Ш" onclick="alphaScroll(this.dataset.value)">Ш</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Щ" onclick="alphaScroll(this.dataset.value)">Щ</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Ю" onclick="alphaScroll(this.dataset.value)">Ю</span>
+						<span class="alpha-nav btn btn-secondary btn-sm" data-value="Я" onclick="alphaScroll(this.dataset.value)">Я</span>
+					</div>
+				</div>
+				<div class="form-row text-center">
+					<div class="col">
+						<button type="submit" class="btn btn-primary">{{ 'BTN_SELECT'|trans|upper }}</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
+	<div class="row">
+		<div class="col text-center mt-4 pt-4">
+			<a class="btn btn-secondary btn-sm mr-2" href="{{ page.root ~ 'docs' }}" role="button">{{ 'BACK'|trans|upper }}</a>
+			<a class="btn btn-secondary btn-sm" href="{{ page.root }}" role="button">{{ 'MAIN_PAGE'|trans|upper }}</a>
+		</div>
+	</div>
+</div>

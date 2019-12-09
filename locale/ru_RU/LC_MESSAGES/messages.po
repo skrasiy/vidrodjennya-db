@@ -1,0 +1,1105 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Vidrodjennya\n"
+"POT-Creation-Date: 2019-12-02 16:09+0200\n"
+"PO-Revision-Date: 2019-12-02 16:09+0200\n"
+"Last-Translator: \n"
+"Language-Team: Inquisitor, <inquisitor@2ch.hk>\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2\n"
+"X-Poedit-Basepath: ../../../templates/html\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: MSG_STRINGS_POEDIT.twig:2
+msgid "QUERY_NAME"
+msgstr "Ф.И.О. содержит строку"
+
+#: MSG_STRINGS_POEDIT.twig:3
+msgid "QUERY_BIRTH"
+msgstr "рождения"
+
+#: MSG_STRINGS_POEDIT.twig:4
+msgid "QUERY_AGE"
+msgstr "полных лет"
+
+#: MSG_STRINGS_POEDIT.twig:5
+msgid "QUERY_DIAGNOSIS"
+msgstr "Диагноз содержит строку"
+
+#: MSG_STRINGS_POEDIT.twig:6
+msgid "QUERY_IPR"
+msgstr "окончания ИПР"
+
+#: MSG_STRINGS_POEDIT.twig:7
+msgid "QUERY_REGISTER"
+msgstr "зачисления"
+
+#: MSG_STRINGS_POEDIT.twig:8
+msgid "QUERY_DISMISS"
+msgstr "отчисления"
+
+#: MSG_STRINGS_POEDIT.twig:9
+msgid "QUERY_ADDRESS"
+msgstr "Адрес похож на"
+
+#: MSG_STRINGS_POEDIT.twig:10
+msgid "QUERY_COMMENT"
+msgstr "Примечания содержат строку"
+
+#: MSG_STRINGS_POEDIT.twig:11
+msgid "QUERY_CONTACTS"
+msgstr "Контактные данные содержат строку"
+
+#: MSG_STRINGS_POEDIT.twig:12
+msgid "QUERY_RNOKPP"
+msgstr "Регистрационный номер учётной карточки плательщика налогов"
+
+#: MSG_STRINGS_POEDIT.twig:13
+msgid "QUERY_MANUAL"
+msgstr "Добавленные к SQL-запросу условия"
+
+#: MSG_STRINGS_POEDIT.twig:14
+msgid "QUERY_IPR_CATEGORY"
+msgstr "Клиент имеет услуги ИПР из категории"
+
+#: MSG_STRINGS_POEDIT.twig:15
+msgid "DAY"
+msgstr "День"
+
+#: MSG_STRINGS_POEDIT.twig:16 client_selector_multiple.twig:19
+msgid "MONTH"
+msgstr "Месяц"
+
+#: MSG_STRINGS_POEDIT.twig:17
+msgid "YEAR"
+msgstr "Год"
+
+#: MSG_STRINGS_POEDIT.twig:18 cardview.twig:37 delete.twig:24
+msgid "STATUS_ATO_DESC"
+msgstr "Внутренне перемещённое лицо"
+
+#: MSG_STRINGS_POEDIT.twig:19 cardview.twig:37 delete.twig:24
+msgid "STATUS_VPO_DESC"
+msgstr "Ребёнок участника АТО"
+
+#: MSG_STRINGS_POEDIT.twig:20
+msgid "STATUS_CHAES_DESC"
+msgstr "Последствия аварии на ЧАЭС"
+
+#: MSG_STRINGS_POEDIT.twig:21 edit.twig:59 edit.twig:73 search.twig:181
+msgid "NO"
+msgstr "Нет"
+
+#: MSG_STRINGS_POEDIT.twig:22 edit.twig:58 edit.twig:74 search.twig:148
+#: search.twig:180
+msgid "YES"
+msgstr "Да"
+
+#: MSG_STRINGS_POEDIT.twig:23
+msgid "INACTIVE"
+msgstr "Отчислен"
+
+#: MSG_STRINGS_POEDIT.twig:24
+msgid "FILENAME_EXPORT_SEARCH"
+msgstr "Результаты поиска от"
+
+#: MSG_STRINGS_POEDIT.twig:25
+msgid "FILENAME_EXPORT_LIST"
+msgstr "Список клиентов"
+
+#: MSG_STRINGS_POEDIT.twig:26
+msgid "TITLE_NOACCESS"
+msgstr "❗ Недостаточно прав доступа"
+
+#: MSG_STRINGS_POEDIT.twig:27
+msgid "MSG_WARNING_NO_CATEGORY"
+msgstr "Не выбрана категория диагноза"
+
+#: MSG_STRINGS_POEDIT.twig:28
+msgid "MSG_WARNING_WRONG_STATUS"
+msgstr "Возможно, неверно указан статус инвалидности или группа диагноза"
+
+#: MSG_STRINGS_POEDIT.twig:29
+msgid "MSG_WARNING_RISK_IPR"
+msgstr "Выбрана группа риска, но есть данные ИПР"
+
+#: MSG_STRINGS_POEDIT.twig:30
+msgid "MSG_WARNING_NO_SERVICES"
+msgstr "Не указано ни одной услуги в ИПР"
+
+#: MSG_STRINGS_POEDIT.twig:31
+msgid "MSG_WARNING_NO_PHONE"
+msgstr "Не указан контактный телефон"
+
+#: MSG_STRINGS_POEDIT.twig:32
+msgid "MONTH1"
+msgstr "Январь"
+
+#: MSG_STRINGS_POEDIT.twig:33
+msgid "MONTH2"
+msgstr "Февраль"
+
+#: MSG_STRINGS_POEDIT.twig:34
+msgid "MONTH3"
+msgstr "Март"
+
+#: MSG_STRINGS_POEDIT.twig:35
+msgid "MONTH4"
+msgstr "Апрель"
+
+#: MSG_STRINGS_POEDIT.twig:36
+msgid "MONTH5"
+msgstr "Май"
+
+#: MSG_STRINGS_POEDIT.twig:37
+msgid "MONTH6"
+msgstr "Июнь"
+
+#: MSG_STRINGS_POEDIT.twig:38
+msgid "MONTH7"
+msgstr "Июль"
+
+#: MSG_STRINGS_POEDIT.twig:39
+msgid "MONTH8"
+msgstr "Август"
+
+#: MSG_STRINGS_POEDIT.twig:40
+msgid "MONTH9"
+msgstr "Сентябрь"
+
+#: MSG_STRINGS_POEDIT.twig:41
+msgid "MONTH10"
+msgstr "Октябрь"
+
+#: MSG_STRINGS_POEDIT.twig:42
+msgid "MONTH11"
+msgstr "Ноябрь"
+
+#: MSG_STRINGS_POEDIT.twig:43
+msgid "MONTH12"
+msgstr "Декабрь"
+
+#: MSG_STRINGS_POEDIT.twig:44
+msgid "RISK_GROUP"
+msgstr "Группа риска"
+
+#: cardview.twig:6
+msgid "CLIENT_ACTIONS"
+msgstr "Действия с клиентом"
+
+#: cardview.twig:7 courses.twig:89 courses_all.twig:85
+msgid "EDIT"
+msgstr "Редактировать"
+
+#: cardview.twig:8 navbar.twig:50
+msgid "EDIT_COURSES"
+msgstr "Курсы"
+
+#: cardview.twig:10 courses.twig:92 courses_all.twig:88 delete.twig:43
+msgid "DELETE"
+msgstr "Удалить"
+
+#: cardview.twig:19 delete.twig:7
+msgid "TITLE_CARDVIEW"
+msgstr "Карточка клиента"
+
+#: cardview.twig:19 client_selector.twig:22 course_edit.twig:4 courses.twig:4
+#: delete.twig:7 edit.twig:8 edit.twig:32 search.twig:32
+msgid "FILE_NO"
+msgstr "№ дела"
+
+#: cardview.twig:26 delete.twig:14 edit.twig:28 list_diagnosis_results.twig:102
+#: list_ordinary_results.twig:84 list_services_results.twig:72
+#: list_special_results.twig:52 search.twig:224 search_results.twig:58
+msgid "RNOKPP"
+msgstr "Идент. код"
+
+#: cardview.twig:28 delete.twig:15 edit.twig:39 list_diagnosis_results.twig:79
+#: list_ordinary_results.twig:61 list_services_results.twig:49
+#: list_special_results.twig:29 search.twig:20 search_results.twig:35
+msgid "BIRTHDATE"
+msgstr "Дата рождения"
+
+#: cardview.twig:28 delete.twig:15 list_diagnosis_results.twig:104
+#: list_ordinary_results.twig:86 list_services_results.twig:74
+#: list_special_results.twig:54 search.twig:29 search_results.twig:60
+msgid "AGE_DESC"
+msgstr "Лет"
+
+#: cardview.twig:29 delete.twig:16 edit.twig:259 list_diagnosis_results.twig:84
+#: list_ordinary_results.twig:66 list_services_results.twig:54
+#: list_special_results.twig:34 search.twig:212 search_results.twig:40
+msgid "ADDRESS"
+msgstr "Адрес"
+
+#: cardview.twig:30 delete.twig:17 edit.twig:242
+msgid "REGION"
+msgstr "Область"
+
+#: cardview.twig:31 delete.twig:18
+msgid "DISTRICT_SHORT"
+msgstr "р-н."
+
+#: cardview.twig:35 cardview.twig:40 delete.twig:22
+#: list_diagnosis_results.twig:85 list_ordinary_results.twig:67
+#: list_services_results.twig:55 list_special_results.twig:35 search.twig:216
+#: search_results.twig:41
+msgid "CONTACTS"
+msgstr "Контакты"
+
+#: cardview.twig:37 delete.twig:24 edit.twig:43 search.twig:167
+msgid "SPECIAL_STATUS"
+msgstr "Статус"
+
+#: cardview.twig:41 delete.twig:27 edit.twig:81 list_diagnosis_results.twig:80
+#: list_ordinary_results.twig:62 list_services_results.twig:50
+#: list_special_results.twig:30 search.twig:39 search_results.twig:36
+msgid "DIAGNOSIS"
+msgstr "Диагноз"
+
+#: cardview.twig:41 delete.twig:27 edit.twig:105 list_diagnosis_results.twig:81
+#: list_ordinary_results.twig:63 list_services_results.twig:51
+#: list_special_results.twig:31 search.twig:52 search_results.twig:37
+msgid "DIAGNOSIS_CATEGORY"
+msgstr "Категория"
+
+#: cardview.twig:43 delete.twig:29 edit.twig:88 list_diagnosis_results.twig:80
+#: list_ordinary_results.twig:62 list_services_results.twig:50
+#: list_special_results.twig:30 search.twig:44 search_results.twig:36
+msgid "ICD10_CODE"
+msgstr "Код МКБ-10"
+
+#: cardview.twig:46 delete.twig:32 edit.twig:96 list_diagnosis_results.twig:83
+#: list_ordinary_results.twig:65 list_services_results.twig:53
+#: list_special_results.twig:33 search.twig:61 search_results.twig:39
+msgid "DISABLED_GROUP"
+msgstr "Инвалидность"
+
+#: cardview.twig:48 delete.twig:34 edit.twig:63 search.twig:193
+msgid "REGISTER_DATE"
+msgstr "Дата зачисления"
+
+#: cardview.twig:50 delete.twig:36 edit.twig:67 search.twig:201
+msgid "DISMISS_DATE"
+msgstr "Дата отчисления"
+
+#: cardview.twig:70
+msgid "MSG_NOGEO"
+msgstr "Не удалось отобразить карту"
+
+#: cardview.twig:77 cardview.twig:147 course_edit.twig:33 courses.twig:48
+#: courses.twig:71 courses_all.twig:67 edit.twig:272
+#: list_diagnosis_results.twig:86 list_ordinary_results.twig:68
+#: list_services_results.twig:56 list_special_results.twig:36 search.twig:220
+#: search_results.twig:42
+msgid "COMMENT"
+msgstr "Примечания"
+
+#: cardview.twig:86 cardview.twig:145 course_edit.twig:23 courses.twig:38
+#: courses.twig:69 courses_all.twig:65 edit.twig:129
+#: list_diagnosis_results.twig:82 list_ordinary_results.twig:64
+#: list_services_results.twig:52 list_special_results.twig:32 search.twig:73
+#: search_results.twig:38
+msgid "IPR_SERVICES"
+msgstr "Услуги ИПР"
+
+#: cardview.twig:91 edit.twig:133 list_diagnosis_results.twig:110
+#: list_ordinary_results.twig:92 list_services_results.twig:80
+#: list_special_results.twig:60 search.twig:80 search_results.twig:66
+msgid "IPR_CAT_PSYCHO"
+msgstr "Психо-педагогическая"
+
+#: cardview.twig:93 edit.twig:140 search.twig:85
+msgid "IPR_SVC_PCONS"
+msgstr "Консультация психолога"
+
+#: cardview.twig:96 edit.twig:160 search.twig:89
+msgid "IPR_SVC_PPD"
+msgstr "Психолого-педагогическая диагностика"
+
+#: cardview.twig:99 edit.twig:169 search.twig:97
+msgid "IPR_SVC_PPK"
+msgstr "Психолого-педагогическая коррекция"
+
+#: cardview.twig:103 edit.twig:177 list_diagnosis_results.twig:118
+#: list_ordinary_results.twig:100 list_services_results.twig:88
+#: list_special_results.twig:68 search.twig:104 search_results.twig:74
+msgid "IPR_CAT_PHYS"
+msgstr "Физическая"
+
+#: cardview.twig:105 edit.twig:184 search.twig:109
+msgid "IPR_SVC_FCONS"
+msgstr "Консультация физреабилитолога"
+
+#: cardview.twig:108 edit.twig:204 search.twig:113
+msgid "IPR_SVC_LM"
+msgstr "Лечебный массаж"
+
+#: cardview.twig:111 edit.twig:193 search.twig:117
+msgid "IPR_SVC_LFK"
+msgstr "Лечебная физкультура"
+
+#: cardview.twig:115 edit.twig:212 list_diagnosis_results.twig:126
+#: list_ordinary_results.twig:108 list_services_results.twig:96
+#: list_special_results.twig:76 search.twig:124 search_results.twig:82
+msgid "IPR_CAT_SOCIAL"
+msgstr "Социальная"
+
+#: cardview.twig:117 edit.twig:219 search.twig:129
+msgid "IPR_SVC_NOSN"
+msgstr "Обучение основным соц. навыкам"
+
+#: cardview.twig:120 edit.twig:230 search.twig:133
+msgid "IPR_SVC_SPP"
+msgstr "Социально-педагогический патронат"
+
+#: cardview.twig:124 edit.twig:120 list_diagnosis_results.twig:82
+#: list_diagnosis_results.twig:133 list_ordinary_results.twig:64
+#: list_ordinary_results.twig:115 list_services_results.twig:52
+#: list_services_results.twig:103 list_special_results.twig:32
+#: list_special_results.twig:83 search.twig:185 search_results.twig:38
+#: search_results.twig:88
+msgid "IPR_DATE"
+msgstr "ИПР действительна до"
+
+#: cardview.twig:136 main.twig:11
+msgid "COURSES"
+msgstr "Курсы реабилитации"
+
+#: cardview.twig:142 course_edit.twig:15 courses.twig:30 courses.twig:66
+#: courses_all.twig:62 search.twig:152
+msgid "COURSE_START"
+msgstr "Начало курса"
+
+#: cardview.twig:143 course_edit.twig:19 courses.twig:34 courses.twig:67
+#: courses_all.twig:63 search.twig:156
+msgid "COURSE_END"
+msgstr "Конец курса"
+
+#: cardview.twig:144 courses.twig:68 courses_all.twig:64
+msgid "DURATION"
+msgstr "Продолжительность"
+
+#: cardview.twig:146 course_edit.twig:27 courses.twig:42 courses.twig:70
+#: courses_all.twig:66
+msgid "ADDITIONAL_SERVICES"
+msgstr "Дополнительные услуги"
+
+#: cardview.twig:156 courses.twig:82 courses_all.twig:78
+msgid "DAYS"
+msgstr "дней"
+
+#: cardview.twig:171
+msgid "CARDVIEW_MSG_NOID"
+msgstr "Клиент не найден"
+
+#: cardview.twig:173 client_selector.twig:117 client_selector_multiple.twig:94
+#: delete.twig:50 delete_status.twig:5 delete_status.twig:10 edit.twig:283
+#: edit_status.twig:6 edit_status.twig:12 edit_status.twig:20 eventlog.twig:22
+#: month_selector.twig:32 navbar.twig:13 noaccess.twig:9
+msgid "MAIN_PAGE"
+msgstr "На главную"
+
+#: client_selector.twig:2
+msgid "SELECT_ONE"
+msgstr "Выберите клиента"
+
+#: client_selector.twig:6 docs.twig:12
+msgid "ORDER"
+msgstr "При­каз"
+
+#: client_selector.twig:6 client_selector.twig:8 docs.twig:13 docs.twig:28
+msgid "DOCS_REGISTER_DESCRIPTION"
+msgstr "О за­чис­ле­нии в ре­а­би­ли­та­ци­он­ное уч­реж­де­ние"
+
+#: client_selector.twig:8 docs.twig:27
+msgid "NOTIFY"
+msgstr "У­ве­дом­ле­ни­е"
+
+#: client_selector.twig:21
+msgid "SELECT_MANUAL"
+msgstr "Введите вручную"
+
+#: client_selector.twig:28 client_selector.twig:107
+#: client_selector_multiple.twig:84 docs.twig:14 docs.twig:29 docs.twig:44
+#: docs.twig:59 docs.twig:74 month_selector.twig:23
+msgid "BTN_SELECT"
+msgstr "Выбрать"
+
+#: client_selector.twig:39
+msgid "SELECT_RECENT"
+msgstr "Выберите из недавних"
+
+#: client_selector.twig:56 client_selector_multiple.twig:32
+msgid "SELECT_ALPHABET"
+msgstr "Выберите по имени"
+
+#: client_selector.twig:69 client_selector_multiple.twig:46 courses_all.twig:17
+msgid "ALPHA_NAV_HINT"
+msgstr "Быстрая навигация"
+
+#: client_selector.twig:116 client_selector_multiple.twig:93 courses.twig:114
+#: month_selector.twig:31
+msgid "BACK"
+msgstr "Вернуться"
+
+#: client_selector_multiple.twig:2
+msgid "SELECT_MULTIPLE"
+msgstr "Выберите клиентов"
+
+#: client_selector_multiple.twig:6 docs.twig:58
+msgid "DOCS_LONG_TERM_PLAN_DESCRIPTION"
+msgstr "Пер­спе­ктив­ний план пре­дос­та­вле­ния услуг кли­ен­там"
+
+#: client_selector_multiple.twig:42
+msgid "SELECT_MULTIPLE_HINT"
+msgstr "Для выбора нескольких клиентов, выбирайте их с зажатой клавишей"
+
+#: course_edit.twig:2
+msgid "TITLE_EDIT_CLIENT_COURSE"
+msgstr "Редактирование курса реабилитации"
+
+#: course_edit.twig:4
+msgid "COURSE"
+msgstr "курс"
+
+#: course_edit.twig:37 edit.twig:276
+msgid "SAVE"
+msgstr "Сохранить"
+
+#: course_edit.twig:46
+msgid "MSG_COURSE_NOT_FOUND"
+msgstr "Выбранный курс не найден"
+
+#: courses.twig:2 courses_all.twig:2
+msgid "TITLE_EDIT_CLIENT_COURSES"
+msgstr "Курсы реабилитации"
+
+#: courses.twig:9
+msgid "MSG_VALUES_ERROR"
+msgstr ""
+"Проверьте введённые данные, неправильный формат даты или конец курса меньше "
+"чем начало курса"
+
+#: courses.twig:14
+msgid "MSG_DATABASE_ERROR"
+msgstr "Ошибка при внесении данных, свяжитесь с системным администратором"
+
+#: courses.twig:19 edit_status.twig:15
+msgid "EDIT_MSG_SUCCESS"
+msgstr "Данные успешно внесены в базу данных"
+
+#: courses.twig:24
+msgid "COURSE_NEW"
+msgstr "Добавить курс"
+
+#: courses.twig:52
+msgid "ADD"
+msgstr "Добавить"
+
+#: courses.twig:61
+msgid "COURSE_EXISTED"
+msgstr "Существующие курсы"
+
+#: courses.twig:92 courses_all.twig:88 delete.twig:41
+msgid "DELETE_CONFIRM"
+msgstr "Вы подтверждаете удаление записи?"
+
+#: courses.twig:105
+msgid "NO_DATA"
+msgstr "Данных не найдено"
+
+#: courses.twig:113
+msgid "BTN_CLIENT_CARD"
+msgstr "Карточка клиента"
+
+#: courses_all.twig:56 search.twig:145
+msgid "COURSE_ACTIVE"
+msgstr "Активный курс"
+
+#: courses_all.twig:61 register.twig:15 search.twig:8
+msgid "NAME"
+msgstr "Имя"
+
+#: courses_all.twig:101
+msgid "MSG_NO_ACTIVE_COURSE"
+msgstr "Нет активных курсов"
+
+#: delete.twig:3
+msgid "TITLE_DELETE_CLIENT"
+msgstr "Удалить запись о клиенте"
+
+#: delete.twig:44
+msgid "CANCEL"
+msgstr "Отменить"
+
+#: delete.twig:48 edit.twig:281
+msgid "MSG_NOFILE"
+msgstr "Клиент не найден"
+
+#: delete_status.twig:3
+msgid "DELETE_MSG_SUCCESS"
+msgstr "Запись успешно удалена"
+
+#: delete_status.twig:8
+msgid "DELETE_MSG_FAIL"
+msgstr "Не получилось удалить запись"
+
+#: docs.twig:2
+msgid "SELECT_DOC_TYPE"
+msgstr "Выберите документ"
+
+#: docs.twig:42 month_selector.twig:6
+msgid "PROTOCOL"
+msgstr "Протокол"
+
+#: docs.twig:43 month_selector.twig:6
+msgid "DOCS_ADMISSION_COMMITTEE_DESCRIPTION"
+msgstr "За­се­да­ния при­ём­ной ко­мис­сии"
+
+#: docs.twig:57
+msgid "PLAN"
+msgstr "План"
+
+#: docs.twig:72
+msgid "TEMPLATE"
+msgstr "Бланк"
+
+#: docs.twig:73
+msgid "DOCS_SOCIAL_YEAR_PLAN_DESCRIPTION"
+msgstr "Учёт со­ци­аль­ных ус­луг го­до­вой"
+
+#: edit.twig:3
+msgid "TITLE_NEW_CLIENT"
+msgstr "Новый клиент"
+
+#: edit.twig:5
+msgid "TITLE_EDIT_CLIENT"
+msgstr "Редактирование клиента"
+
+#: edit.twig:17 list_diagnosis_results.twig:78 list_ordinary_results.twig:60
+#: list_services_results.twig:48 list_special_results.twig:28 search.twig:9
+#: search_results.twig:34
+msgid "NAME_DESC"
+msgstr "Ф.И.О. клиента"
+
+#: edit.twig:21 search.twig:12
+msgid "GENDER"
+msgstr "Пол"
+
+#: edit.twig:23 search.twig:15
+msgid "GENDER_MALE"
+msgstr "мужской"
+
+#: edit.twig:24 search.twig:16
+msgid "GENDER_FEMALE"
+msgstr "женский"
+
+#: edit.twig:40 edit.twig:64 edit.twig:68 edit.twig:117 edit.twig:121
+#: search.twig:24 search.twig:189 search.twig:197 search.twig:205
+msgid "DATE_YEAR"
+msgstr "ГГГГ"
+
+#: edit.twig:40 edit.twig:64 edit.twig:68 edit.twig:117 edit.twig:121
+#: search.twig:23 search.twig:188 search.twig:196 search.twig:204
+msgid "DATE_MONTH"
+msgstr "ММ"
+
+#: edit.twig:40 edit.twig:64 edit.twig:68 edit.twig:117 edit.twig:121
+#: search.twig:22 search.twig:187 search.twig:195 search.twig:203
+msgid "DATE_DAY"
+msgstr "ДД"
+
+#: edit.twig:47 search.twig:170
+msgid "STATUS_ATO"
+msgstr "Переселенец"
+
+#: edit.twig:47
+msgid "STATUS_ATO_SHORT"
+msgstr "АТО"
+
+#: edit.twig:51 search.twig:174
+msgid "STATUS_VPO"
+msgstr "Ребёнок участника АТО"
+
+#: edit.twig:51
+msgid "STATUS_VPO_SHORT"
+msgstr "ВПЛ"
+
+#: edit.twig:56 search.twig:178
+msgid "ACTIVE"
+msgstr "Зачислен"
+
+#: edit.twig:71
+msgid "INCOMPLETE"
+msgstr "Недозаполнено"
+
+#: edit.twig:90 search.twig:46
+msgid "ICD10_CODE_HINT"
+msgstr "Нажмите, чтобы открыть справочник кодов МКБ-10"
+
+#: edit.twig:98 edit.twig:107 edit.twig:244 search.twig:14 search.twig:54
+#: search.twig:63 search.twig:147
+msgid "SELECT"
+msgstr "Выберите"
+
+#: edit.twig:116
+msgid "IPR_STARTED"
+msgstr "ИПР выдана"
+
+#: edit.twig:139 list_diagnosis_results.twig:111 list_ordinary_results.twig:93
+#: list_services_results.twig:81 list_special_results.twig:61 search.twig:85
+#: search_results.twig:67
+msgid "IPR_SVC_PCONS_SHORT"
+msgstr "ПКонс"
+
+#: edit.twig:148 search.twig:93
+msgid "IPR_SVC_PPP_SHORT"
+msgstr "ППП"
+
+#: edit.twig:149 search.twig:93
+msgid "IPR_SVC_PPP"
+msgstr "Психолого-педагогический патронат"
+
+#: edit.twig:159 list_diagnosis_results.twig:112 list_ordinary_results.twig:94
+#: list_services_results.twig:82 list_special_results.twig:62 search.twig:89
+#: search_results.twig:68
+msgid "IPR_SVC_PPD_SHORT"
+msgstr "ППД"
+
+#: edit.twig:168 list_diagnosis_results.twig:113 list_ordinary_results.twig:95
+#: list_services_results.twig:83 list_special_results.twig:63 search.twig:97
+#: search_results.twig:69
+msgid "IPR_SVC_PPK_SHORT"
+msgstr "ППК"
+
+#: edit.twig:183 list_diagnosis_results.twig:119 list_ordinary_results.twig:101
+#: list_services_results.twig:89 list_special_results.twig:69 search.twig:109
+#: search_results.twig:75
+msgid "IPR_SVC_FCONS_SHORT"
+msgstr "ФКонс"
+
+#: edit.twig:192 list_diagnosis_results.twig:121 list_ordinary_results.twig:103
+#: list_services_results.twig:91 list_special_results.twig:71 search.twig:117
+#: search_results.twig:77
+msgid "IPR_SVC_LFK_SHORT"
+msgstr "ЛФК"
+
+#: edit.twig:203 list_diagnosis_results.twig:120 list_ordinary_results.twig:102
+#: list_services_results.twig:90 list_special_results.twig:70 search.twig:113
+#: search_results.twig:76
+msgid "IPR_SVC_LM_SHORT"
+msgstr "ЛМ"
+
+#: edit.twig:218 list_diagnosis_results.twig:127 list_ordinary_results.twig:109
+#: list_services_results.twig:97 list_special_results.twig:77 search.twig:129
+#: search_results.twig:83
+msgid "IPR_SVC_NOSN_SHORT"
+msgstr "НОСН"
+
+#: edit.twig:229 list_diagnosis_results.twig:128 list_ordinary_results.twig:110
+#: list_services_results.twig:98 list_special_results.twig:78 search.twig:133
+#: search_results.twig:84
+msgid "IPR_SVC_SPP_SHORT"
+msgstr "СПП"
+
+#: edit.twig:251
+msgid "DISTRICT"
+msgstr "Район"
+
+#: edit.twig:255
+msgid "CITY"
+msgstr "Город"
+
+#: edit.twig:265 search.twig:217
+msgid "CONTACTS_DESC"
+msgstr "Родители, телефон"
+
+#: edit.twig:276 search.twig:245
+msgid "WAIT_BTN"
+msgstr "Ожидайте..."
+
+#: edit.twig:276 search.twig:245
+msgid "WAIT_MSG"
+msgstr "Идёт загрузка, ожидайте..."
+
+#: edit_status.twig:3
+msgid "EDIT_MSG_NO_CHANGES"
+msgstr "Не внесено никаких изменений"
+
+#: edit_status.twig:5 edit_status.twig:11
+msgid "EDIT_BTN_AGAIN"
+msgstr "Редактировать снова"
+
+#: edit_status.twig:9
+msgid "EDIT_MSG_BAD_DATA"
+msgstr ""
+"Ошибка при внесении информации, внимательно проверьте введённые данные или "
+"свяжитесь с системным администратором"
+
+#: edit_status.twig:18
+msgid "EDIT_BTN_DOCS"
+msgstr "Приказ о зачислении"
+
+#: eventlog.twig:2 navbar.twig:26
+msgid "EVENT_LOG"
+msgstr "Журнал действий"
+
+#: eventlog.twig:6
+msgid "TIMESTAMP"
+msgstr "Дата и время"
+
+#: eventlog.twig:7
+msgid "USER"
+msgstr "Пользователь"
+
+#: eventlog.twig:8
+msgid "EVENT_ACTION"
+msgstr "Событие"
+
+#: eventlog.twig:15 navbar.twig:81 noaccess.twig:6 noaccess.twig:7
+#: register.twig:19
+msgid "ACCESS_LEVEL"
+msgstr "Уровень доступа"
+
+#: html_footer.twig:3
+msgid "SCRIPT_AUTHOR"
+msgstr "Красий Станислав"
+
+#: html_footer.twig:5
+msgid "SCRIPT_VERSION"
+msgstr "версия интерфейса"
+
+#: html_footer.twig:7
+msgid "SCRIPT_EXEC_TIME"
+msgstr "время выполнения"
+
+#: html_footer.twig:7
+msgid "SCRIPT_DB_QUERIES"
+msgstr "запросов к БД"
+
+#: html_footer.twig:8
+msgid "SCRIPT_DEBUG_NOTE"
+msgstr "РЕЖИМ ОТЛАДКИ АКТИВЕН"
+
+#: html_header.twig:5 navbar.twig:3 navbar.twig:4 navbar.twig:73
+msgid "APP_NAME"
+msgstr "База данных"
+
+#: html_header.twig:5 list_diagnosis_results.twig:5
+#: list_ordinary_results.twig:5 list_services_results.twig:5
+#: list_special_results.twig:5 navbar.twig:3
+msgid "COMPANY_NAME"
+msgstr "КУ ЛОЦСРДИ «Відродження»"
+
+#: html_header.twig:20
+msgid "DEBUG_WARNING"
+msgstr ""
+"Внимание! Вы подключены к <strong>ТЕСТОВОЙ</strong> базе данных: внесённые "
+"здесь изменения не затронут основную базу"
+
+#: list.twig:2 main.twig:8 navbar.twig:42
+msgid "LIST"
+msgstr "Списки"
+
+#: list.twig:6 list_diagnosis_results.twig:9 list_ordinary_results.twig:9
+#: list_services_results.twig:9
+msgid "LIST_SORT"
+msgstr "Порядок сортировки"
+
+#: list.twig:10
+msgid "LIST_ALPHABET"
+msgstr "Имя"
+
+#: list.twig:14
+msgid "LIST_FILE"
+msgstr "Номер дела"
+
+#: list.twig:18
+msgid "LIST_AGE"
+msgstr "Возраст"
+
+#: list.twig:22
+msgid "LIST_DIAGNOSIS"
+msgstr "Нозологии"
+
+#: list.twig:26
+msgid "LIST_ADDRESS"
+msgstr "Адрес"
+
+#: list.twig:30 list_services_results.twig:9
+msgid "LIST_SERVICES"
+msgstr "Услуги"
+
+#: list.twig:35
+msgid "LIST_SPECIAL"
+msgstr "Специальные списки"
+
+#: list.twig:38
+msgid "LIST_IPR_OUTDATED"
+msgstr "Просроченные ИПР"
+
+#: list.twig:42
+msgid "LIST_WARNING"
+msgstr "Предупреждения"
+
+#: list_diagnosis_results.twig:5 list_ordinary_results.twig:5
+#: list_services_results.twig:5 list_special_results.twig:5
+msgid "LIST_TITLE"
+msgstr "Список клиентов"
+
+#: list_diagnosis_results.twig:7 list_ordinary_results.twig:7
+#: list_services_results.twig:7 list_special_results.twig:7
+msgid "AS_OF"
+msgstr "по состоянию на"
+
+#: list_diagnosis_results.twig:11 list_ordinary_results.twig:11
+#: list_services_results.twig:11
+msgid "VIEWING_ENTRIES"
+msgstr "Показано записей"
+
+#: list_diagnosis_results.twig:11 list_ordinary_results.twig:11
+msgid "FROM"
+msgstr "из"
+
+#: list_diagnosis_results.twig:48 list_ordinary_results.twig:48
+#: list_services_results.twig:15 list_special_results.twig:15
+#: search_results.twig:20
+msgid "EXPORT_DESC"
+msgstr "Сохранить как документ Word"
+
+#: list_diagnosis_results.twig:50 list_ordinary_results.twig:50
+#: list_services_results.twig:17 list_special_results.twig:17
+#: search_results.twig:22
+msgid "EXPORT_BTN"
+msgstr "СОХРАНИТЬ<br>В ФАЙЛ"
+
+#: list_diagnosis_results.twig:72 list_services_results.twig:42
+msgid "NAV_CAT_PREV"
+msgstr "Следующая категория"
+
+#: list_diagnosis_results.twig:73 list_services_results.twig:43
+msgid "NAV_CAT_NEXT"
+msgstr "Предыдущая категория"
+
+#: list_diagnosis_results.twig:95 list_ordinary_results.twig:77
+#: list_services_results.twig:65 list_special_results.twig:45
+#: search_results.twig:51
+msgid "INCOMPLETE_DESC"
+msgstr "Нет всех необходимых данных или дело недооформлено"
+
+#: list_diagnosis_results.twig:135 list_ordinary_results.twig:117
+#: list_services_results.twig:105 list_special_results.twig:85
+#: search_results.twig:90
+msgid "ACTIVE_UNTIL"
+msgstr "Зачислен до"
+
+#: list_diagnosis_results.twig:154 list_ordinary_results.twig:136
+#: list_services_results.twig:124 list_special_results.twig:109
+#: search_results.twig:108
+msgid "CLIENT_ACTION_VIEW"
+msgstr "Посмотреть карточку клиента"
+
+#: list_diagnosis_results.twig:159 list_ordinary_results.twig:141
+#: list_services_results.twig:129 list_special_results.twig:114
+#: search_results.twig:113
+msgid "CLIENT_ACTION_EDIT"
+msgstr "Отредактировать информацию"
+
+#: list_diagnosis_results.twig:165 list_ordinary_results.twig:147
+#: list_services_results.twig:135 list_special_results.twig:120
+#: search_results.twig:119
+msgid "CLIENT_ACTION_DELETE"
+msgstr "Удалить клиента"
+
+#: login.twig:2
+msgid "TITLE_LOGIN"
+msgstr "Вход"
+
+#: login.twig:5
+msgid "LOGIN_MSG_AUTHREQUIRED"
+msgstr "Для использования базы данных необходима авторизация"
+
+#: login.twig:7
+msgid "LOGIN_MSG_EMPTYPASS"
+msgstr "Введите пароль"
+
+#: login.twig:9
+msgid "LOGIN_MSG_BADPASS"
+msgstr "Пароль не распознан, доступ запрещён"
+
+#: login.twig:21 register.twig:28 register.twig:29
+msgid "PASSWORD"
+msgstr "Пароль"
+
+#: login.twig:21
+msgid "PASSWORD_NON_ENG_CHARS"
+msgstr "Внимание! Выбрана не английская раскладка клавиатуры"
+
+#: login.twig:23 navbar.twig:93
+msgid "LOGIN"
+msgstr "Войти"
+
+#: main.twig:2
+msgid "ACTION_SELECT_MSG"
+msgstr "Для начала работы выберите действие из списка"
+
+#: main.twig:7 navbar.twig:38
+msgid "SEARCH"
+msgstr "Поиск"
+
+#: main.twig:9 navbar.twig:46
+msgid "DOCS"
+msgstr "Документы"
+
+#: main.twig:10 navbar.twig:55
+msgid "NEW_CLIENT"
+msgstr "Новый клиент"
+
+#: month_selector.twig:2
+msgid "SELECT_DATE"
+msgstr "Выберите дату"
+
+#: navbar.twig:4 navbar.twig:73
+msgid "COMPANY_NAME_SHORT"
+msgstr "«Відродження»"
+
+#: navbar.twig:18
+msgid "NAV_MENU_ADMIN"
+msgstr "Администрирование"
+
+#: navbar.twig:22 register.twig:2
+msgid "NEW_USER"
+msgstr "Новый пользователь"
+
+#: navbar.twig:34
+msgid "NAV_MENU_DROPDOWN"
+msgstr "Меню"
+
+#: navbar.twig:62
+msgid "LANGUAGE"
+msgstr "Язык"
+
+#: navbar.twig:73
+msgid "HELP"
+msgstr "Руководство пользователя"
+
+#: navbar.twig:91
+msgid "LOGOUT"
+msgstr "Выйти"
+
+#: noaccess.twig:4
+msgid "NOACCESS_MSG"
+msgstr ""
+"Внимание! У вас недостаточно прав для доступа к этой странице.<br>Обратитесь "
+"к системному администратору или своему руководителю."
+
+#: noaccess.twig:6
+msgid "YOUR"
+msgstr "ваш"
+
+#: noaccess.twig:7
+msgid "REQUIRED"
+msgstr "необходимый"
+
+#: register.twig:21
+msgid "USER_LVL_NO_ACCESS"
+msgstr "нет доступа"
+
+#: register.twig:22
+msgid "USER_LVL_VIEW"
+msgstr "пользователь"
+
+#: register.twig:23
+msgid "USER_LVL_EDIT"
+msgstr "редактор"
+
+#: register.twig:24
+msgid "USER_LVL_ADMIN"
+msgstr "администратор"
+
+#: register.twig:33
+msgid "CREATE"
+msgstr "Создать"
+
+#: register.twig:38
+msgid "NEW_USER_DESCRIPTION"
+msgstr ""
+"Скопируйте эту строку и передайте системному администратору для внесения в "
+"файл конфигурации"
+
+#: search.twig:2
+msgid "TITLE_SEARCH"
+msgstr "Поиск"
+
+#: search.twig:28
+msgid "AGE"
+msgstr "Возраст"
+
+#: search.twig:141
+msgid "IPR_SERVICES_VALUES"
+msgstr "Объем услуг ИПР"
+
+#: search.twig:141
+msgid "IPR_QUERY_DESC"
+msgstr "Чтобы указать несколько запросов, разделите их точкой с запятой – ;"
+
+#: search.twig:160
+msgid "COURSE_SERVICES"
+msgstr "Услуги курса"
+
+#: search.twig:213
+msgid "ADDRESS_DESC"
+msgstr "Фактическое место проживания"
+
+#: search.twig:236
+msgid "SQL_QUERY"
+msgstr "SQL запрос"
+
+#: search.twig:237
+msgid "SQL_QUERY_DESC"
+msgstr ""
+"Внимание! Значение этого поля добавляется без фильтрации к условию WHERE в "
+"автоматически созданном SQL-запросе (начинайте свой запрос с AND). Будьте "
+"осторожны!"
+
+#: search.twig:245
+msgid "DO_SEARCH"
+msgstr "Искать"
+
+#: search.twig:246
+msgid "CLEAR_FORM"
+msgstr "Сбросить"
+
+#: search.twig:248
+msgid "QUICK_EDIT_HINT"
+msgstr "Для быстрого редактирования нажмите"
+
+#: search_results.twig:6
+msgid "QUERY_ERROR"
+msgstr "В вашем SQL-запросе есть синтаксическая ошибка"
+
+#: search_results.twig:7 search_results.twig:15 search_results.twig:132
+msgid "QUERY"
+msgstr "Запрос"
+
+#: search_results.twig:8
+msgid "QUERY_ERROR_AND_HINT"
+msgstr "Возможно вы забыли добавить AND перед условиями"
+
+#: search_results.twig:28
+msgid "SEARCH_RESULT"
+msgstr "Результаты поиска"
+
+#: search_results.twig:130
+msgid "SEARCH_EMPTY"
+msgstr "К сожалению, по вашему запросу ничего не найдено"
+
+#~ msgid "BTN_COURSES"
+#~ msgstr "Курси"

@@ -1,0 +1,46 @@
+<div class="container interface">
+	<h2 class="text-secondary">{% trans 'LIST' %}</h2>
+	<hr>
+	<div class="row justify-content-center">
+		<div class="col-auto">
+			<h4 class="text-center">{% trans 'LIST_SORT' %}</h4>
+			<div class="btn-wrapper-wide">
+				<a href="{{page.root ~ 'list/alphabet'}}" role="button" class="btn btn-primary btn-block">
+					<i class="fal fw fa-sort-alpha-down mr-2 mt-1 float-left"></i>
+					{{ 'LIST_ALPHABET'|trans|upper }}
+				</a>
+				<a href="{{page.root ~ 'list/file'}}" role="button" class="btn btn-primary btn-block">
+					<i class="fal fw fa-sort-numeric-down mr-2 mt-1 float-left"></i>
+					{{ 'LIST_FILE'|trans|upper }}
+				</a>
+				<a href="{{page.root ~ 'list/age'}}" role="button" class="btn btn-primary btn-block">
+					<i class="fal fw fa-calendar mr-2 mt-1 float-left"></i>
+					{{ 'LIST_AGE'|trans|upper }}
+				</a>
+				<a href="{{page.root ~ 'list/diag'}}" role="button" class="btn btn-primary btn-block">
+					<i class="fal fw fa-notes-medical mr-2 mt-1 float-left"></i>
+					{{ 'LIST_DIAGNOSIS'|trans|upper }}
+				</a>
+				<a href="{{page.root ~ 'list/geo'}}" role="button" class="btn btn-primary btn-block">
+					<i class="fal fw fa-map-marker-alt mr-2 mt-1 float-left"></i>
+					{{ 'LIST_ADDRESS'|trans|upper }}
+				</a>
+				<a href="{{page.root ~ 'list/services'}}" role="button" class="btn btn-primary btn-block">
+					<i class="fal fw fa-book-medical mr-2 mt-1 float-left"></i>
+					{{ 'LIST_SERVICES'|trans|upper }}
+				</a>
+			</div>
+		</div>
+		<div class="col-auto">
+			<h4 class="text-center">{% trans 'LIST_SPECIAL' %}</h4>
+			<a href="{{page.root ~ 'list/outdated'}}" role="button" class="btn btn-primary btn-block">
+				<i class="fal fw fa-calendar-times mr-2 mt-1 float-left"></i>
+				{{ 'LIST_IPR_OUTDATED'|trans|upper }}
+			</a>
+			<a href="{{page.root ~ 'list/warning'}}" role="button" class="btn btn-primary btn-block">
+				<i class="fal fw fa-address-card mr-2 mt-1 float-left"></i>
+				{{ 'LIST_WARNING'|trans|upper }}
+			</a>
+		</div>
+	</div>
+</div>

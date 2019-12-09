@@ -1,0 +1,243 @@
+@charset "UTF-8";
+
+/* --------------- */
+.nobr {
+	white-space: nowrap;
+}
+.noselect {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+/* --------------- */
+
+html, body {
+	padding-top: 2em;
+	background-color: #DEDEDE;
+	font-family: Arial, Tahoma, Verdana, sans-serif;
+	font-weight: 500;
+	font-size: 15px;
+}
+
+footer .debug-msg {
+	font-weight: bold;
+	background-color: #770000;
+	padding-left: .5em;
+	padding-right: .5em;
+}
+
+.user {
+	line-height: 2em;
+	position: relative;
+}
+.user .navbar-text {
+	font-weight: bold;
+}
+.user .avatar {
+	display: inline-block;
+	width: 3em;
+	height: 3em;
+	position: absolute;
+	margin-top: -0.6em;
+	margin-left: -3.75em;
+	border: 2px solid #007bff;
+	border-radius: 50%;
+	box-shadow: 0 0 .25rem #007bff !important;
+}
+.user .text-avatar {
+	line-height: 2.8em;
+	text-align: center;
+	background-color: #DDDDDD;
+	color: #333333;
+	font-weight: bold;
+}
+.user a {
+	padding-left: .5em;
+}
+
+.navbar .dropdown-item.active {
+	/* pointer-events: none; */
+}
+
+.interface {
+	margin: 2em auto 3em auto;
+	padding: 1.5em;
+	background-color: rgba(255, 255, 255, .7);
+	border-radius: .5em;
+	border: 1px solid #BEBEBE;
+	box-shadow: rgba(62, 57, 107, 0.3) 0 .4em 1.1em 0;
+	color: #454545;
+}
+.interface h2 {
+	font-weight: bold;
+	text-align: center;
+}
+.interface hr {
+	border: 0;
+	height: 2px;
+	background-image: linear-gradient(90deg, 
+		rgba(0, 0, 0, 0),
+		rgba(40, 40, 40, .5),
+		rgba(0, 0, 0, 0)
+	);
+}
+
+.list {
+	background-color: rgba(255, 255, 255, .7);
+	border: 1px solid #BEBEBE;
+	border-left: none;
+	border-rigt: none;
+	padding-top: .7em;
+	padding-bottom: .7em;
+	box-shadow: rgba(62, 57, 107, 0.3) 0 .2em .5em 0;
+	color: #454545;
+	margin-bottom: 3em;
+}
+
+.btn-export {
+	display: inline-block;
+	margin-right: 1em;
+	float: right;
+	text-align: center;
+}
+
+.fa-question-circle, .ipr-svc-checkbox label {
+	cursor: help;
+}
+#search-manual-query {
+	height:2.35rem;
+	min-height:2.35rem
+}
+#search-manual-query:focus {
+	box-shadow: 0 0 0 .2rem rgba(255,123,0,.25);
+	height:4rem;
+	transition: all .3s ease;
+}
+.sortable .bg-dark th + th {
+	border-left: 1px solid #999999;
+}
+.sortable th {
+	padding-top: .1em;
+	padding-bottom: .1em;
+	text-align: center;
+	vertical-align: middle !important;
+	text-align: center;
+	border-bottom: 1px solid black !important;
+}
+.sortable {
+	font-size: .9em;
+	background: white;
+}
+.fixedHeader-floating tr {
+	box-shadow: rgba(62, 57, 107, 0.5) 0 .5em .25em -.1em;
+}
+.client-file, .client-birthdate, .client-category,
+.client-disabled {
+	text-align: center;
+}
+#osm-map-wrapper {
+	min-height: 10em;
+}
+#osm-map {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	bottom: 0px;
+	right: 0px;
+}
+.ipr-svc .input-group-text {
+	width: 6rem;
+	position: relative;
+}
+.ipr-svc .input-group-text .fa-question-circle {
+	position: absolute;
+	right: .75rem;
+}
+.btn-wrapper-wide {
+	columns: 3;
+}
+.ipr-outdated {
+	border-bottom: 1px dashed #CC0000;
+}
+.warning-msg {
+	color: #990000;
+}
+.cat-prev, .cat-next {
+	cursor: pointer;
+	padding: .5em;
+}
+.docs {
+	box-shadow: rgba(15,15,50,.5) 0 .6em .6em -.3em;
+}
+.optgroup {
+	padding-left: 1.25em;
+	font-weight: bold;
+	background-color: #CCC;
+}
+.alpha-nav {
+	font-size: .75em;
+	font-weight: bold;
+	width: 2.2em;
+	height: 2.2em;
+	margin-bottom: .3em;
+}
+.alpha-nav-links {
+	height: 16em;
+	overflow: auto;
+}
+.alpha-nav-links a {
+	padding: .2em .5em .2em .75em;
+}
+.alpha-nav-group {
+	padding-left: 2.5em !important;
+	font-weight: bold;
+	background-color: #CCC !important;
+}
+
+.qr-contact {
+	image-rendering: crisp-edges;
+	width: 120px;
+	height: 120px;
+	margin-left: .6em;
+	margin-bottom: .25em;
+}
+
+.course-separator {
+	border-top: 2px solid #757575 !important;
+}
+
+@media screen and (max-width: 992px) {
+	html, body {
+		padding-top: 2.7rem;
+		font-size: 1.1rem;
+	}
+	.navbar {
+		font-size: 1.2rem;
+	}
+	.navbar-toggler-icon, .navbar-brand {
+		font-size: 1.5rem;
+	}
+	.navbar .dropdown-item {
+		font-size: 1.1rem;
+	}
+	.user .avatar {
+		width: 2em;
+		height: 2em;
+		position: relative;
+		margin: -0.3em .25em 0 0;
+	}
+	.user .text-avatar {
+		line-height: 1.8em;
+	}
+	.btn-wrapper-wide {
+		columns: 2;
+	}
+}
+@media (max-width: 768px) {
+	.docs img {
+		display:none;
+	}
+}

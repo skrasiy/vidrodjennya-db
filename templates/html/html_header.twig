@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html data-path="{{page.root}}" data-locale="{{page.locale}}">
+<head>
+	<meta charset="utf-8">
+	<title>{% if page.title %}{{ page.title|trans }} – {% endif %}{% trans 'APP_NAME' %} {% trans 'COMPANY_NAME' %}</title>
+	<link rel="icon" sizes="any" href="{{ page.root }}icon.svg">
+	<link rel="stylesheet" href="{{ page.root }}static/css/bootstrap.min.css" media="screen">
+	<link rel="stylesheet" href="{{ page.root }}static/css/fontawesome.all.min.css" media="all">
+	<link rel="stylesheet" href="{{ page.root }}static/css/datatables.min.css" media="screen">
+	<link rel="stylesheet" href="{{ page.root }}static/css/preloader.css" media="screen">
+	<link rel="stylesheet" href="{{ page.root }}static/css/main.css" media="screen">
+	<link rel="stylesheet" href="{{ page.root }}static/css/print.css" media="print">
+	<script src="{{ page.root }}static/js/jquery-3.4.1.min.js"></script>
+	<script src="{{ page.root }}static/js/bootstrap.bundle.min.js"></script>
+	<script src="{{ page.root }}static/js/datatables.min.js"></script>
+</head>
+<body>
+{% if page.debug %}
+<div class="center alert alert-danger text-center sticky-top mx-4 mb-4" role="alert">
+	{% trans 'DEBUG_WARNING' %}
+</div>
+{% endif %}

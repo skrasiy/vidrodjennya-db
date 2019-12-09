@@ -1,0 +1,253 @@
+<div class="container interface">
+	<h2 class="text-secondary">{% trans 'TITLE_SEARCH' %}</h2>
+	<hr>
+	<form id="search" action="{{ page.self }}" method="POST" enctype="multipart/form-data" onkeypress="quickEdit(event, this)">
+		<input type="hidden" id="quick-edit" name="quickedit" value="">
+		<div class="form-row">
+			<div class="form-group col-lg-6 col-md-12 col-sm-12">
+				<label for="search-name">{% trans 'NAME' %}</label>
+				<input type="text" name="search-name" class="form-control" id="search-name" placeholder="{% trans 'NAME_DESC' %}" value="{{post['search-name'] is defined?post['search-name']:''}}">
+			</div>
+			<div class="form-group col-lg-2 col-md-3 col-sm-5">
+				<label for="search-gender">{% trans 'GENDER' %}</label>
+				<select name="search-gender" class="form-control" id="search-gender">
+					<option disabled {{post['search-gender'] is defined?'':'selected'}}>{% trans 'SELECT' %}</option>
+					<option value="1" {{(post['search-gender']==1)?'selected':''}}>{% trans 'GENDER_MALE' %}</option>
+					<option value="2" {{(post['search-gender']==2)?'selected':''}}>{% trans 'GENDER_FEMALE' %}</option>
+				</select>
+			</div>
+			<div class="form-group col-lg-2 col-md-4 col-sm-7">
+				<label>{% trans 'BIRTHDATE' %}</label>
+				<div class="input-group">
+					<input type="text" name="search-birthdate-dd" class="form-control" placeholder="{% trans 'DATE_DAY' %}" pattern="[0-9]{1,2}" maxlength="2" autocomplete="off" value="{{post['search-birthdate-dd']is defined?post['search-birthdate-dd']:''}}">
+					<input type="text" name="search-birthdate-mm" class="form-control" placeholder="{% trans 'DATE_MONTH' %}" pattern="[0-9]{1,2}" maxlength="2" autocomplete="off" value="{{post['search-birthdate-mm']is defined?post['search-birthdate-mm']:''}}">
+					<input type="text" name="search-birthdate-yyyy" class="form-control" placeholder="{% trans 'DATE_YEAR' %}" pattern="[0-9]{4}" maxlength="4" autocomplete="off" style="width:2.7rem;" value="{{post['search-birthdate-yyyy']is defined?post['search-birthdate-yyyy']:''}}">
+				</div>
+			</div>
+			<div class="form-group col-lg-1 col-md-2 col-sm-6">
+				<label for="search-comment">{% trans 'AGE' %}</label>
+				<input type="text" name="search-age" class="form-control" id="search-age" pattern="[0-9]{1,2}" maxlength="2" autocomplete="off" placeholder="{% trans 'AGE_DESC' %}" value="{{post['search-age']is defined?post['search-age']:''}}">
+			</div>
+			<div class="form-group col-lg-1 col-md-3 col-sm-6">
+				<label for="search-file" class="nobr">{% trans 'FILE_NO' %}</label>
+				<input type="text" pattern="[0-9]{1,4}" autocomplete="off" name="search-file" class="form-control" id="search-file" value="{{post['search-file']is defined?post['search-file']:''}}">
+			</div>
+		</div>
+		
+		<div class="form-row">
+			<div class="form-group col-lg-6 col-md-12 col-sm-12">
+				<label for="search-diagnosis">{% trans 'DIAGNOSIS' %}</label>
+				<input type="text" name="search-diagnosis" class="form-control" id="search-diagnosis" value="{{post['search-diagnosis'] is defined?post['search-diagnosis']:''}}">
+			</div>
+			<div class="form-group col-lg-2 col-md-4 col-sm-4">
+				<label for="search-code">
+					{% trans 'ICD10_CODE' %}
+					<a href="https://mkb-10.com/" target="_blank">
+						<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'ICD10_CODE_HINT' %}"></i>
+					</a>
+				</label>
+				<input type="text" name="search-code" class="form-control" id="search-code" value="{{post['search-code'] is defined?post['search-code']|upper:''}}">
+			</div>
+			<div class="form-group col-lg-2 col-md-4 col-sm-4">
+				<label for="search-diag-group">{% trans 'DIAGNOSIS_CATEGORY' %}</label>
+				<select name="search-diag-group" class="form-control" id="search-diag-group">
+					<option disabled {{post['search-diag-group']is defined?'':'selected'}}>{% trans 'SELECT' %}</option>
+					{% for option in enum_diag %}
+					<option value="{{ loop.index }}" {{(post['search-diag-group']==loop.index)?'selected':''}}>{{ option }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<div class="form-group col-lg-2 col-md-4 col-sm-4">
+				<label for="search-disabled-group">{% trans 'DISABLED_GROUP' %}</label>
+				<select name="search-disabled-group" class="form-control" id="search-disabled-group">
+					<option disabled {{post['search-disabled-group']is defined?'':'selected'}}>{% trans 'SELECT' %}</option>
+					{% for option in enum_disabled %}
+					<option value="{{ loop.index }}" {{(post['search-disabled-group']==loop.index)?'selected':''}}>{{ option }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		
+		<div class="form-row">
+			<div class="form-group col-lg-12 col-md-12 col-sm-12 text-center align-bottom text-secondary m-0 border border-bottom-0">
+				{% trans 'IPR_SERVICES' %}
+			</div>
+			<div class="form-group col-lg-1 d-md-none d-lg-block border-left border-bottom"></div>
+			<div class="form-group col-lg-4 col-md-4 col-sm-4 border-bottom">
+				<div>
+					<div class="form-check form-check-inline">
+						<input type="checkbox" class="form-check-input" id="search-ipr-group-psycho" name="search-ipr-group-psycho" {{(post['search-ipr-group-psycho'])?'checked':''}}>
+						<label class="form-check-label badge badge-secondary text-white" for="search-ipr-group-psycho">{% trans 'IPR_CAT_PSYCHO' %}</label>
+					</div>
+				</div>
+				<div class="form-check form-check-inline ipr-svc-checkbox">
+					<input type="checkbox" class="form-check-input" id="search-ipr-pcons" name="search-ipr-pcons" {{(post['search-ipr-pcons'])?'checked':''}}>
+					<label class="form-check-label badge badge-dark text-white" for="search-ipr-pcons" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_PCONS' %}">{% trans 'IPR_SVC_PCONS_SHORT' %}</label>
+				</div>
+				<div class="form-check form-check-inline ipr-svc-checkbox">
+					<input type="checkbox" class="form-check-input" id="search-ipr-ppd" name="search-ipr-ppd" {{(post['search-ipr-ppd'])?'checked':''}}>
+					<label class="form-check-label badge badge-dark text-white" for="search-ipr-ppd" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_PPD' %}">{% trans 'IPR_SVC_PPD_SHORT' %}</label>
+				</div>
+				<div class="form-check form-check-inline ipr-svc-checkbox">
+					<input type="checkbox" class="form-check-input" id="search-ipr-ppp" name="search-ipr-ppp" {{(post['search-ipr-ppp'])?'checked':''}}>
+					<label class="form-check-label badge badge-dark text-white" for="search-ipr-ppp" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_PPP' %}">{% trans 'IPR_SVC_PPP_SHORT' %}</label>
+				</div>
+				<div class="form-check form-check-inline ipr-svc-checkbox">
+					<input type="checkbox" class="form-check-input" id="search-ipr-ppk" name="search-ipr-ppk" {{(post['search-ipr-ppk'])?'checked':''}}>
+					<label class="form-check-label badge badge-dark text-white" for="search-ipr-ppk" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_PPK' %}">{% trans 'IPR_SVC_PPK_SHORT' %}</label>
+				</div>
+			</div>
+			<div class="form-group col-lg-3 col-md-4 col-sm-4 text-lg-center text-sm-left border-bottom">
+				<div>
+					<div class="form-check form-check-inline">
+						<input type="checkbox" class="form-check-input" id="search-ipr-group-phys" name="search-ipr-group-phys" {{(post['search-ipr-group-phys'])?'checked':''}}>
+						<label class="form-check-label badge badge-secondary text-white" for="search-ipr-group-phys">{% trans 'IPR_CAT_PHYS' %}</label>
+					</div>
+				</div>
+				<div class="form-check form-check-inline ipr-svc-checkbox">
+					<input type="checkbox" class="form-check-input" id="search-ipr-fcons" name="search-ipr-fcons" {{(post['search-ipr-fcons'])?'checked':''}}>
+					<label class="form-check-label badge badge-dark text-white" for="search-ipr-fcons" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_FCONS' %}">{% trans 'IPR_SVC_FCONS_SHORT' %}</label>
+				</div>
+				<div class="form-check form-check-inline ipr-svc-checkbox">
+					<input type="checkbox" class="form-check-input" id="search-ipr-lm" name="search-ipr-lm" {{(post['search-ipr-lm'])?'checked':''}}>
+					<label class="form-check-label badge badge-dark text-white" for="search-ipr-lm" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_LM' %}">{% trans 'IPR_SVC_LM_SHORT' %}</label>
+				</div>
+				<div class="form-check form-check-inline ipr-svc-checkbox">
+					<input type="checkbox" class="form-check-input" id="search-ipr-lfk" name="search-ipr-lfk" {{(post['search-ipr-lfk'])?'checked':''}}>
+					<label class="form-check-label badge badge-dark text-white" for="search-ipr-lfk" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_LFK' %}">{% trans 'IPR_SVC_LFK_SHORT' %}</label>
+				</div>
+			</div>
+			<div class="form-group col-lg-3 col-md-4 col-sm-4 text-lg-right text-sm-left border-bottom">
+				<div>
+					<div class="form-check form-check-inline">
+						<input type="checkbox" class="form-check-input" id="search-ipr-group-social" name="search-ipr-group-social" {{(post['search-ipr-group-social'])?'checked':''}}>
+						<label class="form-check-label badge badge-secondary text-white" for="search-ipr-group-social">{% trans 'IPR_CAT_SOCIAL' %}</label>
+					</div>
+				</div>
+				<div class="form-check form-check-inline ipr-svc-checkbox">
+					<input type="checkbox" class="form-check-input" id="search-ipr-nosn" name="search-ipr-nosn" {{(post['search-ipr-nosn'])?'checked':''}}>
+					<label class="form-check-label badge badge-dark text-white" for="search-ipr-nosn" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_NOSN' %}">{% trans 'IPR_SVC_NOSN_SHORT' %}</label>
+				</div>
+				<div class="form-check form-check-inline ipr-svc-checkbox">
+					<input type="checkbox" class="form-check-input" id="search-ipr-spp" name="search-ipr-spp" {{(post['search-ipr-spp'])?'checked':''}}>
+					<label class="form-check-label badge badge-dark text-white" for="search-ipr-spp" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_SPP' %}">{% trans 'IPR_SVC_SPP_SHORT' %}</label>
+				</div>
+			</div>
+			<div class="form-group col-lg-1 d-md-none d-lg-block border-right border-bottom"></div>
+		</div>
+
+		<div class="form-row">
+			<div class="form-group col-lg-3 col-md-12 col-sm-12">
+				<label for="search-services-fulltext">{% trans 'IPR_SERVICES_VALUES' %}<i class="fas fa-question-circle ml-1" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_QUERY_DESC' %}"></i></label>
+				<input type="text" name="search-services-fulltext" class="form-control" id="search-services-fulltext" value="{{post['search-services-fulltext'] is defined?post['search-services-fulltext']:''}}">
+			</div>
+			<div class="form-group col-lg-2 col-md-4 col-sm-12">
+				<label for="search-course-active">{% trans 'COURSE_ACTIVE' %}</label>
+				<select name="search-course-active" class="form-control" id="search-course-active">
+					<option disabled {{post['search-course-active'] is defined?'':'selected'}}>{% trans 'SELECT' %}</option>
+					<option value="true"{{post['search-course-active'] is defined?' selected':''}}>{% trans 'YES' %}</option>
+				</select>
+			</div>
+			<div class="form-group col-lg-2 col-md-4 col-sm-6">
+				<label for="search-course-start">{% trans 'COURSE_START' %}</label>
+				<input type="date" name="search-course-start" class="form-control" id="search-course-start" value="{{post['search-course-start'] is defined?post['search-course-start']:''}}">
+			</div>
+			<div class="form-group col-lg-2 col-md-4 col-sm-6">
+				<label for="search-course-end">{% trans 'COURSE_END' %}</label>
+				<input type="date" name="search-course-end" class="form-control" id="search-course-end" value="{{post['search-course-end'] is defined?post['search-course-end']:''}}">
+			</div>
+			<div class="form-group col-lg-3 col-md-12 col-sm-12">
+				<label for="search-course-services">{% trans 'COURSE_SERVICES' %}</label>
+				<input type="text" name="search-course-services" class="form-control" id="search-course-services" value="{{post['search-course-services'] is defined?post['search-course-services']:''}}">
+			</div>
+		</div>
+		
+		<div class="form-row">
+			<div class="form-group col-lg-4 col-md-8 col-sm-8">
+				<label>{% trans 'SPECIAL_STATUS' %}</label><br>
+				<div class="form-check form-check-inline mt-lg-2">
+					<input type="checkbox" class="form-check-input" id="search-status-ato" name="search-status-ato" {{(post['search-status-ato'])?'checked':''}}>
+					<label class="form-check-label" for="search-status-ato">{% trans 'STATUS_ATO' %}</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input type="checkbox" class="form-check-input" id="search-status-vpo" name="search-status-vpo" {{(post['search-status-vpo'])?'checked':''}}>
+					<label class="form-check-label" for="search-status-vpo">{% trans 'STATUS_VPO' %}</label>
+				</div>
+			</div>
+			<div class="form-group col-lg-2 col-md-4 col-sm-4">
+				<label for="search-active">{% trans 'ACTIVE' %}</label>
+				<select name="search-active" class="form-control" id="search-active">
+					<option value="1"{{not (post['search-active']=='0')?'selected':''}}>{% trans 'YES' %}</option>
+					<option value="0"{{post['search-active']=='0'?'selected':''}}>{% trans 'NO' %}</option>
+				</select>
+			</div>
+			<div class="form-group col-lg-2 col-md-4 col-sm-4">
+				<label>{% trans 'IPR_DATE' %}</label>
+				<div class="input-group">
+					<input type="text" name="search-ipr-dd" class="form-control" placeholder="{% trans 'DATE_DAY' %}" pattern="[0-9]{1,2}" maxlength="2" autocomplete="off" value="{{post['search-ipr-dd']is defined?post['search-ipr-dd']:''}}">
+					<input type="text" name="search-ipr-mm" class="form-control" placeholder="{% trans 'DATE_MONTH' %}" pattern="[0-9]{1,2}" maxlength="2" autocomplete="off" value="{{post['search-ipr-mm']is defined?post['search-ipr-mm']:''}}">
+					<input type="text" name="search-ipr-yyyy" class="form-control" placeholder="{% trans 'DATE_YEAR' %}" pattern="[0-9]{4}" maxlength="4" autocomplete="off" style="width:2.7rem;" value="{{post['search-ipr-yyyy']is defined?post['search-ipr-yyyy']:''}}">
+				</div>
+			</div>
+			<div class="form-group col-lg-2 col-md-4 col-sm-4">
+				<label>{% trans 'REGISTER_DATE' %}</label>
+				<div class="input-group">
+					<input type="text" name="search-register-dd" class="form-control" placeholder="{% trans 'DATE_DAY' %}" pattern="[0-9]{1,2}" maxlength="2" autocomplete="off" value="{{post['search-register-dd']is defined?post['search-register-dd']:''}}">
+					<input type="text" name="search-register-mm" class="form-control" placeholder="{% trans 'DATE_MONTH' %}" pattern="[0-9]{1,2}" maxlength="2" autocomplete="off" value="{{post['search-register-mm']is defined?post['search-register-mm']:''}}">
+					<input type="text" name="search-register-yyyy" class="form-control" placeholder="{% trans 'DATE_YEAR' %}" pattern="[0-9]{4}" maxlength="4" autocomplete="off" style="width:2.7rem;" value="{{post['search-register-yyyy']is defined?post['search-register-yyyy']:''}}">
+				</div>
+			</div>
+			<div class="form-group col-lg-2 col-md-4 col-sm-4">
+				<label>{% trans 'DISMISS_DATE' %}</label>
+				<div class="input-group">
+					<input type="text" name="search-dismiss-dd" class="form-control" placeholder="{% trans 'DATE_DAY' %}" pattern="[0-9]{1,2}" maxlength="2" autocomplete="off" value="{{post['search-dismiss-dd']is defined?post['search-dismiss-dd']:''}}">
+					<input type="text" name="search-dismiss-mm" class="form-control" placeholder="{% trans 'DATE_MONTH' %}" pattern="[0-9]{1,2}" maxlength="2" autocomplete="off" value="{{post['search-dismiss-mm']is defined?post['search-dismiss-mm']:''}}">
+					<input type="text" name="search-dismiss-yyyy" class="form-control" placeholder="{% trans 'DATE_YEAR' %}" pattern="[0-9]{4}" maxlength="4" autocomplete="off" style="width:2.7rem;" value="{{post['search-dismiss-yyyy']is defined?post['search-dismiss-yyyy']:''}}">
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-row">
+			<div class="form-group col-lg-3 col-md-3 col-sm-6">
+				<label for="search-address">{% trans 'ADDRESS' %}</label>
+				<input type="text" name="search-address" class="form-control" id="search-address" placeholder="{% trans 'ADDRESS_DESC' %}" value="{{post['search-address'] is defined?post['search-address']:''}}">
+			</div>
+			<div class="form-group col-lg-3 col-md-3 col-sm-6">
+				<label for="search-contacts">{% trans 'CONTACTS' %}</label>
+				<input type="text" name="search-contacts" class="form-control" id="search-contacts" placeholder="{% trans 'CONTACTS_DESC' %}" value="{{post['search-contacts'] is defined?post['search-contacts']:''}}">
+			</div>
+			<div class="form-group col-lg-3 col-md-3 col-sm-6">
+				<label for="search-comment">{% trans 'COMMENT' %}</label>
+				<input type="text" name="search-comment" class="form-control" id="search-comment" value="{{post['search-comment'] is defined?post['search-comment']:''}}">
+			</div>
+			<div class="form-group col-lg-3 col-md-3 col-sm-6">
+				<label for="search-rnokpp">{% trans 'RNOKPP' %}</label>
+				<input type="text" name="search-rnokpp" class="form-control" id="search-rnokpp" value="{{post['search-rnokpp'] is defined?post['search-rnokpp']:''}}" pattern="[0-9]{10}" autocomplete="off">
+			</div>
+		</div>
+
+
+		<div class="form-row justify-content-between">
+			<div class="form-group col-lg-8 col-md-12 col-sm-12">
+				{% if page.user.accessLevel >= adminAcessLevel %}
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text border-warning bg-dark text-warning">
+							<strong>{% trans 'SQL_QUERY' %}</strong>
+							<i class="fas fa-question-circle ml-1" data-toggle="tooltip" data-placement="top" title="{% trans 'SQL_QUERY_DESC' %}"></i>
+						</span>
+					</div>
+					<textarea name="search-manual-query" class="form-control border-warning " id="search-manual-query" rows="1" autocomplete="off">{{post['search-manual-query'] is defined?post['search-manual-query']:''}}</textarea>
+				</div>
+				{% endif %}
+			</div>
+			<div class="form-group col-lg-3 text-right">
+				<button type="submit" class="btn btn-primary" onclick="submitOnce(this, true)" data-message="{% trans 'WAIT_BTN' %}" data-wait="{% trans 'WAIT_MSG' %}">{{'DO_SEARCH'|trans|upper}}</button>
+				<button type="button" class="btn btn-secondary" onclick="resetForm(this.form)">{{'CLEAR_FORM'|trans|upper}}</button>
+				<br>
+				<small class="pr-1"><code>* – {% trans 'QUICK_EDIT_HINT' %}</code></small>
+				<span class="nobr"><span class="badge badge-dark">Ctrl</span> + <span class="badge badge-dark">Enter</span></span>
+			</div>
+		</div>
+	</form>
+</div>

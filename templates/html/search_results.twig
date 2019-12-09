@@ -1,0 +1,135 @@
+<div class="container-fluid list search">
+	<div class="row">
+		<div class="col">
+			{% if error == 'sql' %}
+			<div class="alert alert-danger" role="alert">
+				<strong>{% trans 'QUERY_ERROR' %}</strong><br>
+				{% trans 'QUERY' %}: <code>WHERE … <span class="text-danger font-weight-bold">{{ user_sql }}</span> ORDER … ;</code>
+				{% if not (user_sql matches '/^AND .*/') %}<br>{% trans 'QUERY_ERROR_AND_HINT' %}{% endif %}
+			</div>
+			{% endif %}
+			{% if debug %}
+			<div class="alert alert-warning" role="alert"><strong>[DEBUG] SQL query:</strong><br><code>{{ query }}</code></div>
+			{% endif %}
+			{% if not error == 'sql' %}
+			<div class="alert alert-secondary" role="alert"><strong>{% trans 'QUERY' %}:</strong> {{ description }}</div>
+			{% endif %}
+		</div>
+		{% if not error %}
+		<div class="col col-auto">
+			<button type="submit" form="search" class="btn btn-primary btn-export" title="{% trans 'EXPORT_DESC' %}" name="export" value="true">
+				<i class="fas fa-file-word fa-2x"></i>
+				<div class="d-lg-block d-md-none">{% trans 'EXPORT_BTN' %}</div>
+			</button>
+		</div>
+		{% endif %}
+	</div>
+	
+	<h4 class="text-center mt-2 mb-4">{% trans 'SEARCH_RESULT' %}{% if not error %} <span class="badge badge-success">{{ count }}</span>{% endif %}</h4>
+	{% if not error %}
+	<table class="table table-striped sortable">
+	<thead>
+		<tr class="bg-dark text-light">
+			<th class="client-file">№</th>
+			<th class="client-name">{% trans 'NAME_DESC' %}</th>
+			<th class="client-birthdate">{% trans 'BIRTHDATE' %}</th>
+			<th class="client-diagnosis sorting_disabled">{% trans 'DIAGNOSIS' %}, {% trans 'ICD10_CODE' %}</th>
+			<th class="client-category">{% trans 'DIAGNOSIS_CATEGORY' %}</th>
+			<th class="client-ipr">{% trans 'IPR_SERVICES' %},<br>{% trans 'IPR_DATE' %}</th>
+			<th class="client-disabled">{% trans 'DISABLED_GROUP' %}</th>
+			<th class="client-address">{% trans 'ADDRESS' %}</th>
+			<th class="client-contacts sorting_disabled">{% trans 'CONTACTS' %}</th>
+			<th class="client-comment sorting_disabled">{% trans 'COMMENT' %}</th>
+			<th class="client-actions sorting_disabled">&nbsp;</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for client in clients %}
+		<tr>
+			<td class="client-file">
+				<strong>
+				{% if client.incomplete %}<span class="text-danger" data-toggle="tooltip" data-placement="right" title="{% trans 'INCOMPLETE_DESC' %}">{% endif %}
+				{{ client.file }}
+				{% if client.incomplete %}</span>{% endif %}
+				</strong>
+			</td>
+			<td class="client-name" data-order="{{loop.index}}">
+				{{ client.name }}
+				{% if client.rnokpp %}<br><small class="nobr text-secondary">{% trans 'RNOKPP' %}: {{client.rnokpp}}</small>{% endif %}
+			</td>
+			<td class="client-birthdate" data-order="{{client.birthdate|date('U')}}">{{ client.birthdate }}<br>({{ client.age }} {{ 'AGE_DESC'|trans|lower }})</td>
+			<td class="client-diagnosis">{% if client.diag_code %}[{{client.diag_code}}] {% endif %}{{ client.diagnosis }}</td>
+			<td class="client-category">{{ client.diag_group }}</td>
+			<td class="client-ipr" data-order="{{client.course_end|date('U')}}">
+				{% if client.service_psycho %}
+				<div class="nobr">
+					<strong class="text-primary">{% trans 'IPR_CAT_PSYCHO' %}:</strong>
+					{{ client.ipr_services.psycho.pscons ? 'IPR_SVC_PCONS_SHORT'|trans }}
+					{{ client.ipr_services.psycho.ppd ? 'IPR_SVC_PPD_SHORT'|trans }}
+					{{ client.ipr_services.psycho.ppk ? 'IPR_SVC_PPK_SHORT'|trans }}
+				</div>
+				{% endif %}
+				{% if client.service_phys %}
+				<div class="nobr">
+					<strong class="text-primary">{% trans 'IPR_CAT_PHYS' %}:</strong>
+					{{ client.ipr_services.phys.phcons ? 'IPR_SVC_FCONS_SHORT'|trans }}
+					{{ client.ipr_services.phys.lm ? 'IPR_SVC_LM_SHORT'|trans }}
+					{{ client.ipr_services.phys.lfk ? 'IPR_SVC_LFK_SHORT'|trans }}
+				</div>
+				{% endif %}
+				{% if client.service_social %}
+				<div class="nobr">
+					<strong class="text-primary">{% trans 'IPR_CAT_SOCIAL' %}:</strong>
+					{{ client.ipr_services.social.nosn ? 'IPR_SVC_NOSN_SHORT'|trans }}
+					{{ client.ipr_services.social.spp ? 'IPR_SVC_SPP_SHORT'|trans }}
+				</div>
+				{% endif %}
+				{% if client.status_disabled == 1 %}
+				{{ 'IPR_DATE'|trans ~ ': ' ~ client.course_end }}
+				{% else %}
+				{{ 'ACTIVE_UNTIL'|trans ~ ': ' ~ client.course_end }}
+				{% endif %}
+			</td>
+			<td class="client-disabled">{{ client.disabled_group }}</td>
+			<td class="client-address">{{ client.address }}</td>
+			<td class="client-contacts">
+			{% for entry in client.contacts %}
+				<div>
+				{% if entry matches '/[0-9]{3}/' %}
+					<a href="tel:+38{{ entry|split(' ')|join('') }}">{{ entry }}</a>
+				{% else %}
+					{{ entry }}
+				{% endif %}
+				</div>
+			{% endfor %}
+			</td>
+			<td class="client-comment">{{ client.comment }}</td>
+			<td class="client-actions">
+				<a class="btn btn-primary btn-sm" href="{{ page.root ~ 'view/' ~ client.id }}" role="button" data-toggle="tooltip" data-placement="left" title="{% trans 'CLIENT_ACTION_VIEW' %}" target="_blank">
+					<i class="fas fa-eye fa-fw"></i>
+				</a>
+				{% if page.user.accessLevel >= page.access['editor'] %}
+				<br>
+				<a class="btn btn-primary btn-sm mt-2" href="{{ page.root ~ 'edit/' ~ client.id }}" role="button" data-toggle="tooltip" data-placement="left" title="{% trans 'CLIENT_ACTION_EDIT' %}" target="_blank">
+					<i class="fas fa-edit fa-fw"></i>
+				</a>
+				{% endif %}
+				{% if page.user.accessLevel >= page.access['admin'] %}
+				<br>
+				<a class="btn btn-danger btn-sm mt-2" href="{{ page.root ~ 'delete/' ~ client.id }}" role="button" data-toggle="tooltip" data-placement="left" title="{% trans 'CLIENT_ACTION_DELETE' %}" target="_blank">
+					<i class="fas fa-trash-alt fa-fw"></i>
+				</a>
+				{% endif %}
+			</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+	</table>
+	{% else %}
+	<div class="alert alert-primary text-center mb-4" role="alert">
+		<h5>{% trans 'SEARCH_EMPTY' %}</h5>
+		<br>
+		<span class="text-secondary"><strong>{% trans 'QUERY' %}:</strong> {{ description }}</span>
+	</div>
+	{% endif %}
+</div>

@@ -1,0 +1,49 @@
+<div class="container interface">
+	<h2 class="text-secondary">{% trans 'TITLE_EDIT_CLIENT_COURSE' %}</h2>
+	<h4 class="text-center mb-0">{{ client.name }}</h4>
+	<h5 class="text-secondary text-center mt-0 pt-0">{% trans 'FILE_NO' %} {{client.file}} ({{'COURSE'|trans ~ ' ' ~ course.id}})</h5>
+	<hr>
+	{% if course %}
+	<div class="row">
+		<div class="col">
+			<form action="{{ page.self }}" method="POST" enctype="multipart/form-data">
+				<input type="hidden" name="course" value="edit">
+				<input type="hidden" name="course-user" value="{{client.id}}">
+				<input type="hidden" name="course-id" value="{{course.id}}">
+				<div class="form-row align-items-end row justify-content-md-center">
+					<div class="form-group col-lg-2 col-md-6 col-sm-6">
+						<label for="course-start">{% trans 'COURSE_START' %}</label>
+						<input type="date" name="course-start" class="form-control" id="course-start" value="{{course.course_start|date('Y-m-d')}}" required>
+					</div>
+					<div class="form-group col-lg-2 col-md-6 col-sm-6">
+						<label for="course-end">{% trans 'COURSE_END' %}</label>
+						<input type="date" name="course-end" class="form-control" id="course-end" value="{{course.course_end|date('Y-m-d')}}" required>
+					</div>
+					<div class="form-group col-lg-3 col-md-12 col-sm-12">
+						<label for="course-services">{% trans 'IPR_SERVICES' %}</label>
+						<input type="text" name="course-services" class="form-control" id="course-services" value="{{course.ipr_svc}}">
+					</div>
+					<div class="form-group col-lg-3 col-md-12 col-sm-12">
+						<label for="course-additional">{% trans 'ADDITIONAL_SERVICES' %}</label>
+						<input type="text" name="course-additional" class="form-control" id="course-additional" value="{{course.additional_svc}}">
+					</div>
+				</div>
+				<div class="form-row align-items-end row justify-content-md-center">
+					<div class="form-group col-lg-8 col-md-12 col-sm-12">
+						<label for="course-comment">{% trans 'COMMENT' %}</label>
+						<input type="text" name="course-comment" class="form-control" id="course-comment" value="{{course.comment}}">
+					</div>
+					<div class="form-group col-lg-2 col-md-3 col-sm-4">
+						<button type="submit" class="btn btn-primary btn-block">{{'SAVE'|trans|upper}}</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	{% else %}
+	<div class="alert alert-warning" role="alert">
+		<i class="fas fa-exclamation-circle"></i>
+		{% trans 'MSG_COURSE_NOT_FOUND' %}
+	</div>
+	{% endif %}
+</div>

@@ -1,0 +1,10 @@
+<div class="container interface">
+	<div class="alert alert-danger text-center" role="alert">
+		<i class="fas fa-exclamation-triangle fa-2x"></i><br>
+		{% trans 'NOACCESS_MSG' %}<br>
+		<a href="{{ page.self }}">{{ page.host ~ page.self }}</a><br>
+		{% trans 'YOUR' %} {{ 'ACCESS_LEVEL'|trans|lower }}: {{ page.user.accessLevel }},
+		{% trans 'REQUIRED' %} {{ 'ACCESS_LEVEL'|trans|lower }}: {{ accessLevel }}
+	</div>
+	<div class="text-center"><a href="{{page.root}}" role="button" class="btn btn-primary">{{ 'MAIN_PAGE'|trans|upper }}</a></div>
+</div>

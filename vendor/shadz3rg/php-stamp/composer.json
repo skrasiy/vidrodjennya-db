@@ -1,0 +1,25 @@
+{
+    "name": "shadz3rg/php-stamp",
+    "description": "The XSL-way templating library for MS Office Word DOCX documents.",
+    "homepage": "https://github.com/shadz3rg/PHPStamp",
+    "type": "library",
+    "keywords": ["docx", "template", "word"],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.0",
+        "ext-xsl": "*",
+        "ext-zip": "*",
+        "shadz3rg/lexer": "^1.0"
+    },
+    "authors": [
+        {
+            "name": "Oleg Aleksandrovich",
+            "email": "ukhardc0r3@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "PHPStamp": "src/"
+        }
+    }
+}

@@ -1,0 +1,26 @@
+<div class="container interface">
+	<h2 class="text-secondary">{% trans 'TITLE_LOGIN' %}</h2>
+	<hr>
+	{% if status == 'authrequired' %}
+	<div class="alert alert-info" role="alert">{% trans 'LOGIN_MSG_AUTHREQUIRED' %}!</div>
+	{% elseif status == 'nopassword' %}
+	<div class="alert alert-warning" role="alert"><i class="fas fa-exclamation-circle"></i> {% trans 'LOGIN_MSG_EMPTYPASS' %}</div>
+	{% elseif status == 'badpassword' %}
+	<div class="alert alert-danger" role="alert"><i class="fas fa-exclamation-triangle"></i> {% trans 'LOGIN_MSG_BADPASS' %}</div>
+	{% endif %}
+	<div>
+		<form id="loginform" class="form-inline" action="{{ page.self }}" method="POST" enctype="multipart/form-data" autocomplete="off">
+			<div class="form-group">
+			{% for key, value in page.path['args'] %}
+				{% if key == 'return' %}
+				<input type="hidden" name="return" value="{{value}}">
+				{% else %}
+				<input type="hidden" name="arg-{{key}}" value="{{value}}">
+				{% endif %}
+			{% endfor %}
+				<input type="password" class="form-control" id="inputPassword" placeholder="{% trans 'PASSWORD' %}" name="auth" data-toggle="tooltip" data-placement="top" title="" data-i18n="{% trans 'PASSWORD_NON_ENG_CHARS' %}">
+			</div>
+			<button type="submit" class="btn btn-primary ml-3">{{'LOGIN'|trans|upper}}</button>
+		</form>
+	</div>
+</div>

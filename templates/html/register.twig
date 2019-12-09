@@ -1,0 +1,43 @@
+<div class="container interface">
+	<h2 class="text-secondary">{% trans 'NEW_USER' %}</h2>
+	<hr>
+	<div class="row">
+		<div class="col">
+			{% if stage == 'request' %}
+			<form action="{{ page.self }}" method="POST" enctype="multipart/form-data">
+				<input type="hidden" name="stage" value="create">
+				<div class="form-row">
+					<div class="form-group col-md-2">
+						<label for="user-id">ID</label>
+						<input type="text" name="user-id" class="form-control" id="user-id" placeholder="user" autocomplete="off" required>
+					</div>
+					<div class="form-group col-md-2">
+						<label for="user-name">{% trans 'NAME' %}</label>
+						<input type="text" name="user-name" class="form-control" id="user-name" placeholder="А. Иванова" autocomplete="off" required>
+					</div>
+					<div class="form-group col-md-2">
+						<label for="user-access">{% trans 'ACCESS_LEVEL' %}</label>
+						<select name="user-access" class="form-control" id="edit-gender">
+							<option value="0">0 - {% trans 'USER_LVL_NO_ACCESS' %}</option>
+							<option value="1">1 - {% trans 'USER_LVL_VIEW' %}</option>
+							<option value="{{editor}}" selected>{{editor}} - {% trans 'USER_LVL_EDIT' %}</option>
+							<option value="{{admin}}">{{admin}} - {% trans 'USER_LVL_ADMIN' %}</option>
+						</select>
+					</div>
+					<div class="form-group col-md-3">
+						<label for="user-password">{% trans 'PASSWORD' %}</label>
+						<input type="text" name="user-password" class="form-control" id="user-password" placeholder="{% trans 'PASSWORD' %}" autocomplete="off" required>
+					</div>
+					<div class="form-group col-md-2">
+						<label>&nbsp;</label><br>
+						<button type="submit" class="btn btn-primary">{{ 'CREATE'|trans|upper }}</button>
+					</div>
+				</div>
+			</form>
+			{% else %}
+				{% trans 'NEW_USER_DESCRIPTION' %}<br><br>
+				<code class="border p-2">$users["{{user_id}}"] = array("displayName"=>"{{user_name}}", "hash"=>"{{user_hash}}", "accessLevel"=>"{{user_lvl}}"); // {{user_pswd}}</code>
+			{% endif %}
+		</div>
+	</div>
+</div>

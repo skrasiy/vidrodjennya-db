@@ -1,0 +1,176 @@
+<div class="container interface">
+{% if client.loaded %}
+	{% if page.user.accessLevel >= page.access.editor %}
+	<div class="row mb-3">
+		<div class="col">
+			{% trans 'CLIENT_ACTIONS' %}: 
+			<a class="btn btn-primary ml-2" href="{{ page.root ~ 'edit/' ~ client.id }}" role="button">{{ 'EDIT'|trans|upper }}</a>
+			<a class="btn btn-primary ml-2" href="{{ page.root ~ 'courses/' ~ client.id }}" role="button">{{ 'EDIT_COURSES'|trans|upper }}</a>
+			{% if page.user.accessLevel >= page.access.admin %}
+			<a class="btn btn-danger ml-2" href="{{ page.root ~ 'delete/' ~ client.id }}" role="button">{{ 'DELETE'|trans|upper }}</a>
+			{% endif %}
+		</div>
+	</div>
+	{% endif %}
+	<div class="row">
+		<div class="col col-sm-12 col-md-12 col-lg-6">
+			<div class="card border-secondary ml-auto mr-auto">
+				<div class="card-header bg-secondary text-light p-1">
+					<i class="fas fa-user pl-3 pr-2"></i><small>{% trans 'TITLE_CARDVIEW' %} ({% trans 'FILE_NO' %} {{ client.file }})</small>
+				</div>
+				<div class="card-body">
+					<h4 class="card-title text-primary">
+						{{ client.name }}
+						<i class="text-secondary float-right fal fa-{{(client.gender==1)?'venus':'mars'}}"></i>
+					</h4>
+					<h6 class="card-subtitle mb-4 text-muted">{% trans 'RNOKPP' %} {{ client.rnokpp }}</h6>
+					
+					<p class="card-text mb-0"><strong>{% trans 'BIRTHDATE' %}</strong>: {{ client.birthdate|date("d.m.Y") }} ({{ client.age ~ ' ' ~ 'AGE_DESC'|trans|lower }})</p>
+					<p class="card-text mb-0"><strong>{% trans 'ADDRESS' %}</strong>: 
+						{{ client.region ~ ' ' ~ 'REGION'|trans|lower }},
+						{{ client.district ? client.district ~ ' ' ~ 'DISTRICT_SHORT'|trans ~ ', ' }}
+						{{ client.city }}, 
+						{{ client.address }}
+					</p>
+					<p class="card-text mb-0"><strong>{% trans 'CONTACTS' %}</strong>: {{ client.contact_data }}</p>
+					{% if (client.status_ato or client.status_vpl) %}
+					<p class="card-text mb-0"><strong>{% trans 'SPECIAL_STATUS' %}</strong>: {{ client.status_ato ? 'STATUS_ATO_DESC'|trans }}{{client.status_vpl?','}} {{ client.status_vpl ? 'STATUS_VPO_DESC'|trans }} </p>
+					{% endif %}
+					<hr class="m-1">
+					<img class="float-right qr-contact" src="{{ page.root ~ 'api/contact/' ~ client.id ~ '?size=300' }}" title="{% trans 'CONTACTS' %}">
+					<p class="card-text mb-0"><strong>{% trans 'DIAGNOSIS' %}</strong>: {{ client.diagnosis }} ({% trans 'DIAGNOSIS_CATEGORY' %}: {{ client.diag_group }})</p>
+					{% if client.diag_code %}
+					<p class="card-text mb-0"><strong>{% trans 'ICD10_CODE' %}</strong>: {{ client.diag_code }}</p>
+					{% endif %}
+					{% if client.status_disabled %}
+					<p class="card-text mb-0"><strong>{% trans 'DISABLED_GROUP' %}</strong>: {{ client.disabled_group }}</p>
+					{% endif %}
+					<p class="card-text mb-0"><strong>{% trans 'REGISTER_DATE' %}</strong>: {{ client.registered|date("d.m.Y") }}</p>
+					{% if client.dismissed %}
+					<p class="card-text mb-0"><strong>{% trans 'DISMISS_DATE' %}</strong>: {{ client.dismissed|date("d.m.Y") }}</p>
+					{% endif %}
+					
+				</div>
+			</div>
+		</div>
+		<div class="col col-sm-12 col-md-12 col-lg-6 pt-md-4 pt-lg-0" id="osm-map-wrapper">
+		{% if client.geo %}
+			<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+			<link href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" rel="stylesheet"/>
+			<div id="osm-map"></div>
+			<script>
+				var element = document.getElementById('osm-map');
+				var map = L.map(element);
+				L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png').addTo(map);
+				var target = L.latLng('{{client.geo.lat}}', '{{client.geo.lon}} ');
+				map.setView(target, 15);
+				L.marker(target).addTo(map);
+			</script>
+		{% else %}
+			<div class="alert alert-warning" role="alert"><i class="fas fa-exclamation-circle"></i> {% trans 'MSG_NOGEO' %}</div>
+		{% endif %}
+		</div>
+	</div>
+	{% if client.comment %}
+	<div class="row">
+		<div class="col pt-lg-4">
+			<div class="alert alert-primary m-0" role="alert"><strong>{% trans 'COMMENT' %}</strong>: {{ client.comment }}</div>
+		</div>
+	</div>
+	{% endif %}
+	{% if client.status_disabled %}
+	<div class="row">
+		<div class="col pt-lg-4">
+			<div class="card border-secondary ml-auto mr-auto">
+				<div class="card-header bg-secondary text-light p-1">
+					<i class="fal fa-th-list pl-3 pr-2"></i><small>{% trans 'IPR_SERVICES' %}</small>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col col-4">
+							<div class="text-primary text-center"><h5>{% trans 'IPR_CAT_PSYCHO' %}</h5></div>
+							{% if client.ipr_services.psycho.pscons %}
+							<strong>{% trans 'IPR_SVC_PCONS' %}</strong>: {{ client.ipr_services.psycho.pscons }}<br>
+							{% endif %}
+							{% if client.ipr_services.psycho.ppd %}
+							<strong>{% trans 'IPR_SVC_PPD' %}</strong>: {{ client.ipr_services.psycho.ppd }}<br>
+							{% endif %}
+							{% if client.ipr_services.psycho.ppk %}
+							<strong>{% trans 'IPR_SVC_PPK' %}</strong>: {{ client.ipr_services.psycho.ppk }}<br>
+							{% endif %}
+						</div>
+						<div class="col col-4">
+							<div class="text-primary text-center"><h5>{% trans 'IPR_CAT_PHYS' %}</h5></div>
+							{% if client.ipr_services.phys.phcons %}
+							<strong>{% trans 'IPR_SVC_FCONS' %}</strong>: {{ client.ipr_services.phys.phcons }}<br>
+							{% endif %}
+							{% if client.ipr_services.phys.lm %}
+							<strong>{% trans 'IPR_SVC_LM' %}</strong>: {{ client.ipr_services.phys.lm }}<br>
+							{% endif %}
+							{% if client.ipr_services.phys.lfk %}
+							<strong>{% trans 'IPR_SVC_LFK' %}</strong>: {{ client.ipr_services.phys.lfk }}<br>
+							{% endif %}
+						</div>
+						<div class="col col-4">
+							<div class="text-primary text-center"><h5>{% trans 'IPR_CAT_SOCIAL' %}</h5></div>
+							{% if client.ipr_services.social.nosn %}
+							<strong>{% trans 'IPR_SVC_NOSN' %}</strong>: {{ client.ipr_services.social.nosn }}<br>
+							{% endif %}
+							{% if client.ipr_services.social.spp %}
+							<strong>{% trans 'IPR_SVC_SPP' %}</strong>: {{ client.ipr_services.social.spp }}<br>
+							{% endif %}
+						</div>
+					</div>
+					<p class="card-text text-right text-info"><strong>{% trans 'IPR_DATE' %}</strong>: {{ client.course_end|date("d.m.Y") }}</p>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	{% endif %}
+	{% if courses %}
+	<div class="row">
+		<div class="col pt-lg-4">
+			<div class="card border-secondary ml-auto mr-auto">
+				<div class="card-header bg-secondary text-light p-1">
+					<i class="fal fa-calendar-plus pl-3 pr-2"></i><small>{% trans 'COURSES' %}</small>
+				</div>
+				<div class="card-body p-0">
+					<table class="table table-sm mb-0">
+						<thead class="thead-light">
+							<tr>
+								<th>{% trans 'COURSE_START' %}</th>
+								<th>{% trans 'COURSE_END' %}</th>
+								<th>{% trans 'DURATION' %}</th>
+								<th>{% trans 'IPR_SERVICES' %}</th>
+								<th>{% trans 'ADDITIONAL_SERVICES' %}</th>
+								<th>{% trans 'COMMENT' %}</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for course in courses %}
+							{% set duration = date(course.course_start).diff(course.course_end) %}
+							<tr{{(date() < date(course.course_end))?' class="table-success"'}}>
+								<td>{{ course.course_start|date("d.m.Y") }}</td>
+								<td>{{ course.course_end|date("d.m.Y") }}</td>
+								<td>{{ duration.days }} {% trans 'DAYS' %}</td>
+								<td>{{ course.ipr_svc }}</td>
+								<td>{{ course.additional_svc }}</td>
+								<td>{{ course.comment}}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+	{% endif %}
+{% else %}
+	<div class="alert alert-warning" role="alert"><i class="fas fa-exclamation-circle"></i> {% trans 'CARDVIEW_MSG_NOID' %}</div>
+	<div class="text-center">
+		<a class="btn btn-primary" href="{{ page.root }}" role="button">{{ 'MAIN_PAGE'|trans|upper }}</a>
+	</div>
+{% endif %}
+</div>
