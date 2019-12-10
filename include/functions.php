@@ -417,6 +417,22 @@ function generateRandomString($length = 16) {
     return $randomString;
 }
 
+function defaultAccount() {
+	global $cfg;
+	global $page;
+	$pass = generateRandomString(10);
+	$hash = substr(hash('sha256', $cfg['salt'].$pass), 0, 16);
+	$account = '$users["admin"] = array("displayName"=>"Default admin", "hash"=>"'.$hash.'", "accessLevel"=>"'.$cfg['access']['admin'].'");';
+	return 'Your users section of config file is empty. Copy & paste this into config file and login with password "'.$pass.'"<br><pre>'.$account.'</pre>';
+}
+
+function getGitBranch() {
+	$head = file('.git/HEAD', FILE_USE_INCLUDE_PATH);
+	if (!$head) return '';
+	$parsed = explode("/", $head[0], 3);
+	return $parsed[2];
+}
+
 // =====================
 
 function search($enum) {

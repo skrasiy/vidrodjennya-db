@@ -307,6 +307,12 @@ switch ($page->path['slice'][0]) {
 		}
 		exit;
 		break;
+	
+	case 'test':
+		$client = new Client;
+		$client->fromDB(112);
+		var_dump($client);
+		break;
 
 	default:
 		$html .= $page->twig->render('main.twig', ['page' => $page]);
@@ -319,7 +325,8 @@ $html .= $page->twig->render('html_footer.twig', [
 	'cfg'		=> $cfg,
 	'exec_time'	=> round(microtime(true) - $start, 2),
 	'queries'	=> $_GET["db_queries"],
-	'js_ver'	=> substr(hash_file('md5', 'static/js/script.js'), -5) // browser cache hack
+	'js_ver'	=> substr(hash_file('md5', 'static/js/script.js'), -5), // browser cache hack
+	'branch'	=> ($page->debug) ? getGitBranch() : ''
 ]);
 $html = $header . $html;
 

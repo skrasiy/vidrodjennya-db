@@ -30,12 +30,7 @@ class User {
 		}
 		if (empty($users)) {
 			// default user
-			global $cfg;
-			global $page;
-			$pass = generateRandomString(10);
-			$hash = substr(hash('sha256', $cfg['salt'].$pass), 0, 16);
-			$account = '$users["admin"] = array("displayName"=>"Default admin", "hash"=>"'.$hash.'", "accessLevel"=>"'.$cfg['access']['admin'].'");';
-			echo 'Your users section of config file is empty. Copy & paste this into config file and login with password "'.$pass.'"<br><pre>'.$account.'</pre>';
+			echo defaultAccount();
 			audit($page->user, '[ERROR] файл налаштувань не має жодного запису користувача, створений тимчасовий запис адміністратора за замовчуванням. Він НЕ БУДЕ АКТИВНИМ, поки строку з цим записом не буде внесено до файлу налаштувань.');
 			die;
 		}
@@ -69,8 +64,6 @@ class Client {
 	public $gender;
 	public $birthdate;
 	public $age;
-	public $course_start;
-	public $course_end;
 	public $registered;
 	public $dismissed;
 	public $diagnosis;
@@ -90,42 +83,32 @@ class Client {
 	public $incomplete;
 	public $ipr_services;
 	public $ipr_services_text;
+	public $ipr_start;
+	public $ipr_end;
+	public $svc_psycho = FALSE;
+	public $svc_phys = FALSE;
+	public $svc_social = FALSE;
 	public $changes = array();
 	public $loaded = FALSE;
 	public $new = FALSE;
+	private $ipr_services_list = array ('pcons','ppd','ppp','ppk','fcons','lm','lfk','nosn','spp');
+	private $ipr_services_group = array (
+		'psycho'	=> array('pcons','ppd','ppp','ppk'),
+		'phys'		=> array('fcons','lm','lfk'),
+		'social'	=> array('nosn','spp')
+	);
 	private $types = array(
 		'id' => 'int', 'file' => 'int', 'rnokpp' => 'string', 'name' => 'string', 'gender' => 'int',
-		'birthdate' => 'date', 'course_start' => 'date', 'course_end' => 'date', 'registered' => 'date',
-		'dismissed' => 'date', 'diagnosis' => 'string', 'diag_code' => 'string', 'diag_group' => 'string',
-		'status_disabled' => 'int', 'disabled_group' => 'string', 'status_ato' => 'int', 'status_vpl' => 'int',
-		'region' => 'string', 'district' => 'string', 'city' => 'string', 'address' => 'string',
-		'contact_data' => 'string', 'active' => 'int', 'comment' => 'string', 'incomplete' => 'int',
-		'ipr_services' => 'object'
-	);
-	private $ipr_locale = array(
-		'pscons' => 'IPR_SVC_PCONS_SHORT', 'ppd' => 'IPR_SVC_PPD_SHORT', 'ppp' => 'IPR_SVC_PPP_SHORT', 'ppk' => 'IPR_SVC_PPK_SHORT',
-		'phcons' => 'IPR_SVC_FCONS_SHORT', 'lm' => 'IPR_SVC_LM_SHORT', 'lfk' => 'IPR_SVC_LFK_SHORT', 'nosn' => 'IPR_SVC_NOSN_SHORT',
-		'spp' => 'IPR_SVC_SPP_SHORT'
+		'birthdate' => 'date', 'registered' => 'date', 'dismissed' => 'date', 'diagnosis' => 'string',
+		'diag_code' => 'string', 'diag_group' => 'string', 'status_disabled' => 'int', 'disabled_group' => 'string',
+		'status_ato' => 'int', 'status_vpl' => 'int', 'region' => 'string', 'district' => 'string',
+		'city' => 'string', 'address' => 'string', 'contact_data' => 'string', 'active' => 'int',
+		'comment' => 'string', 'incomplete' => 'int', 'ipr_services' => 'array', 'ipr_start' => 'date',
+		'ipr_end' => 'date'
 	);
 	
 	function __construct() {
-		$this->ipr_services = (object)[
-			'psycho'	=> (object) [
-				'pscons'	=>	'',
-				'ppd'		=>	'',
-				'ppp'		=>	'',
-				'ppk'		=>	''
-			],
-			'phys'		=> (object) [
-				'phcons'	=>	'',
-				'lm'		=>	'',
-				'lfk'		=>	''
-			],
-			'social'	=> (object) [
-				'nosn'		=>	'',
-				'spp'		=>	''
-			]
-		];
+		$this->ipr_services = array_fill_keys($this->ipr_services_list, '');
 	}
 	
 	public function set($property, $value) {
@@ -143,10 +126,9 @@ class Client {
 	
 	private function getServicesText() {
 		$data = array();
-		foreach ($this->ipr_services as $svcgroup) {
-			foreach ($svcgroup as $key => $value ) {
-				if (!empty($value)) $data[] = _($this->ipr_locale[$key]);
-			}
+		foreach ($this->ipr_services as $key => $value) {
+			$svc_name = 'IPR_SVC_'.strtoupper($key).'_SHORT';
+			if (!empty($value)) $data[] = _($svc_name);
 		}
 		$data = (empty($data)) ? NULL : implode(', ', $data);
 		return $data;
@@ -169,12 +151,16 @@ class Client {
 	
 	public function fromDB($id) {
 		if (!$id) return FALSE;
-		$data = db_select("SELECT * FROM clients WHERE id = ".abs((int)$id));
+		$data = db_select("SELECT * FROM clients INNER JOIN ipr ON clients.id = ipr.user_id WHERE id = ".abs((int)$id));
 		if (!$data) return FALSE;
 		foreach ($data[0] as $key => $value) {
-			if ($key == 'ipr_services') $value = unserialize(base64_decode($value));
-			if (property_exists($this, $key)) {
-				$this->$key = $value;
+			if (property_exists($this, $key)) { $this->$key = $value; }
+			if (array_key_exists($key, $this->ipr_services)) { $this->ipr_services[$key] = $value; }
+		}
+		foreach ($this->ipr_services_group as $group => $svc) {
+			$svc_group = 'svc_'.$group;
+			foreach ($svc as $key) {
+				if(!empty($this->ipr_services[$key])) $this->$svc_group = TRUE;
 			}
 		}
 		$age = date_diff(date_create($this->birthdate), date_create(date("d-m-Y")));
