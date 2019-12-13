@@ -307,12 +307,6 @@ switch ($page->path['slice'][0]) {
 		}
 		exit;
 		break;
-	
-	case 'test':
-		$client = new Client;
-		$client->fromDB(112);
-		var_dump($client);
-		break;
 
 	default:
 		$html .= $page->twig->render('main.twig', ['page' => $page]);

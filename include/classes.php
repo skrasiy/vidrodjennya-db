@@ -89,6 +89,7 @@ class Client {
 	public $svc_phys = FALSE;
 	public $svc_social = FALSE;
 	public $changes = array();
+	public $changes_ipr = array();
 	public $loaded = FALSE;
 	public $new = FALSE;
 	private $ipr_services_list = array ('pcons','ppd','ppp','ppk','fcons','lm','lfk','nosn','spp');
@@ -103,8 +104,7 @@ class Client {
 		'diag_code' => 'string', 'diag_group' => 'string', 'status_disabled' => 'int', 'disabled_group' => 'string',
 		'status_ato' => 'int', 'status_vpl' => 'int', 'region' => 'string', 'district' => 'string',
 		'city' => 'string', 'address' => 'string', 'contact_data' => 'string', 'active' => 'int',
-		'comment' => 'string', 'incomplete' => 'int', 'ipr_services' => 'array', 'ipr_start' => 'date',
-		'ipr_end' => 'date'
+		'comment' => 'string', 'incomplete' => 'int'
 	);
 	
 	function __construct() {
@@ -121,6 +121,17 @@ class Client {
 			);
 			$this->$property = $value;
 			return $this;
+		}
+	}
+	
+	public function setService($property, $value) {
+		if (array_key_exists($property, $this->ipr_services)) {
+			$this->changes_ipr[] = array(
+				'oldValue' => $this->ipr_services[$property],
+				'newValue' => $value,
+				'valueName' => $property
+			);
+			$this->ipr_services[$property] = $value;
 		}
 	}
 	
@@ -166,6 +177,7 @@ class Client {
 		$age = date_diff(date_create($this->birthdate), date_create(date("d-m-Y")));
 		$this->age = $age->format('%y');
 		$this->ipr_services_text = $this->getServicesText();
+		$this->new = FALSE;
 		$this->loaded = TRUE;
 		return $this->loaded;
 	}
@@ -178,18 +190,30 @@ class Client {
 		global $page;
 		
 		if (!$this->loaded) return -1;
-		if ($this->new) {
-			$fields = array();
-			$values = array();
-			foreach ($this->types as $property => $type) {
+		
+		$fields = array();
+		$values = array();
+		$keyvalues = array();
+		$iprvalues = array();
+		$named = array();
+		// clients
+		foreach ($this->types as $property => $type) {
+			if ($property != 'id') {
 				switch ($type) {
 					case 'int':
 						$fields[] = $property;
-						if (empty($this->$property) && ($this->$property != 0)) { $values[] = "NULL"; } else { $values[] = (int)$this->$property; }
+						if (empty($this->$property) && ($this->$property != 0)) {
+							$integer = "NULL";
+						} else {
+							$integer = (int)$this->$property;
+						}
+						$values[] = $integer;
+						$named[$property] = $integer;
 						break;
 					case 'string':
 						$fields[] = $property;
 						$values[] = "'".$this->$property."'";
+						$named[$property] = "'".$this->$property."'";
 						break;
 					case 'date':
 						$date = strtotime($this->$property);
@@ -200,15 +224,53 @@ class Client {
 						}
 						$fields[] = $property;
 						$values[] = $date;
+						$named[$property] = $date;
 						break;
 					case 'object':
+						$serialized = "'".base64_encode(serialize($this->$property))."'";
 						$fields[] = $property;
-						$values[] = "'".base64_encode(serialize($this->$property))."'";
+						$values[] = $serialized;
+						$named[$property] = $serialized;
 						break;
 				}
 			}
-			$query = "INSERT INTO clients (".implode(', ', $fields).") VALUES (".implode(', ', $values).");";
+		}
+		for ($i = 0; $i < count($fields); $i++) { $keyvalues[] = $fields[$i].'='.$values[$i]; }
+		//ipr
+		foreach ($this->ipr_services_list as $key) { $iprvalues[] = "'".$this->ipr_services[$key]."'"; }
+		foreach (array('ipr_start', 'ipr_end') as $key) { $$key = (empty($this->$key)) ? "NULL" : "'".$this->$key."'"; }
+		
+		// query constructor
+		if ($this->new) {
+			$queries = array();
+			$queries[] = "INSERT INTO clients (id, ".implode(', ', $fields).") VALUES (".$this->id.", ".implode(', ', $values)."); ";
+			$queries[] = "INSERT INTO ipr (user_id, ipr_start, ipr_end, ".implode(', ', $this->ipr_services_list).") VALUES (".$this->id.", ".$ipr_start.", ".$ipr_end.", ".implode(', ', $iprvalues).");";
 			audit($page->user, 'додав новий запис клієнта, id='.$this->id.', номер справи = '.$this->file);
+		} else {
+			$changelog = array();
+			$queries = array();
+			if (!empty($this->changes)){
+				$querydata = array();
+				foreach ($this->changes as $change) {
+					$querydata[$change['valueName']] = $change['valueName'].'='.$named[$change['valueName']];
+					$changelog[$change['valueName']] = 'ключ "'.$change['valueName'].'", старе значення = "'.$change['oldValue'].'", нове значення = "'.$change['newValue'].'"';
+				}
+				$queries[] = "UPDATE clients SET ".implode(", ", $querydata)." WHERE id = ".$this->id.";";
+			}
+			if (!empty($this->changes_ipr)){
+				$querydata = array();
+				foreach ($this->changes_ipr as $change) {
+					$querydata[$change['valueName']] = $change['valueName']."='".$change['newValue']."'";
+					$changelog[$change['valueName']] = 'ключ "ІПР '._('IPR_SVC_'.strtoupper($change['valueName']).'_SHORT').'", старе значення = "'.$change['oldValue'].'", нове значення = "'.$change['newValue'].'"';
+				}
+				$queries[] = "UPDATE ipr SET ".implode(", ", $querydata)." WHERE user_id = ".$this->id.";";
+			}
+			if (empty($queries)) return 0;
+			audit($page->user, 'змінив дані запису "'.$this->name.'" (id='.$this->id.'): '.implode("; ", $changelog));
+		}
+
+		// execute query
+		foreach($queries as $query) {
 			try {
 				$result = db_write($query);
 			} catch (Error $e) {
@@ -216,59 +278,8 @@ class Client {
 				return -1;
 			}
 			if ($result == -1) audit($page->user, '[ERROR] помилка при внесенні даних до БД, запит: "'.$query.'"');
-		} else {
-			$changelog = array();
-			$values = array();
-			foreach ($this->changes as $change) {
-				$type = $this->types[$change['valueName']];
-				switch ($type) {
-					case 'string':
-						$values[] = $change['valueName']." = '".$change['newValue']."'";
-						$changelog[] = 'ключ "'.$change['valueName'].'", старе значення = "'.$change['oldValue'].'", нове значення = "'.$change['newValue'].'"';
-						break;
-					case 'int':
-						if (empty($change['newValue']) && ($change['newValue'] != 0)) {
-							$change['newValue'] = 'NULL';
-						} else {
-							$change['newValue'] = (int)$change['newValue'];
-						}
-						if (($change['valueName'] == 'file') && ($change['newValue']==0)) return -1;
-						$values[] = $change['valueName']." = ".$change['newValue'];
-						$changelog[] = 'ключ "'.$change['valueName'].'", старе значення = '.$change['oldValue'].', нове значення = '.$change['newValue'];
-						break;
-					case 'date':
-						if (empty($change['newValue'])) {
-							$change['newValue'] = 'NULL';
-						} else {
-							$date = strtotime($change['newValue']);
-							if ($date < 0) return -1;
-							$change['newValue'] = "'".date("Y-m-d", $date)."'";
-						}
-						$values[] = $change['valueName']." = ".$change['newValue'];
-						$changelog[] = 'ключ "'.$change['valueName'].'", старе значення = "'.$change['oldValue'].'", нове значення = "'.trim($change['newValue'],"'").'"';
-						break;
-					case 'object':
-						$values[] = $change['valueName']." = '".base64_encode($change['newValue'])."'";
-						$changelog[] = 'ключ "'.$change['valueName'].'", старе значення = "'.$change['oldValue'].'", нове значення = "'.$change['newValue'].'"';
-						break;
-				}
-			}
-			if (!empty($values)) {
-				$query = "UPDATE clients SET ".implode(", ", $values)." WHERE id = ".$this->id.";";
-				audit($page->user, 'змінив дані запису "'.$this->name.'" (id='.$this->id.'): '.implode("; ", $changelog));
-				try {
-					$result = db_write($query);
-				} catch (Error $e) {
-					audit($page->user, '[ERROR] помилка при внесенні даних до БД, запит: "'.$query.'"');
-					return -1;
-				}
-				if ($result == -1) audit($page->user, '[ERROR] помилка при внесенні даних до БД, запит: "'.$query.'"');
-			} else {
-				return 0;
-			}
 		}
-		
-		return $result;
+		return 1;
 	}
 	
 	public function delete() {
