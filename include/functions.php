@@ -225,10 +225,6 @@ function processing($result) {
 		$client->gender_readable = (($client->gender == 0) ? _('GENDER_MALE') : _('GENDER_FEMALE'));
 		$client->disabled_group = (($client->status_disabled == 0) ? mb_strtolower(_('NO')) : $client->disabled_group);
 		$client->additional_summary = implode("\n", $additional);
-		$client->ipr_services = unserialize(base64_decode($client->ipr_services));
-		$client->service_psycho = !empty(array_filter((array)$client->ipr_services->psycho));
-		$client->service_phys = !empty(array_filter((array)$client->ipr_services->phys));
-		$client->service_social = !empty(array_filter((array)$client->ipr_services->social));
 		
 		$clients[] = $client;
 	}
@@ -444,6 +440,7 @@ function search($enum) {
 
 	$description = array();
 	$ipr_svc_desc = array();
+	$ipr_svc_affected = array();
 	$search = array();
 	$ipr_group = array();
 	$use_courses = false;
@@ -536,17 +533,17 @@ function search($enum) {
 	}
 	if (isset($queries['search-ipr-dd'])) {
 		$query = intval($queries['search-ipr-dd']);
-		$search[] = "AND EXTRACT(DAY FROM course_end) = ".$query;
+		$search[] = "AND EXTRACT(DAY FROM ipr_end) = ".$query;
 		$description[] = _('DAY').' '._('QUERY_IPR').': '.$query;
 	}
 	if (isset($queries['search-ipr-mm'])) {
 		$query = intval($queries['search-ipr-mm']);
-		$search[] = "AND EXTRACT(MONTH FROM course_end) = ".$query;
+		$search[] = "AND EXTRACT(MONTH FROM ipr_end) = ".$query;
 		$description[] = _('MONTH').' '._('QUERY_IPR').': '.$query;
 	}
 	if (isset($queries['search-ipr-yyyy'])) {
 		$query = intval($queries['search-ipr-yyyy']);
-		$search[] = "AND EXTRACT(YEAR FROM course_end) = ".$query;
+		$search[] = "AND EXTRACT(YEAR FROM ipr_end) = ".$query;
 		$description[] = _('YEAR').' '._('QUERY_IPR').': '.$query;
 	}
 	if (isset($queries['search-register-dd'])) {
@@ -580,40 +577,49 @@ function search($enum) {
 		$description[] = _('YEAR').' '._('QUERY_DISMISS').': '.$query;
 	}
 	if (isset($queries['search-ipr-pcons'])) {
-		$search[] = "AND CONVERT(FROM_BASE64(ipr_services) USING utf8) NOT LIKE '%\\\x22pscons\\\x22;s:0%'";
+		$search[] = "AND ((pcons IS NOT NULL)&&(pcons != ''))";
 		$ipr_svc_desc[] = _('IPR_SVC_PCONS');
+		$ipr_svc_affected[] = 'pcons';
 	}
 	if (isset($queries['search-ipr-ppd'])) {
-		$search[] = "AND CONVERT(FROM_BASE64(ipr_services) USING utf8) NOT LIKE '%\\\x22ppd\\\x22;s:0%'";
+		$search[] = "AND ((ppd IS NOT NULL)&&(ppd != ''))";
 		$ipr_svc_desc[] = _('IPR_SVC_PPD');
+		$ipr_svc_affected[] = 'ppd';
 	}
 	if (isset($queries['search-ipr-ppp'])) {
-		$search[] = "AND CONVERT(FROM_BASE64(ipr_services) USING utf8) NOT LIKE '%\\\x22ppp\\\x22;s:0%'";
+		$search[] = "AND ((ppp IS NOT NULL)&&(ppp != ''))";
 		$ipr_svc_desc[] = _('IPR_SVC_PPP');
+		$ipr_svc_affected[] = 'ppp';
 	}
 	if (isset($queries['search-ipr-ppk'])) {
-		$search[] = "AND CONVERT(FROM_BASE64(ipr_services) USING utf8) NOT LIKE '%\\\x22ppk\\\x22;s:0%'";
+		$search[] = "AND ((ppk IS NOT NULL)&&(ppk != ''))";
 		$ipr_svc_desc[] = _('IPR_SVC_PPK');
+		$ipr_svc_affected[] = 'ppk';
 	}
 	if (isset($queries['search-ipr-fcons'])) {
-		$search[] = "AND CONVERT(FROM_BASE64(ipr_services) USING utf8) NOT LIKE '%\\\x22phcons\\\x22;s:0%'";
+		$search[] = "AND ((fcons IS NOT NULL)&&(fcons != ''))";
 		$ipr_svc_desc[] = _('IPR_SVC_FCONS');
+		$ipr_svc_affected[] = 'fcons';
 	}
 	if (isset($queries['search-ipr-lm'])) {
-		$search[] = "AND CONVERT(FROM_BASE64(ipr_services) USING utf8) NOT LIKE '%\\\x22lm\\\x22;s:0%'";
+		$search[] = "AND ((lm IS NOT NULL)&&(lm != ''))";
 		$ipr_svc_desc[] = _('IPR_SVC_LM');
+		$ipr_svc_affected[] = 'lm';
 	}
 	if (isset($queries['search-ipr-lfk'])) {
-		$search[] = "AND CONVERT(FROM_BASE64(ipr_services) USING utf8) NOT LIKE '%\\\x22lfk\\\x22;s:0%'";
+		$search[] = "AND ((lfk IS NOT NULL)&&(lfk != ''))";
 		$ipr_svc_desc[] = _('IPR_SVC_LFK');
+		$ipr_svc_affected[] = 'lfk';
 	}
 	if (isset($queries['search-ipr-nosn'])) {
-		$search[] = "AND CONVERT(FROM_BASE64(ipr_services) USING utf8) NOT LIKE '%\\\x22nosn\\\x22;s:0%'";
+		$search[] = "AND ((nosn IS NOT NULL)&&(nosn != ''))";
 		$ipr_svc_desc[] = _('IPR_SVC_NOSN');
+		$ipr_svc_affected[] = 'nosn';
 	}
 	if (isset($queries['search-ipr-spp'])) {
-		$search[] = "AND CONVERT(FROM_BASE64(ipr_services) USING utf8) NOT LIKE '%\\\x22spp\\\x22;s:0%'";
+		$search[] = "AND ((spp IS NOT NULL)&&(spp != ''))";
 		$ipr_svc_desc[] = _('IPR_SVC_SPP');
+		$ipr_svc_affected[] = 'spp';
 	}
 	if (!empty($ipr_svc_desc)) $description[] = _('IPR_SERVICES').': '.mb_strtolower(implode(', ', $ipr_svc_desc));
 	if (isset($queries['search-address'])) {
@@ -644,20 +650,19 @@ function search($enum) {
 		audit($page->user, '[WARNING] до SQL-запиту додано користувачем наступні умови: "'.$queries['search-manual-query'].'"');
 	}
 	if (isset($queries['search-ipr-group-psycho'])) {
-		$ipr_group[] = 'psycho';
+		$search[] = "AND (IF (pcons = '', 0, 1)||IF (ppd = '', 0, 1)||IF (ppp = '', 0, 1)||IF (ppk = '', 0, 1)) = 1";
 		$description[] = _('QUERY_IPR_CATEGORY').' "'._('IPR_CAT_PSYCHO').'"';
+		array_push($ipr_svc_affected, 'pcons','ppd','ppp','ppk');
 	}
 	if (isset($queries['search-ipr-group-phys'])) {
-		$ipr_group[] = 'phys';
+		$search[] = "AND (IF (fcons = '', 0, 1)||IF (lm = '', 0, 1)||IF (lfk = '', 0, 1)) = 1";
 		$description[] = _('QUERY_IPR_CATEGORY').' "'._('IPR_CAT_PHYS').'"';
+		array_push($ipr_svc_affected, 'fcons','lm','lfk');
 	}
 	if (isset($queries['search-ipr-group-social'])) {
-		$ipr_group[] = 'social';
+		$search[] = "AND (IF (nosn = '', 0, 1)||IF (spp = '', 0, 1)) = 1";
 		$description[] = _('QUERY_IPR_CATEGORY').' "'._('IPR_CAT_SOCIAL').'"';
-	}
-	if (isset($queries['search-services-fulltext'])) {
-		$svc_fulltext = explode(';', strip_data($queries['search-services-fulltext']));
-		$description[] = _('IPR_SERVICES_VALUES').': "'.implode('; ', $svc_fulltext).'"';
+		array_push($ipr_svc_affected, 'nosn','spp');
 	}
 	if (isset($queries['search-course-active'])) {
 		$use_courses = true;
@@ -682,6 +687,17 @@ function search($enum) {
 		$search_courses[] = "AND CONCAT(ipr_svc, ' ', additional_svc) LIKE '%".$query."%'";
 		$description[] = _('COURSE_SERVICES').' "'.$query.'"';
 	}
+	$ipr_svc_affected = array_unique($ipr_svc_affected);
+	if (empty($ipr_svc_affected)) $ipr_svc_affected = array('pcons','ppd','ppp','ppk','fcons','lm','lfk','nosn','spp');
+	if (isset($queries['search-services-fulltext'])) {
+		$svc_fulltext = explode(';', strip_data($queries['search-services-fulltext']));
+		$description[] = _('IPR_SERVICES_VALUES').': "'.implode('; ', $svc_fulltext).'"';
+		$constructor = array();
+		foreach ($svc_fulltext as $query) {
+			$constructor[] = "CONCAT(".implode(',',$ipr_svc_affected).") LIKE '%".$query."%'";
+		}
+		$search[] = 'AND ('.implode(') OR (', $constructor).')';
+	}
 	
 	$condition = implode(' ', $search);
 	$description = implode('; ', $description);
@@ -693,7 +709,7 @@ function search($enum) {
 				(YEAR(CURRENT_DATE) - YEAR(birthdate)) -
 				(DATE_FORMAT(CURRENT_DATE, '%m%d') < DATE_FORMAT(birthdate, '%m%d'))
 			) AS 'age',
-			DATE_FORMAT(course_end, '%d.%m.%Y') AS 'course_end',
+			DATE_FORMAT(ipr_end, '%d.%m.%Y') AS 'ipr_end',
 			DATE_FORMAT(registered, '%d.%m.%Y') AS 'registered',
 			DATE_FORMAT(dismissed, '%d.%m.%Y') AS 'dismissed',
 			diagnosis, diag_code, diag_group, status_disabled, disabled_group, status_chaes, status_ato, status_vpl,
@@ -703,8 +719,19 @@ function search($enum) {
 				`city`, ', ',
 				`address`
 			) AS 'address',
-			contact_data, additional, comment, incomplete, ipr_services
+			contact_data, additional, comment, incomplete,
+			pcons, ppd, ppp, ppk, fcons, lm, lfk, nosn, spp,
+			(
+				IF (pcons = '', 0, 1) || IF (ppd = '', 0, 1) || IF (ppp = '', 0, 1) || IF (ppk = '', 0, 1)
+			) AS 'service_psycho',
+			(
+				IF (fcons = '', 0, 1) || IF (lm = '', 0, 1) || IF (lfk = '', 0, 1)
+			) AS 'service_phys',
+			(
+				IF (nosn = '', 0, 1) || IF (spp = '', 0, 1)
+			) AS 'service_social'
 		FROM clients
+		INNER JOIN ipr ON clients.id = ipr.user_id
 		WHERE 1 = 1 ".$condition."
 		ORDER BY name ASC
 	";
@@ -720,31 +747,8 @@ function search($enum) {
 	
 	if(!$result) return ['clients' => array(), 'description' => $description, 'query' => $query, 'error' => 'noresult'];
 
-	// постобработка данных запроса, здесь можно работать с хранимым объектом ipr_services
+	// постобработка данных запроса
 	$clients = processing($result);
-	foreach ($ipr_group as $category) {
-		$service_name = 'service_'.$category;
-		$data = $clients;
-		$clients = array_filter($data, function($client) use(&$service_name) {
-			if ($client->$service_name == true) return true;
-			return false;
-		});
-	}
-	if (!empty($svc_fulltext)) {
-		$filtered = array();
-		foreach ($svc_fulltext as $search) {
-			$tmp = array_filter($clients, function($client) use(&$search) {
-				foreach ($client->ipr_services as $data) {
-					foreach ($data as $key => $value) {
-						if (preg_match("/$search/iu", $value)) return true;
-					}
-				}
-				return false;
-			});
-			$filtered = array_merge($filtered, $tmp);
-		}
-		$clients = array_unique($filtered, SORT_REGULAR);
-	}
 	
 	// работа с курсами
 	if ($use_courses) {
