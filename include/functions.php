@@ -712,7 +712,7 @@ function search($enum) {
 			DATE_FORMAT(ipr_end, '%d.%m.%Y') AS 'ipr_end',
 			DATE_FORMAT(registered, '%d.%m.%Y') AS 'registered',
 			DATE_FORMAT(dismissed, '%d.%m.%Y') AS 'dismissed',
-			diagnosis, diag_code, diag_group, status_disabled, disabled_group, status_chaes, status_ato, status_vpl,
+			diagnosis, diag_code, diag_group, status_disabled, disabled_group, status_ato, status_vpl,
 			CONCAT (
 				IF(region = '".$cfg['home_region']."', '', CONCAT (region, ' обл., ')),
 				IF(district IS NULL or district = '', '', CONCAT (district, ' р-н, ')),
@@ -868,18 +868,29 @@ function sortable_list($type, $pagenum) {
 				(YEAR(CURRENT_DATE) - YEAR(birthdate)) -
 				(DATE_FORMAT(CURRENT_DATE, '%m%d') < DATE_FORMAT(birthdate, '%m%d'))
 			) AS 'age',
-			DATE_FORMAT(course_end, '%d.%m.%Y') AS 'course_end',
+			DATE_FORMAT(ipr_end, '%d.%m.%Y') AS 'ipr_end',
 			DATE_FORMAT(registered, '%d.%m.%Y') AS 'registered',
 			DATE_FORMAT(dismissed, '%d.%m.%Y') AS 'dismissed',
-			diagnosis, diag_code, diag_group, status_disabled, disabled_group, status_chaes, status_ato, status_vpl,
+			diagnosis, diag_code, diag_group, status_disabled, disabled_group, status_ato, status_vpl,
 			CONCAT (
 				IF(region = '".$cfg['home_region']."', '', CONCAT (region, ' обл., ')),
 				IF(district IS NULL or district = '', '', CONCAT (district, ' р-н, ')),
 				`city`, ', ',
 				`address`
 			) AS 'address',
-			contact_data, additional, comment, incomplete, ipr_services
+			contact_data, additional, comment, incomplete,
+			pcons, ppd, ppp, ppk, fcons, lm, lfk, nosn, spp,
+			(
+				IF (pcons = '', 0, 1) || IF (ppd = '', 0, 1) || IF (ppp = '', 0, 1) || IF (ppk = '', 0, 1)
+			) AS 'service_psycho',
+			(
+				IF (fcons = '', 0, 1) || IF (lm = '', 0, 1) || IF (lfk = '', 0, 1)
+			) AS 'service_phys',
+			(
+				IF (nosn = '', 0, 1) || IF (spp = '', 0, 1)
+			) AS 'service_social'
 		FROM clients
+		INNER JOIN ipr ON clients.id = ipr.user_id
 		WHERE active = 1
 	";
 	
@@ -961,7 +972,7 @@ function sortable_list($type, $pagenum) {
 			$clients = processing(db_select($query));
 			break;
 		case 'outdated':
-			$query .= "AND course_end <= CURRENT_DATE() ORDER BY name";
+			$query .= "AND ipr_end <= CURRENT_DATE() ORDER BY name";
 			$template = 'list_special_results.twig';
 			$description = _('LIST_IPR_OUTDATED');
 			$clients = processing(db_select($query));

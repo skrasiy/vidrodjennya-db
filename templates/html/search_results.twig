@@ -85,11 +85,13 @@
 					{{ client.spp ? 'IPR_SVC_SPP_SHORT'|trans }}
 				</div>
 				{% endif %}
+				<span{{(date(client.ipr_end) < date())?' class="ipr-outdated"'}}>
 				{% if client.status_disabled == 1 %}
 				{{ 'IPR_DATE'|trans ~ ': ' ~ client.ipr_end }}
 				{% else %}
 				{{ 'ACTIVE_UNTIL'|trans ~ ': ' ~ client.ipr_end }}
 				{% endif %}
+				</span>
 			</td>
 			<td class="client-disabled">{{ client.disabled_group }}</td>
 			<td class="client-address">{{ client.address }}</td>
