@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Vidrodjennya\n"
 "POT-Creation-Date: 2019-12-10 10:32+0200\n"
-"PO-Revision-Date: 2019-12-10 10:37+0200\n"
+"PO-Revision-Date: 2019-12-17 08:45+0200\n"
 "Last-Translator: \n"
 "Language-Team: Inquisitor, <inquisitor@2ch.hk>\n"
 "Language: uk_UA\n"
@@ -1068,7 +1068,10 @@ msgstr "Обсяг послуг ІПР"
 
 #: search.twig:141
 msgid "IPR_QUERY_DESC"
-msgstr "Щоб вказати декілька запросів, розділіть іх крапкою з комою – ;"
+msgstr ""
+"Щоб вказати декілька запросів, розділіть іх крапкою з комою – ;\n"
+"Запити працюють за логікою АБО: перший АБО другий. Коли обрані сервіси ІПР, "
+"пошук проводиться тільки за зазначеними сервісами"
 
 #: search.twig:160
 msgid "COURSE_SERVICES"
