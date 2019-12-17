@@ -780,12 +780,8 @@ function search($enum) {
 function save($client, $enum) {
 	global $page;
 	
-	if (is_string($client->ipr_services)) $client->ipr_services = unserialize($client->ipr_services);
-	
 	$checkboxes = array('status_ato', 'status_vpl');
 	$textareas = array('diagnosis', 'contact_data', 'comment');
-	
-	$ipr_services = serialize($client->ipr_services);
 	
 	$values = array_intersect_key($_POST, array_flip(preg_grep('/^edit-/', array_keys($_POST))));
 	$values = array_map('trim_value', $values);
@@ -816,23 +812,17 @@ function save($client, $enum) {
 	$services = array_intersect_key($_POST, array_flip(preg_grep('/^ipr-svc-/', array_keys($_POST))));
 	$services = array_map('trim_value', $services);
 	$services = array_map('strip_array', $services);
-	$client->ipr_services->psycho->pscons = $services['ipr-svc-psycho-pcons'];
-	$client->ipr_services->psycho->ppd = $services['ipr-svc-psycho-ppd'];
-	$client->ipr_services->psycho->ppp = $services['ipr-svc-psycho-ppp'];
-	$client->ipr_services->psycho->ppk = $services['ipr-svc-psycho-ppk'];
-	$client->ipr_services->phys->phcons = $services['ipr-svc-phys-fcons'];
-	$client->ipr_services->phys->lm = $services['ipr-svc-phys-lm'];
-	$client->ipr_services->phys->lfk = $services['ipr-svc-phys-lfk'];
-	$client->ipr_services->social->nosn = $services['ipr-svc-social-nosn'];
-	$client->ipr_services->social->spp = $services['ipr-svc-social-spp'];
-	
-	$ipr_services_new = serialize($client->ipr_services);
-	if ($ipr_services !== $ipr_services_new) {
-		$client->ipr_services = $ipr_services;
-		$client->set('ipr_services', $ipr_services_new);
-	}
+	$services = array_combine(
+		array_map(
+			function($k) { return str_replace('ipr-svc-', '', $k); }, 
+			array_keys($services)
+		),
+		array_values($services)
+	);
 	
 	foreach ($values as $key => $value) { $client->set($key, $value); }
+	foreach ($services as $key => $value) { $client->setService($key, $value); }
+	
 	$result = $client->toDB();
 	return $page->twig->render('edit_status.twig', ['page' => $page, 'client' => $client, 'result' => $result]);
 }

@@ -126,12 +126,14 @@ class Client {
 	
 	public function setService($property, $value) {
 		if (array_key_exists($property, $this->ipr_services)) {
+			if ($this->ipr_services[$property] == $value) return $this;
 			$this->changes_ipr[] = array(
 				'oldValue' => $this->ipr_services[$property],
 				'newValue' => $value,
 				'valueName' => $property
 			);
 			$this->ipr_services[$property] = $value;
+			return $this;
 		}
 	}
 	
