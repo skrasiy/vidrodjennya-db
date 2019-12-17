@@ -75,8 +75,7 @@ switch ($page->path['slice'][0]) {
 			'page' => $page,
 			'post' => $_POST,
 			'enum_diag' => $enum['diag'],
-			'enum_disabled' => $enum['disabled'],
-			'adminAcessLevel' => $cfg['access']['admin']
+			'enum_disabled' => $enum['disabled']
 		]);
 		$result = search($enum);
 		if (is_array($result['clients'])) {

@@ -236,15 +236,15 @@ function clients_obj2array($data=null) {
 	if (empty($data)) return $clients;
 	foreach($data as $client) {
 		$ipr = array();
-		if ($client->ipr_services->psycho->pscons) $ipr[] = _('IPR_SVC_PCONS_SHORT');
-		if ($client->ipr_services->psycho->ppd) $ipr[] = _('IPR_SVC_PPD_SHORT');
-		if ($client->ipr_services->psycho->ppp) $ipr[] = _('IPR_SVC_PPP_SHORT');
-		if ($client->ipr_services->psycho->ppk) $ipr[] = _('IPR_SVC_PPK_SHORT');
-		if ($client->ipr_services->phys->phcons) $ipr[] = _('IPR_SVC_FCONS_SHORT');
-		if ($client->ipr_services->phys->lm) $ipr[] = _('IPR_SVC_LM_SHORT');
-		if ($client->ipr_services->phys->lfk) $ipr[] = _('IPR_SVC_LFK_SHORT');
-		if ($client->ipr_services->social->nosn) $ipr[] = _('IPR_SVC_NOSN_SHORT');
-		if ($client->ipr_services->social->spp) $ipr[] = _('IPR_SVC_SPP_SHORT');
+		if ($client->pcons) $ipr[] = _('IPR_SVC_PCONS_SHORT');
+		if ($client->ppd) $ipr[] = _('IPR_SVC_PPD_SHORT');
+		if ($client->ppp) $ipr[] = _('IPR_SVC_PPP_SHORT');
+		if ($client->ppk) $ipr[] = _('IPR_SVC_PPK_SHORT');
+		if ($client->fcons) $ipr[] = _('IPR_SVC_FCONS_SHORT');
+		if ($client->lm) $ipr[] = _('IPR_SVC_LM_SHORT');
+		if ($client->lfk) $ipr[] = _('IPR_SVC_LFK_SHORT');
+		if ($client->nosn) $ipr[] = _('IPR_SVC_NOSN_SHORT');
+		if ($client->spp) $ipr[] = _('IPR_SVC_SPP_SHORT');
 		$client->ipr_services = implode(', ', $ipr);
 		if (is_array($client->contacts)) $client->contacts = implode(', ', $client->contacts);
 		$clients[] = (array)$client;

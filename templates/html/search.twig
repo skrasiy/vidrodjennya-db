@@ -229,7 +229,7 @@
 
 		<div class="form-row justify-content-between">
 			<div class="form-group col-lg-8 col-md-12 col-sm-12">
-				{% if page.user.accessLevel >= adminAcessLevel %}
+				{% if page.user.accessLevel >= page.access.admin %}
 				<div class="input-group">
 					<div class="input-group-prepend">
 						<span class="input-group-text border-warning bg-dark text-warning">
