@@ -1,17 +1,5 @@
 <div class="container interface">
 {% if client.loaded %}
-	{% if page.user.accessLevel >= page.access.editor %}
-	<div class="row mb-3">
-		<div class="col">
-			{% trans 'CLIENT_ACTIONS' %}: 
-			<a class="btn btn-primary ml-2" href="{{ page.root ~ 'edit/' ~ client.id }}" role="button">{{ 'EDIT'|trans|upper }}</a>
-			<a class="btn btn-primary ml-2" href="{{ page.root ~ 'courses/' ~ client.id }}" role="button">{{ 'EDIT_COURSES'|trans|upper }}</a>
-			{% if page.user.accessLevel >= page.access.admin %}
-			<a class="btn btn-danger ml-2" href="{{ page.root ~ 'delete/' ~ client.id }}" role="button">{{ 'DELETE'|trans|upper }}</a>
-			{% endif %}
-		</div>
-	</div>
-	{% endif %}
 	<div class="row">
 		<div class="col col-sm-12 col-md-12 col-lg-6">
 			<div class="card border-secondary ml-auto mr-auto">
@@ -49,7 +37,20 @@
 					{% if client.dismissed %}
 					<p class="card-text mb-0"><strong>{% trans 'DISMISS_DATE' %}</strong>: {{ client.dismissed|date("d.m.Y") }}</p>
 					{% endif %}
-					
+					{% if page.user.accessLevel >= page.access.editor %}
+					<div class="mt-3 row justify-content-between">
+						<div class="col-sm-12 col-md-auto col-lg-auto align-self-center">
+						<em>{% trans 'CLIENT_ACTIONS' %}</em>:
+						</div>
+						<div class="col-sm-12 col-md-auto col-lg-auto">
+							<a class="btn btn-primary btn-sm" href="{{ page.root ~ 'edit/' ~ client.id }}" role="button">{{ 'EDIT'|trans|upper }}</a>
+							<a class="btn btn-primary btn-sm" href="{{ page.root ~ 'courses/' ~ client.id }}" role="button">{{ 'EDIT_COURSES'|trans|upper }}</a>
+							{% if page.user.accessLevel >= page.access.admin %}
+							<a class="btn btn-danger btn-sm" href="{{ page.root ~ 'delete/' ~ client.id }}" role="button">{{ 'DELETE'|trans|upper }}</a>
+							{% endif %}
+						</div>
+					</div>
+					{% endif %}
 				</div>
 			</div>
 		</div>
@@ -89,35 +90,38 @@
 					<div class="row">
 						<div class="col col-4">
 							<div class="text-primary text-center"><h5>{% trans 'IPR_CAT_PSYCHO' %}</h5></div>
-							{% if client.ipr_services.psycho.pscons %}
-							<strong>{% trans 'IPR_SVC_PCONS' %}</strong>: {{ client.ipr_services.psycho.pscons }}<br>
+							{% if client.ipr_services.pcons %}
+							<strong>{% trans 'IPR_SVC_PCONS' %}</strong>: {{ client.ipr_services.pcons }}<br>
 							{% endif %}
-							{% if client.ipr_services.psycho.ppd %}
-							<strong>{% trans 'IPR_SVC_PPD' %}</strong>: {{ client.ipr_services.psycho.ppd }}<br>
+							{% if client.ipr_services.ppd %}
+							<strong>{% trans 'IPR_SVC_PPD' %}</strong>: {{ client.ipr_services.ppd }}<br>
 							{% endif %}
-							{% if client.ipr_services.psycho.ppk %}
-							<strong>{% trans 'IPR_SVC_PPK' %}</strong>: {{ client.ipr_services.psycho.ppk }}<br>
+							{% if client.ipr_services.ppp %}
+							<strong>{% trans 'IPR_SVC_PPP' %}</strong>: {{ client.ipr_services.ppp }}<br>
+							{% endif %}
+							{% if client.ipr_services.ppk %}
+							<strong>{% trans 'IPR_SVC_PPK' %}</strong>: {{ client.ipr_services.ppk }}<br>
 							{% endif %}
 						</div>
 						<div class="col col-4">
 							<div class="text-primary text-center"><h5>{% trans 'IPR_CAT_PHYS' %}</h5></div>
-							{% if client.ipr_services.phys.phcons %}
-							<strong>{% trans 'IPR_SVC_FCONS' %}</strong>: {{ client.ipr_services.phys.phcons }}<br>
+							{% if client.ipr_services.fcons %}
+							<strong>{% trans 'IPR_SVC_FCONS' %}</strong>: {{ client.ipr_services.fcons }}<br>
 							{% endif %}
-							{% if client.ipr_services.phys.lm %}
-							<strong>{% trans 'IPR_SVC_LM' %}</strong>: {{ client.ipr_services.phys.lm }}<br>
+							{% if client.ipr_services.lm %}
+							<strong>{% trans 'IPR_SVC_LM' %}</strong>: {{ client.ipr_services.lm }}<br>
 							{% endif %}
-							{% if client.ipr_services.phys.lfk %}
-							<strong>{% trans 'IPR_SVC_LFK' %}</strong>: {{ client.ipr_services.phys.lfk }}<br>
+							{% if client.ipr_services.lfk %}
+							<strong>{% trans 'IPR_SVC_LFK' %}</strong>: {{ client.ipr_services.lfk }}<br>
 							{% endif %}
 						</div>
 						<div class="col col-4">
 							<div class="text-primary text-center"><h5>{% trans 'IPR_CAT_SOCIAL' %}</h5></div>
-							{% if client.ipr_services.social.nosn %}
-							<strong>{% trans 'IPR_SVC_NOSN' %}</strong>: {{ client.ipr_services.social.nosn }}<br>
+							{% if client.ipr_services.nosn %}
+							<strong>{% trans 'IPR_SVC_NOSN' %}</strong>: {{ client.ipr_services.nosn }}<br>
 							{% endif %}
-							{% if client.ipr_services.social.spp %}
-							<strong>{% trans 'IPR_SVC_SPP' %}</strong>: {{ client.ipr_services.social.spp }}<br>
+							{% if client.ipr_services.spp %}
+							<strong>{% trans 'IPR_SVC_SPP' %}</strong>: {{ client.ipr_services.spp }}<br>
 							{% endif %}
 						</div>
 					</div>
