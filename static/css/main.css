@@ -208,6 +208,7 @@ footer .debug-msg {
 .course-separator {
 	border-top: 2px solid #757575 !important;
 }
+.ipr-fulltext {font-size: .8em;}
 
 @media screen and (max-width: 992px) {
 	html, body {

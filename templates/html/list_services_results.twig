@@ -74,32 +74,23 @@
 			<td class="client-birthdate" data-order="{{client.birthdate|date('U')}}">{{ client.birthdate }}<br>({{ client.age }} {{ 'AGE_DESC'|trans|lower }})</td>
 			<td class="client-diagnosis">{% if client.diag_code %}[{{client.diag_code}}] {% endif %}{{ client.diagnosis }}</td>
 			<td class="client-category">{{ client.diag_group }}</td>
-			<td class="client-ipr" data-order="{{client.ipr_end|date('U')}}">
-				{% if client.service_psycho %}
-				<div class="nobr">
-					<strong class="text-primary">{% trans 'IPR_CAT_PSYCHO' %}:</strong>
-					{{ client.pcons ? 'IPR_SVC_PCONS_SHORT'|trans }}
-					{{ client.ppd ? 'IPR_SVC_PPD_SHORT'|trans }}
-					{{ client.ppp ? 'IPR_SVC_PPP_SHORT'|trans }}
-					{{ client.ppk ? 'IPR_SVC_PPK_SHORT'|trans }}
-				</div>
-				{% endif %}
-				{% if client.service_phys %}
-				<div class="nobr">
-					<strong class="text-primary">{% trans 'IPR_CAT_PHYS' %}:</strong>
-					{{ client.fcons ? 'IPR_SVC_FCONS_SHORT'|trans }}
-					{{ client.lm ? 'IPR_SVC_LM_SHORT'|trans }}
-					{{ client.lfk ? 'IPR_SVC_LFK_SHORT'|trans }}
-				</div>
-				{% endif %}
-				{% if client.service_social %}
-				<div class="nobr">
-					<strong class="text-primary">{% trans 'IPR_CAT_SOCIAL' %}:</strong>
-					{{ client.nosn ? 'IPR_SVC_NOSN_SHORT'|trans }}
-					{{ client.spp ? 'IPR_SVC_SPP_SHORT'|trans }}
-				</div>
-				{% endif %}
-				<span{{(date(client.ipr_end) < date())?' class="ipr-outdated"'}}>
+			<td class="client-ipr ipr-fulltext" data-order="{{client.ipr_end|date('U')}}">
+			{% if group_name == 'psycho' %}
+				{% if client.pcons %}<div><strong class="text-primary">{% trans 'IPR_SVC_PCONS_SHORT' %}</strong>: {{client.pcons}}</div>{% endif %}
+				{% if client.ppd %}<div><strong class="text-primary">{% trans 'IPR_SVC_PPD_SHORT' %}</strong>: {{client.ppd}}</div>{% endif %}
+				{% if client.ppp %}<div><strong class="text-primary">{% trans 'IPR_SVC_PPP_SHORT' %}</strong>: {{client.ppp}}</div>{% endif %}
+				{% if client.ppk %}<div><strong class="text-primary">{% trans 'IPR_SVC_PPK_SHORT' %}</strong>: {{client.ppk}}</div>{% endif %}
+			{% endif %}
+			{% if group_name == 'phys' %}
+				{% if client.fcons %}<div><strong class="text-primary">{% trans 'IPR_SVC_FCONS_SHORT' %}</strong>: {{client.fcons}}</div>{% endif %}
+				{% if client.lm %}<div><strong class="text-primary">{% trans 'IPR_SVC_LM_SHORT' %}</strong>: {{client.lm}}</div>{% endif %}
+				{% if client.lfk %}<div><strong class="text-primary">{% trans 'IPR_SVC_LFK_SHORT' %}</strong>: {{client.lfk}}</div>{% endif %}
+			{% endif %}
+			{% if group_name == 'social' %}
+				{% if client.nosn %}<div><strong class="text-primary">{% trans 'IPR_SVC_NOSN_SHORT' %}</strong>: {{client.nosn}}</div>{% endif %}
+				{% if client.spp %}<div><strong class="text-primary">{% trans 'IPR_SVC_SPP_SHORT' %}</strong>: {{client.spp}}</div>{% endif %}
+			{% endif %}
+				<span class="mt-2 nobr{{(date(client.ipr_end) < date())?' ipr-outdated'}}">
 					{% if client.status_disabled == 1 %}
 					{{ 'IPR_DATE'|trans ~ ': ' ~ client.ipr_end }}
 					{% else %}

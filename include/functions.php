@@ -1229,8 +1229,29 @@ function export_list($data, $type, $order, $additional = NULL) {
 			$template = 'list_clients_services.docx';
 			$values['count'] = $additional;
 			$values['clients0'] = clients_obj2array($data['psycho']);
+			for ($i = 0; $i < count($values['clients0']); $i++) {
+				$ipr_services = array();
+				if (!empty($values['clients0'][$i]['pcons'])) $ipr_services[] = _('IPR_SVC_PCONS_SHORT').' - '.$values['clients0'][$i]['pcons'];
+				if (!empty($values['clients0'][$i]['ppd'])) $ipr_services[] = _('IPR_SVC_PPD_SHORT').' - '.$values['clients0'][$i]['ppd'];
+				if (!empty($values['clients0'][$i]['ppp'])) $ipr_services[] = _('IPR_SVC_PPP_SHORT').' - '.$values['clients0'][$i]['ppp'];
+				if (!empty($values['clients0'][$i]['ppk'])) $ipr_services[] = _('IPR_SVC_PPK_SHORT').' - '.$values['clients0'][$i]['ppk'];
+				$values['clients0'][$i]['ipr_services'] = implode(', ', $ipr_services);
+			}
 			$values['clients1'] = clients_obj2array($data['phys']);
+			for ($i = 0; $i < count($values['clients1']); $i++) {
+				$ipr_services = array();
+				if (!empty($values['clients1'][$i]['fcons'])) $ipr_services[] = _('IPR_SVC_FCONS_SHORT').' - '.$values['clients1'][$i]['fcons'];
+				if (!empty($values['clients1'][$i]['lm'])) $ipr_services[] = _('IPR_SVC_LM_SHORT').' - '.$values['clients1'][$i]['lm'];
+				if (!empty($values['clients1'][$i]['lfk'])) $ipr_services[] = _('IPR_SVC_LFK_SHORT').' - '.$values['clients1'][$i]['lfk'];
+				$values['clients1'][$i]['ipr_services'] = implode(', ', $ipr_services);
+			}
 			$values['clients2'] = clients_obj2array($data['social']);
+			for ($i = 0; $i < count($values['clients2']); $i++) {
+				$ipr_services = array();
+				if (!empty($values['clients2'][$i]['nosn'])) $ipr_services[] = _('IPR_SVC_NOSN_SHORT').' - '.$values['clients2'][$i]['nosn'];
+				if (!empty($values['clients2'][$i]['spp'])) $ipr_services[] = _('IPR_SVC_SPP_SHORT').' - '.$values['clients2'][$i]['spp'];
+				$values['clients2'][$i]['ipr_services'] = implode(', ', $ipr_services);
+			}
 			break;
 		case 'outdated':
 			$template = 'list_outdated.docx';
