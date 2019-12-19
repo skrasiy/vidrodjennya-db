@@ -246,6 +246,7 @@ function clients_obj2array($data=null) {
 		if ($client->nosn) $ipr[] = _('IPR_SVC_NOSN_SHORT');
 		if ($client->spp) $ipr[] = _('IPR_SVC_SPP_SHORT');
 		$client->ipr_services = implode(', ', $ipr);
+		if (empty($client->ipr_services)) $client->ipr_services = mb_strtolower(_('NO').' ('._('RISK_GROUP').')');
 		if (is_array($client->contacts)) $client->contacts = implode(', ', $client->contacts);
 		$clients[] = (array)$client;
 	}
@@ -1393,29 +1394,14 @@ function doc_plan() {
 	$date = new DateTime();
 	$readable_date = mb_strtolower(_('MONTH'.$month)).' '.$date->format("Y");
 	
-	$result = db_select("SELECT name, DATE_FORMAT(birthdate, '%d.%m.%Y') AS birthdate, file, city, ipr_services FROM clients WHERE file IN (".$files.")");
+	$result = db_select("SELECT name, DATE_FORMAT(birthdate, '%d.%m.%Y') AS birthdate, file, city,
+		pcons, ppd, ppp, ppk, fcons, lm, lfk, nosn, spp
+		FROM clients INNER JOIN ipr ON clients.id = ipr.user_id  WHERE file IN (".$files.")");
 	if (empty($result)) return;
-	$clients = array();
-	foreach ($result as $client) {
-		$ipr_services = unserialize(base64_decode($client->ipr_services));
-		$readable_services = array();
-		if ($ipr_services->psycho->pscons) $readable_services[] = _('IPR_SVC_PCONS_SHORT');
-		if ($ipr_services->psycho->ppd) $readable_services[] = _('IPR_SVC_PPD_SHORT');
-		if ($ipr_services->psycho->ppp) $readable_services[] = _('IPR_SVC_PPP_SHORT');
-		if ($ipr_services->psycho->ppk)  $readable_services[] = _('IPR_SVC_PPK_SHORT');
-		if ($ipr_services->phys->phcons) $readable_services[] = _('IPR_SVC_FCONS_SHORT');
-		if ($ipr_services->phys->lm) $readable_services[] = _('IPR_SVC_LM_SHORT');
-		if ($ipr_services->phys->lfk) $readable_services[] = _('IPR_SVC_LFK_SHORT');
-		if ($ipr_services->social->nosn) $readable_services[] = _('IPR_SVC_NOSN_SHORT');
-		if ($ipr_services->social->spp) $readable_services[] = _('IPR_SVC_SPP_SHORT');
-		if (empty($readable_services)) $readable_services[] = _('NO').' ('._('RISK_GROUP').')';
-		$client->ipr_services = implode(', ', $readable_services);
-		$clients[] = (array) $client;
-	}
-
+	
 	$values = array(
 		'date'		=> $readable_date,
-		'clients'	=> $clients
+		'clients'	=> clients_obj2array($result)
 	);
 
 	$docName = 'Перспективний план на '.$readable_date;
@@ -1436,30 +1422,21 @@ function doc_soc_year_plan() {
 	
 	$query = "SELECT
 		name, DATE_FORMAT(birthdate, '%d.%m.%Y') AS birthdate, file, diag_code,
-		diag_group, DATE_FORMAT(registered, '%d.%m.%Y') AS regdate, ipr_services
-	FROM clients ORDER BY file";
+		diag_group, DATE_FORMAT(registered, '%d.%m.%Y') AS regdate, pcons, ppd,
+		ppp, ppk, fcons, lm, lfk, nosn, spp
+	FROM clients INNER JOIN ipr ON clients.id = ipr.user_id ORDER BY file";
 	$result = db_select($query);
 	if (empty($result)) return;
 	
+	$clients = clients_obj2array($result);
+
 	$data = array();
-	foreach ($result as $client) {
-		$readable_services = array();
-		$ipr_services = unserialize(base64_decode($client->ipr_services));
-		if ($ipr_services->psycho->pscons) $readable_services[] = _('IPR_SVC_PCONS_SHORT');
-		if ($ipr_services->psycho->ppd) $readable_services[] = _('IPR_SVC_PPD_SHORT');
-		if ($ipr_services->psycho->ppp) $readable_services[] = _('IPR_SVC_PPP_SHORT');
-		if ($ipr_services->psycho->ppk)  $readable_services[] = _('IPR_SVC_PPK_SHORT');
-		if ($ipr_services->phys->phcons) $readable_services[] = _('IPR_SVC_FCONS_SHORT');
-		if ($ipr_services->phys->lm) $readable_services[] = _('IPR_SVC_LM_SHORT');
-		if ($ipr_services->phys->lfk) $readable_services[] = _('IPR_SVC_LFK_SHORT');
-		if ($ipr_services->social->nosn) $readable_services[] = _('IPR_SVC_NOSN_SHORT');
-		if ($ipr_services->social->spp) $readable_services[] = _('IPR_SVC_SPP_SHORT');
-		if (empty($readable_services)) $readable_services[] = _('NO').' ('._('RISK_GROUP').')';
+	foreach ($clients as $client) {
 		$data[] = array(
-			'name'		=> $client->name.' ('.$client->file.')',
-			'birth'		=> $client->birthdate,
-			'diag'		=> (($client->diag_code)?'['.$client->diag_code.'] ':'').$client->diag_group,
-			'svc'		=> implode(', ', $readable_services)
+			'name'		=> $client['name'].' ('.$client['file'].')',
+			'birth'		=> $client['birthdate'],
+			'diag'		=> (($client['diag_code'])?'['.$client['diag_code'].'] ':'').$client['diag_group'],
+			'svc'		=> $client['ipr_services']
 		);
 	}
 	
