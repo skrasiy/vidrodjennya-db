@@ -106,6 +106,12 @@ class Client {
 		'city' => 'string', 'address' => 'string', 'contact_data' => 'string', 'active' => 'int',
 		'comment' => 'string', 'incomplete' => 'int'
 	);
+	private $types_ipr = array(
+		'user_id' => 'int', 'ipr_start' => 'date', 'ipr_end' => 'date', 'pcons' => 'string', 'ppd' => 'string',
+		'ppp' => 'string', 'ppk' => 'string', 'fcons' => 'string', 'lm' => 'string', 'lfk' => 'string',
+		'nosn' => 'string', 'spp' => 'string'
+	);
+	
 	
 	function __construct() {
 		$this->ipr_services = array_fill_keys($this->ipr_services_list, '');
@@ -133,6 +139,15 @@ class Client {
 				'valueName' => $property
 			);
 			$this->ipr_services[$property] = $value;
+			return $this;
+		} elseif (property_exists($this, $property)) {
+			if ($this->$property == $value) return $this;
+			$this->changes_ipr[] = array(
+				'oldValue' => $this->$property,
+				'newValue' => $value,
+				'valueName' => $property
+			);
+			$this->$property = $value;
 			return $this;
 		}
 	}
@@ -193,12 +208,12 @@ class Client {
 		
 		if (!$this->loaded) return -1;
 		
+
+		// clients
 		$fields = array();
 		$values = array();
 		$keyvalues = array();
-		$iprvalues = array();
 		$named = array();
-		// clients
 		foreach ($this->types as $property => $type) {
 			if ($property != 'id') {
 				switch ($type) {
@@ -239,14 +254,32 @@ class Client {
 		}
 		for ($i = 0; $i < count($fields); $i++) { $keyvalues[] = $fields[$i].'='.$values[$i]; }
 		//ipr
+		$iprvalues = array();
 		foreach ($this->ipr_services_list as $key) { $iprvalues[] = "'".$this->ipr_services[$key]."'"; }
-		foreach (array('ipr_start', 'ipr_end') as $key) { $$key = (empty($this->$key)) ? "NULL" : "'".$this->$key."'"; }
+		$named_ipr = array();
+		foreach ($this->types_ipr as $property => $type) {
+			if ($property != 'id') {
+				switch ($type) {
+					case 'string':
+						$named_ipr[$property] = "'".$this->ipr_services[$property]."'";
+						break;
+					case 'date':
+						$date = strtotime($this->$property);
+						if ($date < 1) {
+							$named_ipr[$property] = "NULL";
+						} else {
+							$named_ipr[$property] = "'".date("Y-m-d", $date)."'";
+						}
+						break;
+				}
+			}
+		}
 		
 		// query constructor
 		if ($this->new) {
 			$queries = array();
 			$queries[] = "INSERT INTO clients (id, ".implode(', ', $fields).") VALUES (".$this->id.", ".implode(', ', $values)."); ";
-			$queries[] = "INSERT INTO ipr (user_id, ipr_start, ipr_end, ".implode(', ', $this->ipr_services_list).") VALUES (".$this->id.", ".$ipr_start.", ".$ipr_end.", ".implode(', ', $iprvalues).");";
+			$queries[] = "INSERT INTO ipr (user_id, ipr_start, ipr_end, ".implode(', ', $this->ipr_services_list).") VALUES (".$this->id.", ".$this->ipr_start.", ".$this->ipr_end.", ".implode(', ', $iprvalues).");";
 			audit($page->user, 'додав новий запис клієнта, id='.$this->id.', номер справи = '.$this->file);
 		} else {
 			$changelog = array();
@@ -262,7 +295,7 @@ class Client {
 			if (!empty($this->changes_ipr)){
 				$querydata = array();
 				foreach ($this->changes_ipr as $change) {
-					$querydata[$change['valueName']] = $change['valueName']."='".$change['newValue']."'";
+					$querydata[$change['valueName']] = $change['valueName']."=".$named_ipr[$change['valueName']];
 					$changelog[$change['valueName']] = 'ключ "ІПР '._('IPR_SVC_'.strtoupper($change['valueName']).'_SHORT').'", старе значення = "'.$change['oldValue'].'", нове значення = "'.$change['newValue'].'"';
 				}
 				$queries[] = "UPDATE ipr SET ".implode(", ", $querydata)." WHERE user_id = ".$this->id.";";

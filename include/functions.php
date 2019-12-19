@@ -810,12 +810,12 @@ function save($client, $enum) {
 	$values['diag_group'] = $enum['diag'][(int)$_POST['edit-diag_group']];
 	$values['region'] = $enum['region'][(int)$_POST['edit-region']];
 	
-	$services = array_intersect_key($_POST, array_flip(preg_grep('/^ipr-svc-/', array_keys($_POST))));
+	$services = array_intersect_key($_POST, array_flip(preg_grep('/^svc-/', array_keys($_POST))));
 	$services = array_map('trim_value', $services);
 	$services = array_map('strip_array', $services);
 	$services = array_combine(
 		array_map(
-			function($k) { return str_replace('ipr-svc-', '', $k); }, 
+			function($k) { return str_replace('svc-', '', $k); }, 
 			array_keys($services)
 		),
 		array_values($services)

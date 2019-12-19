@@ -113,12 +113,12 @@
 				</div>
 				<div class="form-row">
 					<div class="form-group col-sm-4 col-md-4 col-lg-4">
-						<label for="edit-ipr_start">{% trans 'IPR_STARTED' %}</label>
-						<input type="text" name="edit-ipr_start" class="form-control" id="edit-ipr_start" value="{{ client.ipr_start }}" placeholder="{% trans 'DATE_YEAR' %}-{% trans 'DATE_MONTH' %}-{% trans 'DATE_DAY' %}" pattern="\d{4}-\d{2}-\d{2}" required>
+						<label for="svc-ipr_start">{% trans 'IPR_STARTED' %}</label>
+						<input type="text" name="svc-ipr_start" class="form-control" id="svc-ipr_start" value="{{ client.ipr_start }}" placeholder="{% trans 'DATE_YEAR' %}-{% trans 'DATE_MONTH' %}-{% trans 'DATE_DAY' %}" pattern="\d{4}-\d{2}-\d{2}" required>
 					</div>
 					<div class="form-group col-sm-4 col-md-4 col-lg-4">
-						<label for="edit-ipr_end">{% trans 'IPR_DATE' %}</label>
-						<input type="text" name="edit-ipr_end" class="form-control" id="edit-ipr_end" value="{{ client.ipr_end }}" placeholder="{% trans 'DATE_YEAR' %}-{% trans 'DATE_MONTH' %}-{% trans 'DATE_DAY' %}" pattern="\d{4}-\d{2}-\d{2}" required>
+						<label for="svc-ipr_end">{% trans 'IPR_DATE' %}</label>
+						<input type="text" name="svc-ipr_end" class="form-control" id="svc-ipr_end" value="{{ client.ipr_end }}" placeholder="{% trans 'DATE_YEAR' %}-{% trans 'DATE_MONTH' %}-{% trans 'DATE_DAY' %}" pattern="\d{4}-\d{2}-\d{2}" required>
 					</div>
 				</div>
 			</div>
@@ -140,7 +140,7 @@
 							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_PCONS' %}"></i>
 						</span>
 					</div>
-					<input type="text" class="form-control" name="ipr-svc-pcons" value="{{ client.ipr_services.pcons }}">
+					<input type="text" class="form-control" name="svc-pcons" value="{{ client.ipr_services.pcons }}">
 				</div>
 				<div class="input-group ipr-svc mb-1">
 					<div class="input-group-prepend">
@@ -149,7 +149,7 @@
 							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_PPP' %}"></i>
 						</span>
 					</div>
-					<input type="text" class="form-control" name="ipr-svc-ppp" value="{{ client.ipr_services.ppp }}">
+					<input type="text" class="form-control" name="svc-ppp" value="{{ client.ipr_services.ppp }}">
 				</div>
 			</div>
 			<div class="form-group col-sm-12 col-md-5 col-lg-5 align-self-top mb-1">
@@ -160,7 +160,7 @@
 							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_PPD' %}"></i>
 						</span>
 					</div>
-					<input type="text" class="form-control" name="ipr-svc-ppd" value="{{ client.ipr_services.ppd }}">
+					<input type="text" class="form-control" name="svc-ppd" value="{{ client.ipr_services.ppd }}">
 				</div>
 				<div class="input-group ipr-svc mb-1">
 					<div class="input-group-prepend">
@@ -169,7 +169,7 @@
 							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_PPK' %}"></i>
 						</span>
 					</div>
-					<input type="text" class="form-control" name="ipr-svc-ppk" value="{{ client.ipr_services.ppk }}">
+					<input type="text" class="form-control" name="svc-ppk" value="{{ client.ipr_services.ppk }}">
 				</div>
 			</div>
 
@@ -184,7 +184,7 @@
 							<i class="fas fa-question-circle ml-1" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_FCONS' %}"></i>
 						</span>
 					</div>
-					<input type="text" class="form-control" name="ipr-svc-fcons" value="{{ client.ipr_services.fcons }}">
+					<input type="text" class="form-control" name="svc-fcons" value="{{ client.ipr_services.fcons }}">
 				</div>
 				<div class="input-group ipr-svc mb-1">
 					<div class="input-group-prepend">
@@ -193,7 +193,7 @@
 							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_LFK' %}"></i>
 						</span>
 					</div>
-					<input type="text" class="form-control" name="ipr-svc-lfk" value="{{ client.ipr_services.lfk }}">
+					<input type="text" class="form-control" name="svc-lfk" value="{{ client.ipr_services.lfk }}">
 				</div>
 			</div>
 			<div class="form-group col-sm-12 col-md-5 col-lg-5 align-self-top mb-1">
@@ -204,7 +204,7 @@
 							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_LM' %}"></i>
 						</span>
 					</div>
-					<input type="text" class="form-control" name="ipr-svc-lm" value="{{ client.ipr_services.lm }}">
+					<input type="text" class="form-control" name="svc-lm" value="{{ client.ipr_services.lm }}">
 				</div>
 			</div>
 
@@ -219,7 +219,7 @@
 							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_NOSN' %}"></i>
 						</span>
 					</div>
-					<input type="text" class="form-control" name="ipr-svc-nosn" value="{{ client.ipr_services.nosn }}">
+					<input type="text" class="form-control" name="svc-nosn" value="{{ client.ipr_services.nosn }}">
 				</div>
 			</div>
 			<div class="form-group col-sm-12 col-md-5 col-lg-5 align-self-top mb-1">
@@ -230,7 +230,7 @@
 							<i class="fas fa-question-circle" data-toggle="tooltip" data-placement="top" title="{% trans 'IPR_SVC_SPP' %}"></i>
 						</span>
 					</div>
-					<input type="text" class="form-control" name="ipr-svc-spp" value="{{ client.ipr_services.spp }}">
+					<input type="text" class="form-control" name="svc-spp" value="{{ client.ipr_services.spp }}">
 				</div>
 			</div>
 		</div>
