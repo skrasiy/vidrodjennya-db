@@ -2,7 +2,7 @@
 $start = microtime(true);
 $_GET["db_queries"] = 0;
 
-$root = 'new';  // '/', 'subfolder', 'folder1/folder2'
+$root = 'db';  // '/', 'subfolder', 'folder1/folder2'
 
 require 'include/config.php';
 require 'include/functions.php';

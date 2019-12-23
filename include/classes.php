@@ -294,9 +294,14 @@ class Client {
 			}
 			if (!empty($this->changes_ipr)){
 				$querydata = array();
+				$ipr_non_svc = array('ipr_start' => 'IPR_STARTED', 'ipr_end' => 'IPR_DATE');
 				foreach ($this->changes_ipr as $change) {
 					$querydata[$change['valueName']] = $change['valueName']."=".$named_ipr[$change['valueName']];
-					$changelog[$change['valueName']] = 'ключ "ІПР '._('IPR_SVC_'.strtoupper($change['valueName']).'_SHORT').'", старе значення = "'.$change['oldValue'].'", нове значення = "'.$change['newValue'].'"';
+					if (array_key_exists($change['valueName'], $ipr_non_svc)) {
+						$changelog[$change['valueName']] = 'ключ "'._($ipr_non_svc[$change['valueName']]).'", старе значення = "'.$change['oldValue'].'", нове значення = "'.$change['newValue'].'"';
+					} else {
+						$changelog[$change['valueName']] = 'ключ "ІПР '._('IPR_SVC_'.strtoupper($change['valueName']).'_SHORT').'", старе значення = "'.$change['oldValue'].'", нове значення = "'.$change['newValue'].'"';
+					}
 				}
 				$queries[] = "UPDATE ipr SET ".implode(", ", $querydata)." WHERE user_id = ".$this->id.";";
 			}

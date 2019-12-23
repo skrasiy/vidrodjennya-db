@@ -4,3 +4,6 @@ cache/*
 !cache/geocode
 # Production config file
 include/config.php
+# Office temporary
+~$*.doc*
+~$*.xls*
