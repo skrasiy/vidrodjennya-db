@@ -279,7 +279,7 @@ class Client {
 		if ($this->new) {
 			$queries = array();
 			$queries[] = "INSERT INTO clients (id, ".implode(', ', $fields).") VALUES (".$this->id.", ".implode(', ', $values)."); ";
-			$queries[] = "INSERT INTO ipr (user_id, ipr_start, ipr_end, ".implode(', ', $this->ipr_services_list).") VALUES (".$this->id.", ".$this->ipr_start.", ".$this->ipr_end.", ".implode(', ', $iprvalues).");";
+			$queries[] = "INSERT INTO ipr (user_id, ipr_start, ipr_end, ".implode(', ', $this->ipr_services_list).") VALUES (".$this->id.", '".$this->ipr_start."', '".$this->ipr_end."', ".implode(', ', $iprvalues).");";
 			audit($page->user, 'додав новий запис клієнта, id='.$this->id.', номер справи = '.$this->file);
 		} else {
 			$changelog = array();
