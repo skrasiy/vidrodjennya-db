@@ -7,3 +7,5 @@ include/config.php
 # Office temporary
 ~$*.doc*
 ~$*.xls*
+# Composer vendor folder
+/vendor
